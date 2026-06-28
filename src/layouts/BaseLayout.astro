@@ -6,6 +6,7 @@ import 'katex/dist/katex.min.css';
 import '../styles/global.css';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import MermaidClient from '../components/MermaidClient.astro';
+import Ripple from '../components/Ripple.astro';
 
 interface Props {
   title?: string;
@@ -74,5 +75,6 @@ const pageTitle = title ? `${title} — ${siteName}` : `${siteName} · notes`;
     </div>
 
     <MermaidClient />
+    <Ripple />
   </body>
 </html>
