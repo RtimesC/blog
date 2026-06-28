@@ -296,3 +296,39 @@ footer.site-footer {
 [data-theme="dark"] .theme-toggle .icon-moon {
   display: inline;
 }
+
+/* ---- Responsive: phones & narrow windows ---- */
+@media (max-width: 640px) {
+  body {
+    font-size: 1.0625rem; /* 17px — 19.5 reads a touch large on phones */
+  }
+
+  /* Header: let brand + nav wrap instead of overflowing; tighten spacing */
+  .header-inner {
+    flex-wrap: wrap;
+    gap: 0.35rem 1rem;
+    padding: 0.55rem var(--space);
+  }
+  .site-header a.brand {
+    font-size: 1rem;
+  }
+  .site-header nav {
+    gap: 0.9rem;
+  }
+  .site-header nav a {
+    font-size: 0.9rem;
+  }
+
+  /* Headings scale down a step on small screens */
+  h1 {
+    font-size: 1.6rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  /* Comfortable tap target for nav links (toggle is already a 2rem square) */
+  .site-header nav a {
+    padding-block: 0.2rem;
+  }
+}
