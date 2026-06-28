@@ -1,0 +1,254 @@
+:root {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, "Apple Color Emoji", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+  --measure: 46rem;
+  --space: clamp(1.25rem, 4vw, 2rem);
+}
+
+/* Light is the default; [data-theme] is set by the no-FOUC head script. */
+:root,
+[data-theme="light"] {
+  --bg: #fbfbfa;
+  --fg: #1b1b1d;
+  --muted: #6b7280;
+  --border: #e6e6e3;
+  --link: #1f5fd0;
+  --accent: #1f5fd0;
+  --inline-code-bg: #f1f1ee;
+}
+
+[data-theme="dark"] {
+  --bg: #0f1115;
+  --fg: #e8eaed;
+  --muted: #9aa3b2;
+  --border: #232733;
+  --link: #82a9ff;
+  --accent: #82a9ff;
+  --inline-code-bg: #1a1d24;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.wrap {
+  max-width: var(--measure);
+  margin-inline: auto;
+  padding: var(--space);
+}
+
+/* Header */
+.site-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 3.5rem;
+}
+
+.site-header a.brand {
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.site-header nav {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.site-header nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.site-header nav a:hover {
+  color: var(--fg);
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin: 2.5rem 0 1rem;
+  font-weight: 650;
+}
+
+h1 {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  margin-top: 0;
+}
+h2 {
+  font-size: 1.4rem;
+}
+h3 {
+  font-size: 1.15rem;
+}
+
+p,
+ul,
+ol {
+  margin: 0 0 1.25rem;
+}
+
+a {
+  color: var(--link);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 3rem 0;
+}
+
+blockquote {
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--border);
+  color: var(--muted);
+}
+
+/* Inline code (Expressive Code styles fenced blocks itself) */
+:not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--inline-code-bg);
+  padding: 0.15em 0.4em;
+  border-radius: 0.35rem;
+}
+
+/* KaTeX: let display math scroll on narrow screens instead of overflowing */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}
+
+/* Mermaid: center the rendered SVG, no code styling before it renders */
+pre.mermaid {
+  background: none;
+  text-align: center;
+  margin: 1.75rem 0;
+  /* Hide the raw source until mermaid swaps in the SVG */
+  visibility: hidden;
+}
+pre.mermaid[data-processed="true"],
+pre.mermaid svg {
+  visibility: visible;
+}
+
+/* Post list */
+.post-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.post-list li {
+  padding: 1.1rem 0;
+  border-top: 1px solid var(--border);
+}
+.post-list li:last-child {
+  border-bottom: 1px solid var(--border);
+}
+.post-list a {
+  color: var(--fg);
+  text-decoration: none;
+  font-weight: 550;
+}
+.post-list a:hover {
+  color: var(--accent);
+}
+.post-meta {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+}
+
+/* Post header */
+.post-header {
+  margin-bottom: 2.5rem;
+}
+.post-header .post-meta {
+  margin-top: 0.6rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+.tags span {
+  font-size: 0.75rem;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
+}
+
+footer.site-footer {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--fg);
+  border-radius: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+  padding: 0;
+  line-height: 0;
+}
+.theme-toggle:hover {
+  border-color: var(--accent);
+}
+.theme-toggle svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+/* Show the correct icon for the active theme */
+.theme-toggle .icon-moon {
+  display: none;
+}
+[data-theme="dark"] .theme-toggle .icon-sun {
+  display: none;
+}
+[data-theme="dark"] .theme-toggle .icon-moon {
+  display: inline;
+}

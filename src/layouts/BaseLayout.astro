@@ -1,0 +1,66 @@
+---
+import 'katex/dist/katex.min.css';
+import '../styles/global.css';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import MermaidClient from '../components/MermaidClient.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const siteName = 'Sousuke';
+const pageTitle = title ? `${title} — ${siteName}` : `${siteName} · notes`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{pageTitle}</title>
+    {description && <meta name="description" content={description} />}
+    <meta name="generator" content={Astro.generator} />
+
+    {/* Apply the saved theme before paint to avoid a flash. */}
+    <script is:inline>
+      (function () {
+        try {
+          const stored = localStorage.getItem('theme');
+          const theme =
+            stored ||
+            (window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light');
+          document.documentElement.dataset.theme = theme;
+        } catch (e) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="site-header">
+        <a class="brand" href="/">Sousuke</a>
+        <nav>
+          <a href="/">Posts</a>
+          <a href="https://github.com/RtimesC" target="_blank" rel="me noopener">GitHub</a>
+          <ThemeToggle />
+        </nav>
+      </header>
+
+      <main>
+        <slot />
+      </main>
+
+      <footer class="site-footer">
+        <p>© {new Date().getFullYear()} Sousuke · robotics, SLAM, embedded, FPV, deep learning.</p>
+      </footer>
+    </div>
+
+    <MermaidClient />
+  </body>
+</html>

@@ -1,0 +1,46 @@
+---
+// Renders any <pre class="mermaid"> blocks on the client and re-renders them
+// when the color theme changes. The mermaid source is preserved in a data
+// attribute so re-rendering after a toggle works.
+---
+<script>
+  type MermaidEl = HTMLElement & { dataset: { source?: string } };
+
+  const theme = () =>
+    document.documentElement.dataset.theme === 'dark' ? 'dark' : 'default';
+
+  async function renderAll() {
+    const nodes = Array.from(
+      document.querySelectorAll<MermaidEl>('pre.mermaid'),
+    );
+    if (nodes.length === 0) return;
+
+    // Only pull in the (large) mermaid bundle on pages that have a diagram.
+    const { default: mermaid } = await import('mermaid');
+
+    for (const el of nodes) {
+      // Cache the original definition before mermaid overwrites it with SVG.
+      if (el.dataset.source === undefined) {
+        el.dataset.source = el.textContent ?? '';
+      }
+      el.innerHTML = el.dataset.source;
+      el.removeAttribute('data-processed');
+    }
+
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: theme(),
+      securityLevel: 'loose',
+      fontFamily: 'var(--font-sans)',
+    });
+
+    try {
+      await mermaid.run({ nodes });
+    } catch (err) {
+      console.error('[mermaid]', err);
+    }
+  }
+
+  renderAll();
+  document.addEventListener('theme-change', renderAll);
+</script>
