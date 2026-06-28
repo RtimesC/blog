@@ -13,8 +13,11 @@
 </button>
 
 <script>
-  const btn = document.querySelector<HTMLButtonElement>('.theme-toggle');
-  btn?.addEventListener('click', () => {
+  // Delegated to document so it survives view-transition DOM swaps
+  // (the button is replaced on navigation, but document persists).
+  document.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest('.theme-toggle');
+    if (!btn) return;
     const next =
       document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
     document.documentElement.dataset.theme = next;

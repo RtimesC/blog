@@ -41,6 +41,8 @@
     }
   }
 
-  renderAll();
+  // astro:page-load fires on first load and after every view transition,
+  // so diagrams render on fresh navigations too (not just full reloads).
+  document.addEventListener('astro:page-load', renderAll);
   document.addEventListener('theme-change', renderAll);
 </script>
