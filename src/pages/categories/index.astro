@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { CATEGORIES } from '../../categories';
+
+const posts = await getCollection('posts', ({ data }) => !data.draft);
+const countFor = (id: string) =>
+  posts.filter((p) => p.data.category === id).length;
+---
+
+<BaseLayout
+  title="Topics"
+  description="Browse posts by topic: robotics & SLAM, deep learning, embedded & FPV, and notes."
+>
+  <h1>Topics</h1>
+  <ul class="post-list">
+    {
+      CATEGORIES.map((c) => (
+        <li>
+          <a href={`/categories/${c.id}/`}>{c.name}</a>
+          <div class="post-meta">
+            {c.blurb} · {countFor(c.id)} post{countFor(c.id) === 1 ? '' : 's'}
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>

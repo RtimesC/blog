@@ -2,6 +2,7 @@
 title: "The EKF-SLAM Prediction Step, End to End"
 description: "Propagating the robot pose and covariance through the motion model — with the Jacobians written out and runnable code."
 pubDate: 2026-06-28
+category: robotics-slam
 tags: ["slam", "robotics", "kalman-filter"]
 draft: false
 ---
