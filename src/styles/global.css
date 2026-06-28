@@ -75,22 +75,28 @@ button {
   padding: var(--space);
 }
 
-/* Header — frosted glass that sticks to the top while you scroll.
+/* Header — full-bleed frosted glass that sticks to the top while you scroll.
    The scrolling article underneath is what the blur acts on. */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 10;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 3.5rem;
-  padding: 0.7rem 0;
+  margin-bottom: 3rem;
   background: color-mix(in srgb, var(--bg) 60%, transparent);
   -webkit-backdrop-filter: blur(14px) saturate(150%);
   backdrop-filter: blur(14px) saturate(150%);
   border-bottom: 1px solid var(--border);
+}
+
+/* Inner row keeps brand + nav aligned to the article column */
+.header-inner {
+  max-width: var(--measure);
+  margin-inline: auto;
+  padding: 0.7rem var(--space);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 /* Honor "reduce transparency" — fall back to a solid bar */

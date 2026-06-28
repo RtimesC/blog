@@ -50,8 +50,8 @@ const pageTitle = title ? `${title} — ${siteName}` : `${siteName} · notes`;
     </script>
   </head>
   <body>
-    <div class="wrap">
-      <header class="site-header">
+    <header class="site-header">
+      <div class="header-inner">
         <a class="brand" href="/">Sousuke</a>
         <nav>
           <a href="/">Posts</a>
@@ -60,8 +60,10 @@ const pageTitle = title ? `${title} — ${siteName}` : `${siteName} · notes`;
           <a href="https://github.com/RtimesC" target="_blank" rel="me noopener">GitHub</a>
           <ThemeToggle />
         </nav>
-      </header>
+      </div>
+    </header>
 
+    <div class="wrap">
       <main>
         <slot />
       </main>
