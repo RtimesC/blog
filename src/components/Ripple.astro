@@ -1,0 +1,25 @@
+---
+// Material-style click ripple. Delegated to `document` so it keeps working
+// after view-transition DOM swaps. Hosts: the theme toggle and post cards.
+---
+<script>
+  document.addEventListener('click', (e) => {
+    const ev = e as MouseEvent;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const target = ev.target as HTMLElement;
+    const host = target.closest(
+      '.theme-toggle, .post-list li',
+    ) as HTMLElement | null;
+    if (!host) return;
+
+    const rect = host.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    ripple.style.width = ripple.style.height = `${size}px`;
+    ripple.style.left = `${ev.clientX - rect.left - size / 2}px`;
+    ripple.style.top = `${ev.clientY - rect.top - size / 2}px`;
+    host.appendChild(ripple);
+    ripple.addEventListener('animationend', () => ripple.remove());
+  });
+</script>

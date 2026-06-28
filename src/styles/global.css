@@ -6,6 +6,8 @@
     "Liberation Mono", monospace;
   --measure: 68ch;
   --space: clamp(1.25rem, 4vw, 2rem);
+  /* Gemini-style gradient, reused for hover lines */
+  --gemini: linear-gradient(90deg, #4285f4, #9b72cb, #d96570);
 }
 
 /* Light is the default; [data-theme] is set by the no-FOUC head script. */
@@ -18,6 +20,8 @@
   --link: #1f5fd0;
   --accent: #1f5fd0;
   --inline-code-bg: #f1f1ee;
+  --card-bg: #ffffff;
+  --shadow-hover: 0 6px 20px rgba(24, 24, 48, 0.1);
 }
 
 [data-theme="dark"] {
@@ -28,6 +32,8 @@
   --link: #82a9ff;
   --accent: #82a9ff;
   --inline-code-bg: #1a1d24;
+  --card-bg: #161922;
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -88,13 +94,33 @@ button {
 }
 
 .site-header nav a {
+  position: relative;
+  display: inline-block;
   color: var(--muted);
   text-decoration: none;
   font-size: 0.95rem;
 }
 
+/* Gemini gradient underline, wipes in on hover */
+.site-header nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 2px;
+  background: var(--gemini);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
 .site-header nav a:hover {
   color: var(--fg);
+}
+
+.site-header nav a:hover::after {
+  transform: scaleX(1);
 }
 
 /* Typography */
@@ -173,25 +199,51 @@ pre.mermaid svg {
   visibility: visible;
 }
 
-/* Post list */
+/* Post list — each item is a lightweight card */
 .post-list {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 .post-list li {
-  padding: 1.1rem 0;
-  border-top: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  /* transform-based lift keeps the card's footprint unchanged (no reflow) */
+  transition: transform 0.22s ease, box-shadow 0.22s ease,
+    border-color 0.22s ease;
 }
-.post-list li:last-child {
-  border-bottom: 1px solid var(--border);
+.post-list li:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+  border-color: transparent;
+}
+/* Gemini gradient line slides in along the bottom edge on hover */
+.post-list li::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 2px;
+  background: var(--gemini);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.post-list li:hover::after {
+  transform: scaleX(1);
 }
 .post-list a {
   color: var(--fg);
   text-decoration: none;
   font-weight: 550;
 }
-.post-list a:hover {
+.post-list li:hover a {
   color: var(--accent);
 }
 .post-meta {
@@ -232,6 +284,8 @@ footer.site-footer {
 
 /* Theme toggle button */
 .theme-toggle {
+  position: relative;
+  overflow: hidden;
   background: none;
   border: 1px solid var(--border);
   color: var(--fg);
@@ -260,4 +314,36 @@ footer.site-footer {
 }
 [data-theme="dark"] .theme-toggle .icon-moon {
   display: inline;
+}
+
+/* Material-style click ripple (hosts set position + overflow:hidden) */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  background: currentColor;
+  opacity: 0.22;
+  pointer-events: none;
+  animation: ripple 0.6s ease-out forwards;
+}
+@keyframes ripple {
+  to {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* Honor reduced-motion: drop the lift, ripple, and gradient wipes */
+@media (prefers-reduced-motion: reduce) {
+  .post-list li,
+  .post-list li::after,
+  .site-header nav a::after {
+    transition: none;
+  }
+  .post-list li:hover {
+    transform: none;
+  }
+  .ripple {
+    display: none;
+  }
 }
