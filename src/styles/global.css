@@ -1,7 +1,7 @@
 :root {
-  --font-sans: Inter, system-ui, sans-serif;
-  --font-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", Georgia,
-    serif;
+  --font-sans: "Inter Variable", Inter, system-ui, sans-serif;
+  --font-serif: "Source Serif 4 Variable", "Source Serif 4", "Songti SC",
+    "Source Han Serif SC", Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
     "Liberation Mono", monospace;
   --measure: 68ch;
