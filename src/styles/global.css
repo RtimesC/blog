@@ -82,10 +82,11 @@ button {
   top: 0;
   z-index: 10;
   margin-bottom: 3rem;
-  background: color-mix(in srgb, var(--bg) 40%, transparent);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  backdrop-filter: blur(24px) saturate(180%);
+  background: color-mix(in srgb, var(--bg) 16%, transparent);
+  -webkit-backdrop-filter: blur(3px) saturate(170%) brightness(1.05);
+  backdrop-filter: blur(3px) saturate(170%) brightness(1.05);
   border-bottom: 1px solid var(--border);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 28%, transparent);
 }
 
 /* Inner row keeps brand + nav aligned to the article column */
