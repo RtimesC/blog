@@ -18,6 +18,11 @@
   --link: #1f5fd0;
   --accent: #1f5fd0;
   --inline-code-bg: #f1f1ee;
+  /* Very faint corner glow so frosted surfaces have something to show through */
+  --page-bg:
+    radial-gradient(900px 480px at 12% -8%, rgba(66, 133, 244, 0.06), transparent 60%),
+    radial-gradient(820px 460px at 112% 6%, rgba(217, 101, 112, 0.045), transparent 58%),
+    #fbfbfa;
 }
 
 [data-theme="dark"] {
@@ -28,6 +33,11 @@
   --link: #82a9ff;
   --accent: #82a9ff;
   --inline-code-bg: #1a1d24;
+  /* Slightly stronger in dark mode — reads as gentle backlight through glass */
+  --page-bg:
+    radial-gradient(900px 480px at 12% -8%, rgba(99, 140, 255, 0.12), transparent 60%),
+    radial-gradient(820px 460px at 112% 6%, rgba(180, 120, 200, 0.1), transparent 58%),
+    #0f1115;
 }
 
 * {
@@ -40,7 +50,8 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
+  background: var(--page-bg);
+  background-attachment: fixed;
   color: var(--fg);
   font-family: var(--font-serif);
   font-size: 1.21875rem; /* 19.5px */
@@ -64,13 +75,31 @@ button {
   padding: var(--space);
 }
 
-/* Header */
+/* Header — frosted glass that sticks to the top while you scroll.
+   The scrolling article underneath is what the blur acts on. */
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: 3.5rem;
+  padding: 0.7rem 0;
+  background: color-mix(in srgb, var(--bg) 60%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  backdrop-filter: blur(14px) saturate(150%);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Honor "reduce transparency" — fall back to a solid bar */
+@media (prefers-reduced-transparency: reduce) {
+  .site-header {
+    background: var(--bg);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
 
 .site-header a.brand {
