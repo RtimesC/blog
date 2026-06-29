@@ -12,5 +12,7 @@ pnpm-debug.log*
 # environment
 .env
 .env.production
+# local assistant/tool config
+.claude/
 # macOS
 .DS_Store

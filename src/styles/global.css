@@ -350,8 +350,8 @@ button {
   height: 1.05rem;
 }
 
-/* Homepage hero — poster banner. Drop the mech art at public/hero.webp and it
-   shows automatically; until then the page-bg + scrims act as a placeholder. */
+/* Homepage hero — intentionally image-free until a stronger poster direction is
+   chosen. The scrims keep the title readable over the HUD background. */
 .hero {
   position: relative;
   margin: 0 0 2.5rem;
@@ -364,7 +364,6 @@ button {
   background:
     linear-gradient(0deg, color-mix(in srgb, var(--bg) 85%, transparent), transparent 52%),
     linear-gradient(90deg, color-mix(in srgb, var(--bg) 78%, transparent) 6%, transparent 70%),
-    url("/hero.webp") right center / cover no-repeat,
     var(--page-bg);
 }
 .hero__inner {
