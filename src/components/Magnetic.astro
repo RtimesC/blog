@@ -1,0 +1,31 @@
+---
+// Magnetic pull: interactive elements drift slightly toward the cursor.
+// A tiny client-side "island" — re-binds on every page load so it survives
+// view-transition DOM swaps, and stays off under reduced-motion.
+// Elements opt in by being matched here; CSS reads the --mx / --my it sets.
+---
+<script>
+  const STRENGTH = 0.2;
+  const SELECTOR = '.post-list li, .site-header nav a, .theme-toggle';
+
+  function bind() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.querySelectorAll<HTMLElement>(SELECTOR).forEach((el) => {
+      if (el.dataset.magnetic) return;
+      el.dataset.magnetic = '1';
+      el.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        const mx = (e.clientX - (r.left + r.width / 2)) * STRENGTH;
+        const my = (e.clientY - (r.top + r.height / 2)) * STRENGTH;
+        el.style.setProperty('--mx', `${mx.toFixed(1)}px`);
+        el.style.setProperty('--my', `${my.toFixed(1)}px`);
+      });
+      el.addEventListener('pointerleave', () => {
+        el.style.removeProperty('--mx');
+        el.style.removeProperty('--my');
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', bind);
+</script>
