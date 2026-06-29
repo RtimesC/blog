@@ -70,13 +70,26 @@ const navItems = [
     </script>
   </head>
   <body>
+    {/* Liquid-glass refraction filter for the nav pill. Keep the displacement
+        subtle: the edge highlights do most of the work, while the backdrop only
+        bends a few pixels so grids do not look wavy. */}
+    <svg class="glass-defs" width="0" height="0" aria-hidden="true" focusable="false">
+      <filter id="glass-refract" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.018 0.022" numOctaves="1" seed="7" result="noise" />
+        <feGaussianBlur in="noise" stdDeviation="0.8" result="soft" />
+        <feDisplacementMap in="SourceGraphic" in2="soft" scale="6" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
+
     <header class="site-header">
-      <nav class="nav-pill" aria-label="Primary">
+      <nav class="nav-pill" aria-label="Primary" data-active-section={section}>
+        <span class="nav-thumb" aria-hidden="true"></span>
         {
           navItems.map((item) => (
             <a
               href={item.href}
               class:list={['segment', { 'is-active': section === item.key }]}
+              data-nav-key={item.key}
               aria-current={section === item.key ? 'page' : undefined}
             >
               {item.label}
@@ -113,5 +126,125 @@ const navItems = [
     <MermaidClient />
     <Ripple />
     <Magnetic />
+    <script is:inline>
+      (() => {
+        const bindNavThumb = () => {
+          const header = document.querySelector('.site-header');
+          const nav = document.querySelector('.nav-pill');
+          if (!header || !nav) return;
+
+          window.__navThumbAbort?.abort();
+          window.__navThumbAbort = new AbortController();
+          const { signal } = window.__navThumbAbort;
+          const segments = [...nav.querySelectorAll('.segment')];
+          const active = () =>
+            nav.querySelector('.segment[aria-current="page"]') || segments[0];
+          let lastThumbBox = '';
+
+          const moveThumb = (target, options = {}) => {
+            if (!target) return;
+            const navRect = nav.getBoundingClientRect();
+            const rect = target.getBoundingClientRect();
+            const box = {
+              x: Math.round((rect.left - navRect.left) * 10) / 10,
+              y: Math.round((rect.top - navRect.top) * 10) / 10,
+              w: Math.round(rect.width * 10) / 10,
+              h: Math.round(rect.height * 10) / 10,
+            };
+            const boxKey = `${box.x}:${box.y}:${box.w}:${box.h}`;
+            if (boxKey === lastThumbBox) return;
+
+            nav.classList.toggle('is-thumb-instant', Boolean(options.instant));
+            nav.style.setProperty('--thumb-x', `${box.x}px`);
+            nav.style.setProperty('--thumb-y', `${box.y}px`);
+            nav.style.setProperty('--thumb-w', `${box.w}px`);
+            nav.style.setProperty('--thumb-h', `${box.h}px`);
+            nav.classList.add('is-thumb-ready');
+            lastThumbBox = boxKey;
+
+            if (options.instant) {
+              window.requestAnimationFrame(() => nav.classList.remove('is-thumb-instant'));
+            }
+          };
+
+          moveThumb(active(), { instant: true });
+
+          const showNav = () => header.classList.remove('is-nav-hidden');
+          const hideNav = () => {
+            const navHasFocus = nav.contains(document.activeElement);
+            if (window.scrollY > 96 && !nav.matches(':hover') && !navHasFocus) {
+              header.classList.add('is-nav-hidden');
+            }
+          };
+
+          let lastScrollY = window.scrollY;
+          let scrollFrame = 0;
+          const syncNavVisibility = () => {
+            scrollFrame = 0;
+            const currentY = window.scrollY;
+            const delta = currentY - lastScrollY;
+
+            if (currentY <= 8) {
+              showNav();
+            } else if (delta > 6 && currentY > 120) {
+              hideNav();
+            } else if (delta < -4) {
+              showNav();
+            }
+
+            lastScrollY = currentY;
+          };
+
+          const requestVisibilitySync = () => {
+            if (!scrollFrame) scrollFrame = window.requestAnimationFrame(syncNavVisibility);
+          };
+
+          segments.forEach((segment) => {
+            segment.addEventListener('pointerenter', () => {
+              showNav();
+              moveThumb(segment);
+            }, { signal });
+            segment.addEventListener('mouseenter', () => {
+              showNav();
+              moveThumb(segment);
+            }, { signal });
+            segment.addEventListener('pointerdown', () => {
+              nav.classList.add('is-thumb-pressed');
+              showNav();
+              moveThumb(segment);
+            }, { signal });
+            segment.addEventListener('click', () => {
+              window.setTimeout(() => nav.classList.remove('is-thumb-pressed'), 220);
+            }, { signal });
+            segment.addEventListener('focus', () => {
+              showNav();
+              moveThumb(segment);
+            }, { signal });
+          });
+
+          nav.addEventListener('pointerleave', () => {
+            moveThumb(active());
+            if (window.scrollY > 120) hideNav();
+          }, { signal });
+          nav.addEventListener('focusin', showNav, { signal });
+          nav.addEventListener('focusout', (event) => {
+            if (!nav.contains(event.relatedTarget)) moveThumb(active());
+          }, { signal });
+          window.addEventListener('scroll', requestVisibilitySync, { passive: true, signal });
+          window.addEventListener('pointermove', (event) => {
+            if (event.clientY < 88) showNav();
+          }, { passive: true, signal });
+          window.addEventListener('resize', () => {
+            moveThumb(active());
+            requestVisibilitySync();
+          }, { passive: true, signal });
+          syncNavVisibility();
+        };
+
+        bindNavThumb();
+        document.addEventListener('astro:page-load', bindNavThumb);
+        document.addEventListener('astro:after-swap', bindNavThumb);
+      })();
+    </script>
   </body>
 </html>
