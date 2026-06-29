@@ -4,6 +4,9 @@
     "Source Han Serif SC", Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
     "Liberation Mono", monospace;
+  /* Mithril display mono — used for the brand mark and HUD readouts */
+  --font-mono-display: "JetBrains Mono Variable", "JetBrains Mono",
+    ui-monospace, monospace;
   --measure: 68ch;
   --space: clamp(1.25rem, 4vw, 2rem);
   /* Gemini-style gradient, reused for hover lines */
@@ -20,34 +23,41 @@
   --link: #1f5fd0;
   --accent: #1f5fd0;
   --inline-code-bg: #f1f1ee;
-  --card-bg: #ffffff;
-  --shadow-hover: 0 6px 20px rgba(24, 24, 48, 0.1);
-  /* Big-Sur-style colour wash so frosted surfaces have something vivid to
-     reveal. Three large radial colour clouds fixed to the viewport. */
+  --card-bg: #f7f5ee;
+  --shadow-hover: 0 6px 20px rgba(28, 38, 48, 0.12);
+  /* Light = "tactical archive": warm-paper base with cold accents */
+  --bg: #efeee7;
+  --fg: #1a2230;
+  --muted: #5a6470;
+  --border: #d4d2c5;
+  --link: #1f3548;
+  --accent: #c54a25; /* matte warning red-orange */
+  --hud-stroke: rgba(30, 50, 70, 0.06);
+  --hud-accent: rgba(197, 74, 37, 0.18);
   --page-bg:
-    radial-gradient(1100px 700px at 8% -4%, rgba(66, 133, 244, 0.28), transparent 62%),
-    radial-gradient(1000px 700px at 108% 28%, rgba(217, 101, 112, 0.22), transparent 60%),
-    radial-gradient(1200px 800px at 50% 118%, rgba(155, 114, 203, 0.26), transparent 62%),
-    #fbfbfa;
+    radial-gradient(900px 600px at 8% -4%, rgba(31, 53, 72, 0.07), transparent 62%),
+    radial-gradient(800px 600px at 108% 32%, rgba(47, 65, 51, 0.05), transparent 60%),
+    #efeee7;
 }
 
 [data-theme="dark"] {
-  --bg: #0f1115;
-  --fg: #e8eaed;
-  --muted: #9aa3b2;
-  --border: #232733;
-  --link: #82a9ff;
-  --accent: #82a9ff;
-  --inline-code-bg: #1a1d24;
-  --card-bg: #161922;
-  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.5);
-  /* Dark mode keeps the same three colour clouds, more saturated against the
-     near-black base — reads like coloured backlight behind the glass. */
+  /* Dark = Mithril at night: deep navy with HUD readouts */
+  --bg: #0c1622;
+  --fg: #d8e1ec;
+  --muted: #6e7d8e;
+  --border: #1f2e3f;
+  --link: #6da7d8; /* HUD blue */
+  --accent: #ff6b35; /* warning orange */
+  --inline-code-bg: #142233;
+  --card-bg: #11202e;
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.55);
+  --hud-stroke: rgba(180, 210, 230, 0.06);
+  --hud-accent: rgba(255, 107, 53, 0.18);
   --page-bg:
-    radial-gradient(1100px 700px at 8% -4%, rgba(99, 140, 255, 0.32), transparent 62%),
-    radial-gradient(1000px 700px at 108% 28%, rgba(220, 110, 150, 0.22), transparent 60%),
-    radial-gradient(1200px 800px at 50% 118%, rgba(170, 110, 220, 0.28), transparent 62%),
-    #0f1115;
+    radial-gradient(1100px 700px at 8% -4%, rgba(45, 95, 145, 0.35), transparent 62%),
+    radial-gradient(900px 600px at 108% 30%, rgba(255, 107, 53, 0.1), transparent 60%),
+    radial-gradient(1100px 800px at 50% 118%, rgba(36, 70, 90, 0.32), transparent 62%),
+    #0c1622;
 }
 
 * {
@@ -69,6 +79,39 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* HUD grid layer — fixed full-viewport, drawn beneath all content. Two thin
+   line grids (32px) plus an inline-SVG with a few radar rings and ticks.
+   Strength is driven by the --hud-stroke / --hud-accent tokens. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(to right, var(--hud-stroke) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(to bottom, var(--hud-stroke) 1px, transparent 1px) 0 0 / 32px 32px,
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 1000' preserveAspectRatio='xMidYMid slice'>\
+<g fill='none' stroke='rgb(180 210 230 / 0.15)' stroke-width='1'>\
+<circle cx='1380' cy='180' r='90'/><circle cx='1380' cy='180' r='150'/><circle cx='1380' cy='180' r='210'/>\
+<line x1='1180' y1='180' x2='1580' y2='180'/><line x1='1380' y1='40' x2='1380' y2='320'/>\
+<circle cx='160' cy='820' r='60'/><circle cx='160' cy='820' r='110'/>\
+<line x1='40' y1='820' x2='280' y2='820'/><line x1='160' y1='720' x2='160' y2='920'/>\
+</g>\
+<g fill='rgb(255 107 53 / 0.18)' font-family='monospace' font-size='10'>\
+<text x='1300' y='100'>SECTOR 04</text><text x='110' y='760'>M9-001</text>\
+</g>\
+</svg>")
+    center / cover no-repeat;
+  opacity: 1;
+  mix-blend-mode: normal;
+}
+/* In light mode the SVG ring strokes (white-blue) wash out — fade the layer */
+[data-theme="light"] body::before,
+:root:not([data-theme="dark"]) body::before {
+  opacity: 0.55;
 }
 
 /* UI chrome uses the sans stack; body and article copy stay serif */
@@ -120,11 +163,13 @@ button {
 }
 
 .site-header a.brand {
-  font-weight: 600;
-  font-size: 1.05rem;
-  letter-spacing: -0.01em;
+  font-family: var(--font-mono-display);
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
   color: var(--fg);
   text-decoration: none;
+  text-transform: uppercase;
 }
 
 .site-header nav {
