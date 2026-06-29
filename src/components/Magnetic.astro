@@ -5,8 +5,9 @@
 // Elements opt in by being matched here; CSS reads the --mx / --my it sets.
 ---
 <script>
-  const STRENGTH = 0.2;
+  const MAX = 6; // px — pull is capped and size-independent (no edge jitter)
   const SELECTOR = '.post-list li, .site-header nav a, .theme-toggle';
+  const clamp = (n: number) => Math.max(-1, Math.min(1, n));
 
   function bind() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -15,8 +16,10 @@
       el.dataset.magnetic = '1';
       el.addEventListener('pointermove', (e) => {
         const r = el.getBoundingClientRect();
-        const mx = (e.clientX - (r.left + r.width / 2)) * STRENGTH;
-        const my = (e.clientY - (r.top + r.height / 2)) * STRENGTH;
+        // Normalise by half-size so a wide card pulls the same tiny amount as a
+        // small link, then cap at MAX — this is what kills the edge jitter.
+        const mx = clamp((e.clientX - (r.left + r.width / 2)) / (r.width / 2)) * MAX;
+        const my = clamp((e.clientY - (r.top + r.height / 2)) / (r.height / 2)) * MAX;
         el.style.setProperty('--mx', `${mx.toFixed(1)}px`);
         el.style.setProperty('--my', `${my.toFixed(1)}px`);
       });
