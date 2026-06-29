@@ -249,17 +249,18 @@ pre.mermaid svg {
   flex-direction: column;
   gap: 0.75rem;
 }
-/* (A) Stronger local glow behind the list so the frosted cards have
-   something vivid to reveal through the glass */
+/* (A) Soft ambient glow behind the list so the frosted cards have a little
+   colour to reveal. Kept diffuse and edgeless — colour centres sit off-screen
+   and a blur dissolves the rectangle so it never reads as a block. */
 .post-list::before {
   content: "";
   position: absolute;
-  inset: -1.5rem -2rem;
+  inset: -3rem -4rem;
   z-index: -1;
   background:
-    radial-gradient(420px 220px at 16% 6%, rgba(66, 133, 244, 0.2), transparent 62%),
-    radial-gradient(440px 240px at 96% 55%, rgba(217, 101, 112, 0.16), transparent 60%),
-    radial-gradient(380px 220px at 45% 108%, rgba(155, 114, 203, 0.18), transparent 62%);
+    radial-gradient(55% 55% at 6% -8%, rgba(66, 133, 244, 0.12), transparent 66%),
+    radial-gradient(55% 55% at 98% 108%, rgba(155, 114, 203, 0.1), transparent 66%);
+  filter: blur(24px);
   pointer-events: none;
 }
 .post-list li {
