@@ -9,7 +9,6 @@ import ThemeToggle from '../components/ThemeToggle.astro';
 import MermaidClient from '../components/MermaidClient.astro';
 import Ripple from '../components/Ripple.astro';
 import Magnetic from '../components/Magnetic.astro';
-import HudDecor from '../components/HudDecor.astro';
 
 interface Props {
   title?: string;
@@ -71,8 +70,6 @@ const pageTitle = title ? `${title} — ${siteName}` : `${siteName} · notes`;
       <main>
         <slot />
       </main>
-
-      <HudDecor />
 
       <footer class="site-footer">
         <p>© {new Date().getFullYear()} Sousuke · robotics, SLAM, embedded, FPV, deep learning.</p>
