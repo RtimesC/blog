@@ -123,14 +123,15 @@ button {
   box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 28%, transparent);
 }
 
-/* Inner row keeps brand + nav aligned to the article column */
+/* Three zones: brand · centered segmented nav · utilities. Grid 1fr/auto/1fr
+   keeps the pill optically centered regardless of brand / utility widths. */
 .header-inner {
   max-width: var(--measure);
   margin-inline: auto;
-  padding: 0.7rem var(--space);
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
+  padding: 0.6rem var(--space);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
   gap: 1rem;
 }
 
@@ -144,6 +145,8 @@ button {
 }
 
 .site-header a.brand {
+  grid-column: 1;
+  justify-self: start;
   font-family: var(--font-mono-display);
   font-weight: 500;
   font-size: 0.95rem;
@@ -153,44 +156,105 @@ button {
   text-transform: uppercase;
 }
 
-.site-header nav {
-  display: flex;
+/* ---- Segmented pill nav (iOS-style) ----
+   A recessed glass capsule track. The active segment carries a raised "thumb"
+   (its ::before) named `nav-thumb`; ClientRouter pairs that box across pages
+   and tweens its position + size on navigation — that is the sliding thumb. */
+.segmented {
+  grid-column: 2;
+  justify-self: center;
+  display: inline-flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 0.1rem;
+  padding: 0.22rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--fg) 7%, transparent);
+  border: 1px solid var(--border);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, #000 22%, transparent),
+    0 2px 10px color-mix(in srgb, #000 12%, transparent);
 }
 
-.site-header nav a {
+.segment {
   position: relative;
-  display: inline-block;
+  isolation: isolate;
+  padding: 0.34rem 0.95rem;
+  border-radius: 999px;
   color: var(--muted);
   text-decoration: none;
-  font-size: 0.95rem;
-  /* Magnetic pull toward the cursor */
-  transform: translate(var(--mx, 0), var(--my, 0));
-  transition: transform 0.18s ease, color 0.2s ease;
-  will-change: transform;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transition: color 0.25s ease;
 }
 
-/* Gemini gradient underline, wipes in on hover */
-.site-header nav a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -3px;
-  height: 2px;
-  background: var(--gemini);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-}
-
-.site-header nav a:hover {
+.segment:hover {
   color: var(--fg);
 }
 
-.site-header nav a:hover::after {
-  transform: scaleX(1);
+/* Faint press highlight — inactive segments only, so it never fights the thumb */
+.segment:not(.is-active):hover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--fg) 7%, transparent);
+}
+
+.segment.is-active {
+  color: var(--fg);
+}
+
+/* The raised, sliding thumb */
+.segment.is-active::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 70%, #fff 30%);
+  border: 1px solid color-mix(in srgb, var(--fg) 12%, transparent);
+  box-shadow:
+    0 1px 3px color-mix(in srgb, #000 30%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 18%, transparent);
+  view-transition-name: nav-thumb;
+}
+
+/* ---- Right-side utilities: GitHub + theme toggle ---- */
+.header-utils {
+  grid-column: 3;
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  color: var(--muted);
+  text-decoration: none;
+  /* Magnetic pull toward the cursor */
+  transform: translate(var(--mx, 0), var(--my, 0));
+  transition: transform 0.18s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.icon-btn:hover {
+  color: var(--fg);
+  border-color: var(--accent);
+}
+
+.icon-btn svg {
+  width: 1.05rem;
+  height: 1.05rem;
 }
 
 /* Homepage hero — poster banner. Drop the mech art at public/hero.webp and it
@@ -487,8 +551,8 @@ footer.site-footer {
 @media (prefers-reduced-motion: reduce) {
   .post-list li,
   .post-list li::after,
-  .site-header nav a,
-  .site-header nav a::after,
+  .segment,
+  .icon-btn,
   .theme-toggle {
     transition: none;
   }
@@ -503,20 +567,24 @@ footer.site-footer {
     font-size: 1.0625rem; /* 17px — 19.5 reads a touch large on phones */
   }
 
-  /* Header: let brand + nav wrap instead of overflowing; tighten spacing */
+  /* Header: brand + utilities on the top row, the pill centered below them */
   .header-inner {
-    flex-wrap: wrap;
-    gap: 0.35rem 1rem;
-    padding: 0.55rem var(--space);
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "brand .    utils"
+      "nav   nav  nav";
+    row-gap: 0.5rem;
+    padding: 0.5rem var(--space);
   }
   .site-header a.brand {
+    grid-area: brand;
     font-size: 1rem;
   }
-  .site-header nav {
-    gap: 0.9rem;
+  .header-utils {
+    grid-area: utils;
   }
-  .site-header nav a {
-    font-size: 0.9rem;
+  .segmented {
+    grid-area: nav;
   }
 
   /* Headings scale down a step on small screens */
@@ -525,10 +593,5 @@ footer.site-footer {
   }
   h2 {
     font-size: 1.25rem;
-  }
-
-  /* Comfortable tap target for nav links (toggle is already a 2rem square) */
-  .site-header nav a {
-    padding-block: 0.2rem;
   }
 }
