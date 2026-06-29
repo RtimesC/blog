@@ -9,8 +9,8 @@
     ui-monospace, monospace;
   --measure: 68ch;
   --space: clamp(1.25rem, 4vw, 2rem);
-  /* Gemini-style gradient, reused for hover lines */
-  --gemini: linear-gradient(90deg, #4285f4, #9b72cb, #d96570);
+  /* Hover accent line — single warning-orange to match Mithril */
+  --gemini: var(--accent);
 }
 
 /* Light is the default; [data-theme] is set by the no-FOUC head script. */
@@ -81,9 +81,9 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* HUD grid layer — fixed full-viewport, drawn beneath all content. Two thin
-   line grids (32px) plus an inline-SVG with a few radar rings and ticks.
-   Strength is driven by the --hud-stroke / --hud-accent tokens. */
+/* HUD grid layer — fixed full-viewport, drawn beneath all content. Just a
+   32px line grid; radar rings and HUD ornaments live in the page flow
+   (HudDecor component near the footer) so they scroll with content. */
 body::before {
   content: "";
   position: fixed;
@@ -92,26 +92,7 @@ body::before {
   pointer-events: none;
   background:
     linear-gradient(to right, var(--hud-stroke) 1px, transparent 1px) 0 0 / 32px 32px,
-    linear-gradient(to bottom, var(--hud-stroke) 1px, transparent 1px) 0 0 / 32px 32px,
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 1000' preserveAspectRatio='xMidYMid slice'>\
-<g fill='none' stroke='rgb(180 210 230 / 0.15)' stroke-width='1'>\
-<circle cx='1380' cy='180' r='90'/><circle cx='1380' cy='180' r='150'/><circle cx='1380' cy='180' r='210'/>\
-<line x1='1180' y1='180' x2='1580' y2='180'/><line x1='1380' y1='40' x2='1380' y2='320'/>\
-<circle cx='160' cy='820' r='60'/><circle cx='160' cy='820' r='110'/>\
-<line x1='40' y1='820' x2='280' y2='820'/><line x1='160' y1='720' x2='160' y2='920'/>\
-</g>\
-<g fill='rgb(255 107 53 / 0.18)' font-family='monospace' font-size='10'>\
-<text x='1300' y='100'>SECTOR 04</text><text x='110' y='760'>M9-001</text>\
-</g>\
-</svg>")
-    center / cover no-repeat;
-  opacity: 1;
-  mix-blend-mode: normal;
-}
-/* In light mode the SVG ring strokes (white-blue) wash out — fade the layer */
-[data-theme="light"] body::before,
-:root:not([data-theme="dark"]) body::before {
-  opacity: 0.55;
+    linear-gradient(to bottom, var(--hud-stroke) 1px, transparent 1px) 0 0 / 32px 32px;
 }
 
 /* UI chrome uses the sans stack; body and article copy stay serif */
@@ -384,8 +365,23 @@ pre.mermaid svg {
   padding: 0.1rem 0.6rem;
 }
 
+/* HUD radar ornament between content and footer — scrolls with the page */
+.hud-decor {
+  margin: 4rem auto 1.5rem;
+  display: block;
+  width: 240px;
+  max-width: 100%;
+  color: var(--muted);
+  opacity: 0.7;
+}
+.hud-decor svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 footer.site-footer {
-  margin-top: 4rem;
+  margin-top: 0.5rem;
   padding-top: 1.5rem;
   border-top: 1px solid var(--border);
   color: var(--muted);

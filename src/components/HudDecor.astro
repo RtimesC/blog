@@ -1,0 +1,25 @@
+---
+// Mithril-style HUD ornament: small radar rings + crosshair ticks, lives in
+// the page flow (just above the footer) so it scrolls with content rather
+// than floating in the viewport.
+---
+<aside class="hud-decor" aria-hidden="true">
+  <svg viewBox="0 0 240 80" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" stroke="currentColor" stroke-width="1">
+      <circle cx="40" cy="40" r="22" />
+      <circle cx="40" cy="40" r="32" />
+      <line x1="0" y1="40" x2="80" y2="40" />
+      <line x1="40" y1="8" x2="40" y2="72" />
+    </g>
+    <g fill="none" stroke="currentColor" stroke-width="1">
+      <circle cx="200" cy="40" r="14" />
+      <line x1="180" y1="40" x2="220" y2="40" />
+      <line x1="200" y1="26" x2="200" y2="54" />
+    </g>
+    <g fill="currentColor" font-family="ui-monospace, monospace" font-size="6" letter-spacing="0.5">
+      <text x="76" y="44">SCAN</text>
+      <text x="148" y="44">·</text>
+      <text x="160" y="44">PING</text>
+    </g>
+  </svg>
+</aside>
