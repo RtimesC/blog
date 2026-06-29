@@ -193,6 +193,47 @@ button {
   transform: scaleX(1);
 }
 
+/* Homepage hero — poster banner. Drop the mech art at public/hero.webp and it
+   shows automatically; until then the page-bg + scrims act as a placeholder. */
+.hero {
+  position: relative;
+  margin: 0 0 2.5rem;
+  min-height: 360px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background:
+    linear-gradient(0deg, color-mix(in srgb, var(--bg) 85%, transparent), transparent 52%),
+    linear-gradient(90deg, color-mix(in srgb, var(--bg) 78%, transparent) 6%, transparent 70%),
+    url("/hero.webp") right center / cover no-repeat,
+    var(--page-bg);
+}
+.hero__inner {
+  position: relative;
+  padding: 1.6rem 1.8rem;
+}
+.hero__title {
+  font-family: var(--font-mono-display);
+  font-weight: 500;
+  font-size: clamp(2rem, 7vw, 3.2rem);
+  letter-spacing: 0.06em;
+  line-height: 1;
+  margin: 0;
+  text-transform: uppercase;
+  color: var(--fg);
+  text-shadow: 0 2px 14px color-mix(in srgb, var(--bg) 72%, transparent);
+}
+.hero__sub {
+  font-family: var(--font-sans);
+  color: var(--muted);
+  margin: 0.6rem 0 0;
+  max-width: 30ch;
+  font-size: 0.95rem;
+  text-shadow: 0 1px 8px color-mix(in srgb, var(--bg) 82%, transparent);
+}
+
 /* Typography */
 h1,
 h2,
