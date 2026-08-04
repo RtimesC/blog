@@ -9,6 +9,7 @@
   <body>
     <div class="paper-grain" aria-hidden="true"></div>
     <canvas id="space" aria-hidden="true"></canvas>
+    <div id="paper-veil" class="paper-veil" aria-hidden="true"></div>
 
     <header class="site-header" data-visible="false">
       <a class="wordmark" href="#entrance" data-action="home" aria-label="Return to the corridor">S.</a>
@@ -19,14 +20,30 @@
 
     <main>
       <section id="entrance" class="entrance" aria-labelledby="entrance-title">
-        <div class="paper-sheet">
-          <p class="eyebrow">PORTFOLIO / 01</p>
-          <h1 id="entrance-title">A place you<br /><em>walk into.</em></h1>
-          <p class="entrance-copy">An explorable sketch of work, questions, and systems in progress.</p>
-          <button id="enter-space" class="enter-button" type="button"><span>Open the threshold</span><span aria-hidden="true">↓</span></button>
-          <p class="entry-hint">Choose a door after entering · A keyboard-friendly map is always available.</p>
+        <div class="entry-stage">
+          <div class="entry-identity">
+            <p class="eyebrow">SPATIAL PORTFOLIO / 2026</p>
+            <h1 id="entrance-title">Sousuke</h1>
+            <p class="entrance-copy">An explorable sketch of work, questions, and systems in progress.</p>
+          </div>
+
+          <div class="entry-threshold">
+            <div class="entry-threshold__depth" aria-hidden="true"></div>
+            <img class="entry-portrait" alt="" />
+            <button id="enter-space" class="entry-door" type="button" aria-label="Enter Sousuke's spatial portfolio">
+              <span class="entry-door__panel">
+                <span class="entry-door__mark" aria-hidden="true">S.</span>
+                <span class="entry-door__label">Open the door</span>
+                <span class="entry-door__handle" aria-hidden="true"></span>
+              </span>
+            </button>
+          </div>
+
+          <div class="entry-meta" aria-hidden="true">
+            <span>ROOMS / 01—04</span>
+            <span>PAPER ARCHIVE</span>
+          </div>
         </div>
-        <div class="tear-edge" aria-hidden="true"></div>
       </section>
 
       <section class="corridor-caption" aria-live="polite" aria-atomic="true">

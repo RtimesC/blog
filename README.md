@@ -1,8 +1,12 @@
 # Sousuke — Spatial Portfolio
 
-An original, explorable 3D portfolio prototype. A torn-paper threshold leads into a hand-drawn corridor; each door leads the camera into a small paper archive room: a workbench, gallery wall, project table, or message desk.
+An original, explorable 3D portfolio prototype. A paper entrance door opens into a hand-drawn corridor; four wall doors lead to a workbench, gallery wall, project table, and message desk, while the distant `∞` door returns the visitor to the same corridor.
 
-The spatial interaction is the navigation. The HTML room content remains available for keyboard users and as a fallback if WebGL cannot start.
+The spatial interaction is the navigation. Desktop and mobile share the same rooms, content, map, and loop state, then re-choreograph camera, walls, labels, placards, and hit areas for their respective viewports. The HTML room content remains available for keyboard users and as a fallback if WebGL cannot start.
+
+## Project status
+
+`main` is the active portfolio implementation. It supersedes the former Astro blog architecture; Vite and native Three.js are now the project baseline.
 
 ## Design reference
 

@@ -9,7 +9,7 @@
 This portfolio should be **entered, not browsed**. Its navigation is a small spatial narrative:
 
 ```text
-paper threshold → archive corridor → one independent room at a time → return to corridor
+paper door → archive corridor → one independent room at a time → return or continue through ∞
 ```
 
 The visual language is a paper archive: warm paper, pencil lines, worn edges, and practical objects. It should feel authored and unfinished in a productive way, not like a generic WebGL template or a game level.
@@ -25,10 +25,11 @@ The visual language is a paper archive: warm paper, pencil lines, worn edges, an
 
 | State | Visitor experience | Required behaviour |
 | --- | --- | --- |
-| Threshold | A single torn sheet introduces the portfolio. | `Open the threshold` lazily loads the Three.js scene, then moves focus to the map. |
-| Corridor | A warm paper archive corridor with a continuous floor guide, numbered landmarks, four doors, and a paper-lit far wall. | Doors are spaced along the route; the first door must never crowd the initial camera view. |
+| Threshold | `Sousuke`, a concise introduction, and one closed paper door introduce the portfolio. A transparent portrait layer may sit behind the door when an approved asset exists. | The whole door is a focusable button. Opening it lazily loads Three.js, covers the handoff with warm paper, and moves focus to the map. With no portrait path, no placeholder or image request is created. |
+| Corridor | A warm paper archive corridor with a continuous floor guide, numbered landmarks, four room doors, and a distant `∞` door. | Doors keep their room order and wall relationship. Desktop and mobile re-choreograph the same corridor without duplicating content or navigation state. |
 | Room | Camera approaches a door, passes through it, and settles inside a self-contained micro-space. | Hide the corridor and every other room stage. Only the selected room, its paper shell, its objects, and its placard remain visible. |
 | Return | The placard closes and the camera returns through the threshold. | Restore corridor visibility only after the camera reaches the room exit. |
+| Continue | The distant `∞` door opens into warm paper fog and returns to the same corridor entrance. | Lock room, map, and repeated loop input during the transition. Reset the existing camera and door state; never clone rooms, map entries, or event listeners. |
 
 The interaction is **guided camera choreography**, not free roaming. There is no WASD navigation, drag-to-walk control, audio, or mandatory scroll progression.
 
@@ -37,9 +38,22 @@ The interaction is **guided camera choreography**, not free roaming. There is no
 ### Corridor
 
 - The corridor is warm and legible: paper floor, paper walls, warm paper ceiling, pencil guide lines, and diffuse warm fog.
-- Its far end must resolve into a softly lit paper wall/arch, never a black void.
+- The floor and side walls share one warm white-yellow paper base; the ceiling stays only slightly lighter to hold the room open.
+- Its far end resolves into a small paper door marked `∞`, set into the warm end wall with a restrained local glow. It is a spatial continuation, not a fifth room: it never enters `ROOMS`, the map, or visit progress.
 - The corridor remains calm and geometric. Animation is limited to subtle light/line movement and must disappear under reduced motion.
-- Each door receives a unique accent colour, hand-drawn symbol, number, hover response, and nearby landmark label.
+- Each door receives a unique accent colour, hand-drawn symbol, number, layered pencil frame, matte handle, hover response, and a same-side landmark label.
+- Every door hinges inward toward its own wall. Hover and room entry use the same physical direction, so the corridor never receives a swinging door panel.
+- Door panels sit slightly clear of the wall and use a deliberately shallow inward hinge turn. The motion reads as a push into the archive wall without letting a panel intersect its surface.
+- Door interaction has a deliberate cadence: the handle depresses first, the panel follows, and only then does the camera move. Returning keeps the selected door open until the camera reaches the corridor, then closes it before map and keyboard input are restored.
+- Door spacing opens gradually after the first threshold distance: room 01 stays clear of the entry camera, while 02 to 04 form a readable, unhurried sequence down the corridor.
+- Distant doors may use small physical and larger landmark-scale compensation, plus a slight resting inward turn, so labels stay legible without flattening the corridor into a menu.
+- Desktop keeps a first-person corridor with long, parallel side walls and deep perspective.
+- Mobile is the same portfolio and the same corridor logic, re-choreographed for a narrow viewport. It raises both side walls and opens the near end while tapering the far end inward, creating more wall area and separating doors on the same side without changing room content or order.
+- Mobile room doors share one physical scale and one threshold height. Each door's position and rotation are derived from its original `z` and the tapered wall plane, so the panel and frame remain visually inset into the wall instead of becoming floating cards. A near-zero interior clearance plus material depth bias prevents coplanar z-fighting without making near doors hover above the wall.
+- Mobile room labels use dedicated centred billboards whose `x`, `y`, and `z` are derived from the final door transform, with an inward safety inset for the near edge of a narrow viewport. Any wall, camera, or door adjustment must move its label with it.
+- Mobile touch targeting is presentation-specific: project each visible door face into screen space, expand that rectangle for finger input, and resolve overlap by distance to the projected door centre. Activate only a `pointerdown` to `pointerup` gesture that travels no more than 10 px; dragging and cancellation never open a door. The visible door geometry must not be distorted merely to make it clickable.
+- The `∞` door stays centred and distant on both devices. Mobile may move and scale the terminus independently, but it must remain visibly part of the same returning corridor.
+- Each handle lever points toward its own hinge axis. Its hover turn keeps the same downward press on both walls.
 
 ### Materials and typography
 
@@ -70,7 +84,7 @@ The four room definitions live in `src/rooms.js`. Keep their number, ID, accent,
 The HTML placard is part of the room, not a replacement for it:
 
 - Desktop: a narrow paper placard sits beside the visible stage.
-- Mobile: the same placard becomes a bottom reading sheet, leaving the upper scene visible.
+- Mobile: the same placard becomes a bottom reading sheet capped at 45% of the viewport and scrolls internally, leaving at least 55% for the room stage.
 - Each room has its own paper shell. Entering it must not show corridor doors, landmarks, or another room's objects.
 
 ## 5. Content migration workflow
@@ -89,10 +103,12 @@ Content stays English-first. Technical writing can be concise, concrete, and evi
 
 - **Map:** always reachable after entering; closes after a room is selected; `Escape` closes it or returns from an open room.
 - **Focus:** entry sends focus to the map; an arriving room sends focus to its heading; returning sends focus back to the map.
+- **Loop:** only the 3D `∞` door starts the continuation. While looping, room, map, and `Escape` input are locked; completion returns focus to the map.
 - **Fallback:** `?mode=html` forces the no-WebGL route for review. The map and all room placards must remain usable.
-- **Reduced motion:** camera jumps to its target and ambient motion is disabled when `prefers-reduced-motion: reduce` is set.
-- **Loading:** Three.js is imported only after the threshold opens. The initial page must remain a small DOM/CSS bundle.
-- **Responsive layout:** test the entrance, map, placard, and back action at 390 px and at a normal desktop viewport.
+- **Reduced motion:** remove entrance rotation, blur, camera interpolation, and ambient motion when `prefers-reduced-motion: reduce` is set; state changes remain complete and direct.
+- **Loading:** Three.js is imported only after the entrance door opens. The initial page must remain a small DOM/CSS bundle and an empty portrait layer must not issue a request.
+- **Responsive relationship:** room content, map entries, door order, loop state, and room isolation are shared. Camera paths, corridor wall composition, label placement, placard layout, and pointer/touch hit testing may differ by device.
+- **Responsive review:** test the entrance, corridor, map, placard, back action, loop, and every room at 390 px and at a normal desktop viewport. A mobile change is incomplete until its labels are rechecked against the final door transforms.
 
 ## 7. Implementation boundaries
 
@@ -113,6 +129,23 @@ Keep Vite and native Three.js. Do not add React, React Three Fiber, external mod
 | 2026-08-04 | Chose paper archive rooms and guided camera movement. | Keeps the experience personal, calm, lightweight, and mobile-safe. |
 | 2026-08-04 | Added lazy WebGL loading, a map, keyboard flow, and `?mode=html`. | The spatial layer must never block readable content. |
 | 2026-08-04 | Moved door 01 deeper, warmed the ceiling/far end, and isolated room stages. | The corridor must not feel like a dark void; rooms must feel genuinely independent. |
+| 2026-08-04 | Promoted the Vite + native Three.js spatial portfolio to `main`. | The paper-archive experience is now the active project, replacing the former Astro architecture. |
+| 2026-08-04 | Re-spaced the doors, aligned landmarks, and added layered door hardware with a warm-white end wall. | Improve corridor legibility and tactile wayfinding without turning navigation into free roaming. |
+| 2026-08-04 | Compressed the distant door rhythm and added depth-aware label, door, fog, and render-resolution compensation. | Keep every room readable from the entry view without losing spatial depth. |
+| 2026-08-04 | Widened the corridor, door faces, and room approach path; extended the end wall beyond the staggered door band and widened the mobile lens. | Give each door more readable area while retaining a stable rectangular terminus on mobile. |
+| 2026-08-04 | Tested, then retired, a centre-biased mobile spread of front-facing door cards. | It improved label size but broke the physical relationship between doors and walls; the tapered-wall choreography supersedes it. |
+| 2026-08-04 | Enlarged door bodies and labels, then opened the door rhythm to `-11 / -18 / -26 / -34`. | Restore legibility while giving each room a more distinct place along the archive route. |
+| 2026-08-04 | Unified door hinge motion so every panel turns toward its own wall. | Keep hover and entry movement tactile without obstructing the corridor. |
+| 2026-08-04 | Set door panels slightly clear of the wall and limited their inward hinge travel. | Preserve the inward-push cue without wall intersection or heavy doorway scenery. |
+| 2026-08-04 | Unified the corridor floor and side walls, then reduced the warm-white terminus into responsive desktop and mobile paper rectangles. | Restore a continuous paper material while making the end feel farther away without extending the route. |
+| 2026-08-04 | Pointed every handle lever toward its hinge and mirrored the hover turn in local space. | Keep the hardware mechanically consistent on both corridor walls. |
+| 2026-08-04 | Replaced the torn-sheet threshold with a focusable CSS paper door and an optional empty portrait layer. | Make entering the portfolio a literal spatial action while preserving lazy Three.js loading. |
+| 2026-08-04 | Replaced the static terminus with a clickable `∞` door that returns to the existing corridor. | Turn the far end into a repeatable spatial continuation without creating a fifth room or duplicate scene. |
+| 2026-08-04 | Defined desktop and mobile as one shared content and state system with device-specific spatial choreography and hit testing. | Preserve one portfolio while allowing each viewport to solve composition and interaction on its own terms. |
+| 2026-08-04 | Rebuilt the mobile corridor as raised walls that open near the viewer and taper inward at the far end; doors share one scale, sit flush to the wall plane, and own their label anchors. | Restore believable perspective, increase usable wall area, and keep same-wall doors separated without floating card geometry. |
+| 2026-08-04 | Limited the mobile reading sheet to 45% and added per-room mobile camera targets. | Keep room objects visible in the upper scene while retaining readable, scrollable content. |
+| 2026-08-05 | Reduced mobile door clearance to a near-zero gap backed by material depth bias, added an inward mobile label safety inset, and moved desktop labels above corridor depth. | Remove wall/door z-fighting without a floating near-door edge, and prevent labels or door-foot marks from being clipped by scene geometry. |
+| 2026-08-05 | Sequenced handle, door, and camera motion; delayed closing until the corridor return completes; locked navigation during room transitions. | Give opening and closing physical cause-and-effect while preventing repeated input and mid-transition state conflicts. |
 
 ## 9. Update protocol
 
