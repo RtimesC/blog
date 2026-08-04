@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sousuke — an explorable spatial portfolio." />
+    <title>Sousuke — Spatial Portfolio</title>
+  </head>
+  <body>
+    <div class="paper-grain" aria-hidden="true"></div>
+    <canvas id="space" aria-hidden="true"></canvas>
+
+    <header class="site-header" data-visible="false">
+      <a class="wordmark" href="#entrance" data-action="home" aria-label="Return to the corridor">S.</a>
+      <p class="site-mark">SOUSUKE / SPATIAL STUDY</p>
+      <button class="map-toggle" type="button" aria-expanded="false" aria-controls="room-map">Map</button>
+      <nav id="room-map" class="room-map" aria-label="Rooms" hidden></nav>
+    </header>
+
+    <main>
+      <section id="entrance" class="entrance" aria-labelledby="entrance-title">
+        <div class="paper-sheet">
+          <p class="eyebrow">PORTFOLIO / 01</p>
+          <h1 id="entrance-title">A place you<br /><em>walk into.</em></h1>
+          <p class="entrance-copy">An explorable sketch of work, questions, and systems in progress.</p>
+          <button id="enter-space" class="enter-button" type="button"><span>Open the threshold</span><span aria-hidden="true">↓</span></button>
+          <p class="entry-hint">Choose a door after entering · A keyboard-friendly map is always available.</p>
+        </div>
+        <div class="tear-edge" aria-hidden="true"></div>
+      </section>
+
+      <section class="corridor-caption" aria-live="polite" aria-atomic="true">
+        <p id="scene-status">Behind the paper: four rooms.</p>
+        <p id="door-hint">Choose a door in the corridor, or open the map.</p>
+      </section>
+
+      <section id="room-panel" class="room-panel" aria-labelledby="room-title" hidden>
+        <div class="room-panel__rule" aria-hidden="true"><span data-room-number>01</span><span data-room-label>ABOUT</span></div>
+        <div class="room-panel__paper">
+          <p class="eyebrow" data-room-kicker>ROOM / 01</p>
+          <h2 id="room-title" tabindex="-1" data-room-title>A place for orientation.</h2>
+          <p class="room-panel__copy" data-room-copy></p>
+          <dl class="detail-list" data-room-fields></dl>
+          <button class="back-button" type="button" data-room-target="corridor">← Back to corridor</button>
+        </div>
+      </section>
+    </main>
+
+    <noscript><p class="no-script">This spatial portfolio needs JavaScript for navigation. The 3D scene is optional; room content remains available through the map when JavaScript is active.</p></noscript>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

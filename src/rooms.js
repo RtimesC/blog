@@ -1,0 +1,105 @@
+export const ROOMS = [
+  {
+    id: 'about',
+    number: '01',
+    label: 'ABOUT',
+    symbol: '◎',
+    color: '#e96a4d',
+    colorValue: 0xe96a4d,
+    side: -1,
+    z: -7,
+    stage: 'workbench',
+    camera: {
+      approach: [-0.5, 0.05, -2.8],
+      approachLook: [-5.7, 0, -7],
+      position: [-8.2, 0.15, -3.1],
+      lookAt: [-10.35, -0.15, -7.3],
+    },
+    content: {
+      title: 'A place for orientation.',
+      description: 'A concise introduction, current direction, and the questions worth following can live on this desk.',
+      fields: [
+        ['Short introduction', 'Add a few grounded lines about who you are and what you are exploring.'],
+        ['Current direction', 'Add the work, place, or question that has your attention now.'],
+      ],
+    },
+  },
+  {
+    id: 'gallery',
+    number: '02',
+    label: 'GALLERY',
+    symbol: '▧',
+    color: '#7590ef',
+    colorValue: 0x7590ef,
+    side: 1,
+    z: -23,
+    stage: 'gallery-wall',
+    camera: {
+      approach: [0.5, 0.05, -18.8],
+      approachLook: [5.7, 0, -23],
+      position: [8.2, 0.18, -19.1],
+      lookAt: [10.35, -0.15, -23.1],
+    },
+    content: {
+      title: 'Work, with context.',
+      description: 'Replace these placeholders with a selected project, the question behind it, and evidence that makes the work legible.',
+      fields: [
+        ['Project 01', 'Add a visual, a one-sentence question, and a link or outcome.'],
+        ['Project 02', 'Leave enough room for a different medium or experiment.'],
+        ['Project 03', 'Use this space only when another piece earns its place.'],
+      ],
+    },
+  },
+  {
+    id: 'studio',
+    number: '03',
+    label: 'STUDIO',
+    symbol: '∷',
+    color: '#4eaf81',
+    colorValue: 0x4eaf81,
+    side: -1,
+    z: -39,
+    stage: 'project-table',
+    camera: {
+      approach: [-0.5, 0.05, -34.8],
+      approachLook: [-5.7, 0, -39],
+      position: [-8.2, 0.15, -35.1],
+      lookAt: [-10.35, -0.1, -39.15],
+    },
+    content: {
+      title: 'A record of making.',
+      description: 'This table is for the path between an initial note and a dependable system: experiments, tools, failures, and revisions.',
+      fields: [
+        ['Question', 'State the problem or constraint that started the work.'],
+        ['Evidence', 'Add an experiment, sketch, trace, or result that changed the next step.'],
+      ],
+    },
+  },
+  {
+    id: 'contact',
+    number: '04',
+    label: 'CONTACT',
+    symbol: '↗',
+    color: '#d8b449',
+    colorValue: 0xd8b449,
+    side: 1,
+    z: -55,
+    stage: 'message-desk',
+    camera: {
+      approach: [0.5, 0.05, -50.8],
+      approachLook: [5.7, 0, -55],
+      position: [8.2, 0.15, -51.1],
+      lookAt: [10.35, -0.1, -55.1],
+    },
+    content: {
+      title: 'Leave a door open.',
+      description: 'When the portfolio is ready, this final desk can hold a preferred contact route and a small invitation to continue the conversation.',
+      fields: [
+        ['Preferred route', 'Add one contact channel you actively maintain.'],
+        ['A good starting point', 'Add a short cue for the kind of conversation you welcome.'],
+      ],
+    },
+  },
+];
+
+export const ROOM_BY_ID = new Map(ROOMS.map((room) => [room.id, room]));
