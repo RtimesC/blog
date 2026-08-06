@@ -1,6 +1,6 @@
-# Sousuke — Spatial Portfolio
+# Taotao — Spatial Portfolio
 
-An original, explorable 3D portfolio prototype. A paper entrance door opens into a hand-drawn corridor; four wall doors lead to a workbench, gallery wall, project table, and message desk, while the distant `∞` door returns the visitor to the same corridor.
+An original, explorable 3D portfolio prototype. A paper entrance door opens into a hand-drawn corridor; four wall doors lead to open paper fields containing a workbench, gallery display, project table, and message desk, while the distant `∞` door returns the visitor to the same corridor.
 
 The spatial interaction is the navigation. Desktop and mobile share the same rooms, content, map, and loop state, then re-choreograph camera, walls, labels, placards, and hit areas for their respective viewports. The HTML room content remains available for keyboard users and as a fallback if WebGL cannot start.
 
@@ -16,7 +16,7 @@ The spatial interaction is the navigation. Desktop and mobile share the same roo
 
 - Vite
 - Three.js
-- Procedural paper, pencil-line, and room materials; no third-party 3D models or textures
+- Procedural paper, pencil-line, and stage materials; no third-party 3D models or textures
 
 ## Run
 
@@ -36,7 +36,11 @@ npm run build
 
 - `src/rooms.js` — one room configuration source for labels, colours, camera paths, staged spaces, and neutral content placeholders
 - `src/main.js` — DOM state, lazy scene loading, room navigation, focus management, and WebGL fallback
-- `src/space.js` — procedural Three.js corridor, room stages, door picking, and guided camera choreography
+- `src/textures.js` — procedural paper textures, labels, and shared material primitives
+- `src/doors.js` — room-door and continuation-door geometry
+- `src/stages.js` — the four procedural room-stage builders
+- `src/space-layout.js` — corridor construction, wall openings, landmarks, and responsive geometry
+- `src/space.js` — scene state, picking, camera choreography, and animation scheduling
 - `src/style.css` — paper threshold, in-space content placards, responsive reading layout, and fallback styling
 
 Three.js loads only after the threshold is opened. The four room placards intentionally contain neutral structures rather than invented biography, projects, or contact information.
