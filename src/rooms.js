@@ -22,11 +22,11 @@ export const ROOMS = [
       },
     },
     content: {
-      title: 'A place for orientation.',
-      description: 'A concise introduction, current direction, and the questions worth following can live on this desk.',
+      title: 'Building paths from language to motion.',
+      description: 'I\'m Tao, a Mechatronics Engineering student at Xi\'an Jiaotong-Liverpool University. I work at the boundary of vision-language navigation, robotics software, and STM32-based embedded systems—interested in how a robot can turn what it sees and is told into safe, useful action.',
       fields: [
-        ['Short introduction', 'Add a few grounded lines about who you are and what you are exploring.'],
-        ['Current direction', 'Add the work, place, or question that has your attention now.'],
+        ['Current work', 'I am developing a vision-language navigation pipeline that links camera observations and remote model inference to a ROS 2 vehicle stack, then sends safety-bounded motion commands to an STM32-connected chassis.'],
+        ['Working style', 'I pair closed-loop navigation experiments in Habitat with hands-on embedded work in C: I2C displays, timer systems, and STM32G4 application projects.'],
       ],
     },
   },
@@ -53,12 +53,12 @@ export const ROOMS = [
       },
     },
     content: {
-      title: 'Work, with context.',
-      description: 'Replace these placeholders with a selected project, the question behind it, and evidence that makes the work legible.',
+      title: 'Systems, with evidence.',
+      description: 'A small selection of public work across navigation, simulation, and embedded control—each chosen for the link it makes between an idea and a working system.',
       fields: [
-        ['Project 01', 'Add a visual, a one-sentence question, and a link or outcome.'],
-        ['Project 02', 'Leave enough room for a different medium or experiment.'],
-        ['Project 03', 'Use this space only when another piece earns its place.'],
+        ['Vision-language navigation', 'A camera-to-inference-to-control pipeline: observations go to a remote model, safety-bounded motion returns through ROS 2, and an STM32-connected chassis carries it out.'],
+        ['Habitat experiments', 'Closed-loop navigation work in simulation, used to test the distance between a promising instruction-following idea and a dependable policy.'],
+        ['STM32 systems', 'C projects that make the physical layer tangible: I2C display work, timer systems, and STM32G4 application experiments.'],
       ],
     },
   },
@@ -86,10 +86,10 @@ export const ROOMS = [
     },
     content: {
       title: 'A record of making.',
-      description: 'This table is for the path between an initial note and a dependable system: experiments, tools, failures, and revisions.',
+      description: 'The work is not a straight line from model to robot. This room holds the useful middle: tests, constraints, implementation details, and the revisions that make a system more dependable.',
       fields: [
-        ['Question', 'State the problem or constraint that started the work.'],
-        ['Evidence', 'Add an experiment, sketch, trace, or result that changed the next step.'],
+        ['Method', 'I move between simulation and hardware: observe a closed loop in Habitat, inspect the ROS 2 control path, then test the embedded boundary that reaches the chassis.'],
+        ['Evidence', 'A project earns a place here when it records the question, a reproducible constraint, and the outcome that changed the next decision.'],
       ],
     },
   },

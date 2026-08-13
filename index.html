@@ -9,7 +9,11 @@
   <body>
     <div class="paper-grain" aria-hidden="true"></div>
     <canvas id="space" aria-hidden="true"></canvas>
-    <div id="paper-veil" class="paper-veil" aria-hidden="true"></div>
+    <div id="paper-veil" class="paper-veil" aria-hidden="true">
+      <div class="paper-veil__half paper-veil__half--left"></div>
+      <div class="paper-veil__half paper-veil__half--right"></div>
+      <svg class="paper-veil__tear" viewBox="0 0 100 100" preserveAspectRatio="none"><path></path></svg>
+    </div>
 
     <header class="site-header" data-visible="false">
       <a class="wordmark" href="#entrance" data-action="home" aria-label="Return to the corridor">T.</a>
@@ -25,6 +29,10 @@
             <p class="eyebrow">SPATIAL PORTFOLIO / 2026</p>
             <h1 id="entrance-title">Taotao</h1>
             <p class="entrance-copy">An explorable sketch of work, questions, and systems in progress.</p>
+            <button id="open-reading" class="entry-read" type="button">
+              <span>Read selected work</span>
+              <span class="entry-read__note">Skip the spatial tour</span>
+            </button>
           </div>
 
           <div class="entry-threshold">
@@ -51,6 +59,18 @@
         <p id="door-hint">Choose a door in the corridor, or open the map.</p>
       </section>
 
+      <section id="reading-index" class="reading-index" aria-labelledby="reading-index-title" hidden>
+        <div class="reading-index__sheet">
+          <p class="eyebrow">READING INDEX / 2026</p>
+          <div class="reading-index__intro">
+            <h2 id="reading-index-title" tabindex="-1">Start with the work.</h2>
+            <p>For readers who prefer a direct route: choose a section and read at your own pace. The spatial archive remains available as another way to explore.</p>
+          </div>
+          <nav id="reading-list" class="reading-list" aria-label="Selected work and notes"></nav>
+          <button class="archive-link" type="button" data-action="restart-space">Explore the spatial archive <span aria-hidden="true">↗</span></button>
+        </div>
+      </section>
+
       <section id="room-panel" class="room-panel" aria-labelledby="room-title" hidden>
         <div class="room-panel__rule" aria-hidden="true"><span data-room-number>01</span><span data-room-label>ABOUT</span></div>
         <div class="room-panel__paper">
@@ -58,7 +78,7 @@
             <p class="eyebrow" data-room-kicker>ROOM / 01</p>
             <button class="back-button" type="button" data-room-target="corridor" aria-label="Close the room and return to the corridor">
               <span class="back-button__icon" aria-hidden="true">↩</span>
-              <span>Corridor</span>
+              <span data-back-label>Corridor</span>
             </button>
           </div>
           <h2 id="room-title" tabindex="-1" data-room-title>A place for orientation.</h2>

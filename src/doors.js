@@ -9,6 +9,7 @@ import {
   makePaperCard,
   makeRoughLine,
 } from './textures.js';
+import { createPaintRevealMaterial } from './itom-paint-reveal.js';
 
 const DOOR_WIDTH = 3.38;
 export const DOOR_PANEL_HEIGHT = 4.78;
@@ -45,7 +46,14 @@ export function createDoor(room, paper, wallHalfWidth, floorY) {
   );
   root.add(frame);
 
-  const panel = makePaperCard(DOOR_PANEL_WIDTH, DOOR_PANEL_HEIGHT, new THREE.Color(room.colorValue).lerp(new THREE.Color(PAPER), 0.72), paper);
+  const panel = new THREE.Mesh(
+    new THREE.PlaneGeometry(DOOR_PANEL_WIDTH, DOOR_PANEL_HEIGHT),
+    createPaintRevealMaterial({
+      color: new THREE.Color(room.colorValue).lerp(new THREE.Color(PAPER), 0.72),
+      map: paper,
+      paintedColor: room.colorValue,
+    }),
+  );
   panel.material.polygonOffset = true;
   panel.material.polygonOffsetFactor = -1;
   panel.material.polygonOffsetUnits = -1;

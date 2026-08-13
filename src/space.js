@@ -417,8 +417,7 @@ export function createSpace({ canvas, reducedMotion, onDoor, onHover, onLoop, on
       door.frameMaterials.forEach((material) => {
         material.opacity = 0.78 + interaction * 0.16;
       });
-      door.panel.material.emissive?.setHex(door.room.colorValue);
-      door.panel.material.emissiveIntensity = interaction * 0.14 + door.motion * 0.07;
+      door.panel.material.setPaintProgress?.(interaction);
     });
 
     const targetLoopHover = hoverLoop && !roomActive && !loopActive ? 1 : 0;

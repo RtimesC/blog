@@ -4,7 +4,9 @@ import { ROOMS, ROOM_BY_ID } from './rooms.js';
 const body = document.body;
 const entrance = document.querySelector('.entrance');
 const header = document.querySelector('.site-header');
+const homeLink = document.querySelector('[data-action="home"]');
 const enterButton = document.querySelector('#enter-space');
+const openReadingButton = document.querySelector('#open-reading');
 const entryDoorPanel = document.querySelector('.entry-door__panel');
 const paperVeil = document.querySelector('#paper-veil');
 const mapToggle = document.querySelector('.map-toggle');
@@ -13,12 +15,18 @@ const sceneStatus = document.querySelector('#scene-status');
 const doorHint = document.querySelector('#door-hint');
 const roomPanel = document.querySelector('#room-panel');
 const roomPanelPaper = roomPanel.querySelector('.room-panel__paper');
+const backButton = roomPanel.querySelector('.back-button');
+const backButtonLabel = roomPanel.querySelector('[data-back-label]');
 const panelNumber = document.querySelector('[data-room-number]');
 const panelLabel = document.querySelector('[data-room-label]');
 const panelKicker = document.querySelector('[data-room-kicker]');
 const panelTitle = document.querySelector('[data-room-title]');
 const panelCopy = document.querySelector('[data-room-copy]');
 const panelFields = document.querySelector('[data-room-fields]');
+const readingIndex = document.querySelector('#reading-index');
+const readingIndexTitle = document.querySelector('#reading-index-title');
+const readingList = document.querySelector('#reading-list');
+const paperTear = paperVeil.querySelector('.paper-veil__tear path');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const htmlOnly = new URLSearchParams(window.location.search).get('mode') === 'html';
 
@@ -34,6 +42,31 @@ const copy = {
   corridor: ['The corridor is a map, not a menu.', 'Choose a door in the corridor, or open the map.'],
   looping: ['The corridor folds back on itself.', 'Passing through the archive…'],
 };
+
+const readingSummaries = {
+  about: 'A short introduction to the questions, systems, and disciplines that guide my work.',
+  gallery: 'Selected projects, each framed by the problem it addresses and the evidence behind it.',
+  studio: 'Process notes on experiments, constraints, revisions, and the path from a sketch to a working system.',
+  contact: 'A simple way to start a relevant conversation when the work gives us a reason to connect.',
+};
+
+function preparePaperTear() {
+  const points = [[50, 0]];
+  const segments = 12;
+  for (let index = 1; index < segments; index += 1) {
+    const y = (index / segments) * 100;
+    const x = 50 + ((Math.sin(index * 17.3) + Math.cos(index * 4.7)) * 1.45);
+    points.push([x, y]);
+  }
+  points.push([50, 100]);
+
+  const path = points.map(([x, y], index) => `${index === 0 ? 'M' : 'L'} ${x} ${y}`).join(' ');
+  const leftPolygon = `polygon(0% 0%, ${points.map(([x, y]) => `${x}% ${y}%`).join(', ')}, 0% 100%)`;
+  const rightPolygon = `polygon(100% 0%, 100% 100%, ${[...points].reverse().map(([x, y]) => `${x}% ${y}%`).join(', ')})`;
+  paperTear.setAttribute('d', path);
+  paperVeil.style.setProperty('--tear-left', leftPolygon);
+  paperVeil.style.setProperty('--tear-right', rightPolygon);
+}
 
 function transitionState(element, change, timeout = 900) {
   if (reduceMotion.matches) {
@@ -101,6 +134,48 @@ function renderMap() {
   roomMap.replaceChildren(items);
 }
 
+function renderReadingIndex() {
+  const items = document.createDocumentFragment();
+  ROOMS.forEach((room) => {
+    const button = document.createElement('button');
+    const number = document.createElement('span');
+    const copyBlock = document.createElement('span');
+    const label = document.createElement('span');
+    const title = document.createElement('strong');
+    const summary = document.createElement('span');
+    const arrow = document.createElement('span');
+
+    button.type = 'button';
+    button.className = 'reading-card';
+    button.dataset.roomTarget = room.id;
+    number.className = 'reading-card__number';
+    number.textContent = room.number;
+    copyBlock.className = 'reading-card__copy';
+    label.className = 'reading-card__label';
+    label.textContent = room.label;
+    title.textContent = room.content.title;
+    summary.textContent = readingSummaries[room.id];
+    arrow.className = 'reading-card__arrow';
+    arrow.setAttribute('aria-hidden', 'true');
+    arrow.textContent = '→';
+
+    copyBlock.append(label, title, summary);
+    button.append(number, copyBlock, arrow);
+    items.append(button);
+  });
+  readingList.replaceChildren(items);
+}
+
+function readingMode() {
+  return body.dataset.reading === 'true';
+}
+
+function setBackDestination() {
+  const index = readingMode();
+  backButtonLabel.textContent = index ? 'Index' : 'Corridor';
+  backButton.setAttribute('aria-label', index ? 'Close the room and return to the reading index' : 'Close the room and return to the corridor');
+}
+
 function renderRoomPanel(room) {
   roomPanelPaper.scrollTop = 0;
   roomPanel.style.setProperty('--room-signal', room.color);
@@ -129,7 +204,24 @@ function revealEnteredState() {
   body.dataset.entered = 'true';
   entrance.setAttribute('aria-hidden', 'true');
   header.dataset.visible = 'true';
+  homeLink.setAttribute('aria-label', 'Return to the corridor');
   setSceneCopy('corridor');
+}
+
+function openReadingIndex({ focus = true } = {}) {
+  if (looping || roomTransitioning) return;
+  entered = true;
+  body.dataset.entered = 'true';
+  body.dataset.reading = 'true';
+  entrance.setAttribute('aria-hidden', 'true');
+  header.dataset.visible = 'true';
+  homeLink.setAttribute('aria-label', 'Return to the reading index');
+  activeRoom = null;
+  roomPanel.hidden = true;
+  delete body.dataset.room;
+  closeMap();
+  readingIndex.hidden = false;
+  if (focus) requestAnimationFrame(() => readingIndexTitle.focus({ preventScroll: true }));
 }
 
 function showUnavailableState() {
@@ -194,6 +286,7 @@ async function enter() {
 function revealRoom(room) {
   if (activeRoom !== room.id) return;
   renderRoomPanel(room);
+  setBackDestination();
   roomPanel.hidden = false;
   body.dataset.room = room.id;
   setSceneCopy(room.id);
@@ -217,6 +310,7 @@ async function openRoom(id) {
   const previousRoom = activeRoom;
   activeRoom = room.id;
   closeMap();
+  readingIndex.hidden = true;
   roomPanel.hidden = true;
   delete body.dataset.room;
   setSceneCopy(room.id, `Walking through the ${room.label.toLowerCase()} door…`);
@@ -275,9 +369,20 @@ function returnToCorridor({ focusMap = true } = {}) {
   }
 }
 
+function returnFromRoom() {
+  if (readingMode()) {
+    openReadingIndex();
+    return;
+  }
+  returnToCorridor();
+}
+
 renderMap();
+renderReadingIndex();
+preparePaperTear();
 
 enterButton.addEventListener('click', () => { void enter(); });
+openReadingButton.addEventListener('click', () => openReadingIndex());
 
 mapToggle.addEventListener('click', () => {
   if (looping || roomTransitioning) return;
@@ -293,17 +398,27 @@ roomMap.addEventListener('click', (event) => {
   if (button) void openRoom(button.dataset.roomTarget);
 });
 
-document.querySelector('.back-button').addEventListener('click', () => returnToCorridor());
+readingList.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-room-target]');
+  if (button) void openRoom(button.dataset.roomTarget);
+});
 
-document.querySelector('[data-action="home"]')?.addEventListener('click', (event) => {
+backButton.addEventListener('click', () => returnFromRoom());
+
+homeLink.addEventListener('click', (event) => {
   event.preventDefault();
-  returnToCorridor({ focusMap: false });
+  if (readingMode()) openReadingIndex();
+  else returnToCorridor({ focusMap: false });
+});
+
+document.querySelector('[data-action="restart-space"]')?.addEventListener('click', () => {
+  window.location.assign(window.location.pathname);
 });
 
 document.addEventListener('keydown', (event) => {
   if (looping || roomTransitioning) return;
   if (event.key === 'Escape' && activeRoom) {
-    returnToCorridor();
+    returnFromRoom();
   } else if (event.key === 'Escape' && !roomMap.hidden) {
     closeMap();
     mapToggle.focus({ preventScroll: true });
