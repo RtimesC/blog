@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f3e9" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>Tao — Embodied AI and Mechatronics</title>
+    <meta name="description" content="Tao's interactive portfolio: embodied navigation, simulation validation, and embedded interfaces." />
+    <meta name="author" content="Tao" />
+    <meta name="keywords" content="Tao, embodied AI, mechatronics, robotics, ROS 2, visual navigation, STM32" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Tao — Embodied AI and Mechatronics" />
+    <meta property="og:description" content="An interactive portfolio about embodied navigation, simulation validation, and embedded interfaces." />
+    <meta property="og:site_name" content="Tao Portfolio" />
+    <meta property="og:image" content="/textures/tao/gallery/vln-navigation.webp" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Tao — Embodied AI and Mechatronics" />
+    <meta name="twitter:description" content="An interactive portfolio about embodied navigation, simulation validation, and embedded interfaces." />
+    <meta name="twitter:image" content="/textures/tao/gallery/vln-navigation.webp" />
+    <style>
+      .sr-only-seo {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap !important;
+        border: 0 !important;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="seo-content" class="sr-only-seo">
+      <header>
+        <h1>Tao — Mechatronics student building embodied AI systems</h1>
+        <p>An interactive 3D portfolio about robotics, simulation, and embedded interfaces.</p>
+      </header>
+      <nav aria-label="Portfolio navigation">
+        <a href="/?read=selected">Read selected work</a>
+        <a href="/?work=vln">Language to motion</a>
+        <a href="/?work=habitat-vln">Simulation checks</a>
+        <a href="/?work=stm32-oled">Small display, clear state</a>
+        <a href="https://github.com/RtimesC">GitHub</a>
+      </nav>
+      <article>
+        <h2>Selected work</h2>
+        <section>
+          <h3>Language to motion</h3>
+          <p>A Jetson vehicle runtime connecting camera input and language-guided navigation to bounded ROS 2 motion commands and an STM32 serial bridge.</p>
+        </section>
+        <section>
+          <h3>Simulation checks</h3>
+          <p>Navigation validation work built on Habitat-Lab, used to inspect trajectories and failure cases before hardware tests.</p>
+        </section>
+        <section>
+          <h3>Small display, clear state</h3>
+          <p>An STM32F10x OLED driver using software I2C and an SSD1306 controller.</p>
+        </section>
+      </article>
+    </main>
+    <noscript>
+      This portfolio uses JavaScript for the 3D experience. You can still read the project sources at https://github.com/RtimesC.
+    </noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
