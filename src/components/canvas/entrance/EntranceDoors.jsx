@@ -25,6 +25,7 @@ const EntranceDoors = ({
     const leftHandleRef = useRef();
     const rightHandleRef = useRef();
     const groupRef = useRef();
+    const openingStartedRef = useRef(false);
     const [isOpen, setIsOpen] = useState(false);
     const [isAnimating, setIsAnimating] = useState(false);
     const { camera } = useThree();
@@ -54,7 +55,11 @@ const EntranceDoors = ({
     // Handle click
     const handleClick = (e) => {
         e.stopPropagation();
-        if (isOpen || isAnimating) return;
+        if (isOpen || isAnimating || openingStartedRef.current) return;
+
+        // Pointer-leave can fire as the mesh starts to move. Lock it
+        // synchronously so it cannot schedule a competing reset tween.
+        openingStartedRef.current = true;
 
         // Reset cursor immediately on transition start
         document.body.style.cursor = "auto";
@@ -69,19 +74,21 @@ const EntranceDoors = ({
             }
         });
 
-        // Press handles down fully (like really opening)
+        // Complete one restrained handle press before the leaves start moving.
         if (leftHandleRef.current) {
             tl.to(leftHandleRef.current.rotation, {
-                z: 0.4,
-                duration: 0.15,
-                ease: 'power2.out'
+                z: 0.28,
+                duration: 0.2,
+                ease: 'power1.inOut',
+                overwrite: true
             }, 0);
         }
         if (rightHandleRef.current) {
             tl.to(rightHandleRef.current.rotation, {
-                z: -0.4,
-                duration: 0.15,
-                ease: 'power2.out'
+                z: -0.28,
+                duration: 0.2,
+                ease: 'power1.inOut',
+                overwrite: true
             }, 0);
         }
 
@@ -89,14 +96,16 @@ const EntranceDoors = ({
         tl.to(leftDoorRef.current.rotation, {
             y: -Math.PI * 0.55,
             duration: 0.9,
-            ease: 'power2.out'
-        }, 0.1);
+            ease: 'power2.out',
+            overwrite: true
+        }, 0.18);
 
         tl.to(rightDoorRef.current.rotation, {
             y: Math.PI * 0.55,
             duration: 0.9,
-            ease: 'power2.out'
-        }, 0.1);
+            ease: 'power2.out',
+            overwrite: true
+        }, 0.18);
 
         // Camera flies through and stops near the corridor welcome mark.
         tl.to(camera.position, {
@@ -109,7 +118,7 @@ const EntranceDoors = ({
 
     // Handle hover - doors slightly open to indicate interactivity
     const handlePointerEnter = () => {
-        if (isOpen || isAnimating || isMobile) return;
+        if (isOpen || isAnimating || openingStartedRef.current || isMobile) return;
         document.body.style.cursor = "pointer";
 
         // Slightly open doors on hover
@@ -147,7 +156,7 @@ const EntranceDoors = ({
     };
 
     const handlePointerLeave = () => {
-        if (isOpen || isAnimating || isMobile) return;
+        if (isOpen || isAnimating || openingStartedRef.current || isMobile) return;
         document.body.style.cursor = "auto";
 
         // Close doors back
@@ -259,11 +268,25 @@ const EntranceDoors = ({
                     />
                 </mesh>
 
-                {/* Code-native handle. */}
-                <group ref={leftHandleRef} position={[doorWidth / 2 + 0.357, -0.099, 0.10]}>
+                {/* Low-profile pull: fixed escutcheon plus a movable horizontal grip. */}
+                <group position={[doorWidth / 2 + 0.357, -0.099, 0.112]}>
                     <mesh>
-                        <boxGeometry args={[0.24, 0.045, 0.055]} />
-                        <meshBasicMaterial color="#f0ede5" />
+                        <boxGeometry args={[0.095, 0.255, 0.018]} />
+                        <meshBasicMaterial color="#8e6634" />
+                    </mesh>
+                    <mesh position={[0, 0, 0.012]}>
+                        <boxGeometry args={[0.058, 0.205, 0.012]} />
+                        <meshBasicMaterial color="#4a301b" />
+                    </mesh>
+                </group>
+                <group ref={leftHandleRef} position={[doorWidth / 2 + 0.357, -0.099, 0.145]}>
+                    <mesh position={[-0.09, 0, 0]}>
+                        <boxGeometry args={[0.18, 0.034, 0.052]} />
+                        <meshBasicMaterial color="#c0924d" />
+                    </mesh>
+                    <mesh position={[-0.09, 0, 0.03]}>
+                        <boxGeometry args={[0.13, 0.014, 0.01]} />
+                        <meshBasicMaterial color="#5a3920" />
                     </mesh>
                 </group>
             </group>
@@ -292,11 +315,25 @@ const EntranceDoors = ({
                     />
                 </mesh>
 
-                {/* Code-native handle. */}
-                <group ref={rightHandleRef} position={[-doorWidth / 2 - 0.357, -0.099, 0.10]}>
+                {/* Low-profile pull: fixed escutcheon plus a movable horizontal grip. */}
+                <group position={[-doorWidth / 2 - 0.357, -0.099, 0.112]}>
                     <mesh>
-                        <boxGeometry args={[0.24, 0.045, 0.055]} />
-                        <meshBasicMaterial color="#f0ede5" />
+                        <boxGeometry args={[0.095, 0.255, 0.018]} />
+                        <meshBasicMaterial color="#8e6634" />
+                    </mesh>
+                    <mesh position={[0, 0, 0.012]}>
+                        <boxGeometry args={[0.058, 0.205, 0.012]} />
+                        <meshBasicMaterial color="#4a301b" />
+                    </mesh>
+                </group>
+                <group ref={rightHandleRef} position={[-doorWidth / 2 - 0.357, -0.099, 0.145]}>
+                    <mesh position={[0.09, 0, 0]}>
+                        <boxGeometry args={[0.18, 0.034, 0.052]} />
+                        <meshBasicMaterial color="#c0924d" />
+                    </mesh>
+                    <mesh position={[0.09, 0, 0.03]}>
+                        <boxGeometry args={[0.13, 0.014, 0.01]} />
+                        <meshBasicMaterial color="#5a3920" />
                     </mesh>
                 </group>
             </group>
