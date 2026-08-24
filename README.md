@@ -2,6 +2,8 @@
 
 A fresh React workspace for a small, evidence-led working loop.
 
+> This branch owns the 2D workbench. Its Tailwind CSS and daisyUI setup does not apply to the 3D experience on `main`; see [BRANCHING.md](BRANCHING.md) before moving work between branches.
+
 ## Working loop
 
 1. Frame one question and its boundary.
