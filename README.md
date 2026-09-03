@@ -1,21 +1,15 @@
-# TAO / Workbench
+# τaotao
 
-A fresh React workspace for a small, evidence-led working loop.
+A small public-learning notebook for robotics, AI, and the questions in between.
 
-> This branch owns the 2D workbench. Its Tailwind CSS and daisyUI setup does not apply to the 3D experience on `main`; see [BRANCHING.md](BRANCHING.md) before moving work between branches.
-
-## Working loop
-
-1. Frame one question and its boundary.
-2. Build the smallest visible change.
-3. Verify with an appropriate check.
-4. Publish the outcome and its next action.
+> This branch owns the 2D Notes experience. It does not apply to the 3D experience on `main`; see [BRANCHING.md](BRANCHING.md) before moving work between branches.
 
 ## Stack
 
 - React + Vite
 - Tailwind CSS 4
-- daisyUI 5
+- shadcn/ui primitives, kept in `src/components/ui/`
+- Brand tokens, kept in `src/styles/app.css`
 
 ## Commands
 
