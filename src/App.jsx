@@ -11,7 +11,7 @@ function ArticleToolbar({ checked, onChange }) {
   return (
     <div className="taotao-article-toolbar">
       <Button asChild size="sm">
-        <a className="taotao-article-back" href="/">Back to notes</a>
+        <a className="taotao-article-back" href="/">Home</a>
       </Button>
       <ThemeSwitch checked={checked} onChange={onChange} />
     </div>

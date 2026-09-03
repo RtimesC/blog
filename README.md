@@ -2,7 +2,7 @@
 
 A small public-learning notebook for robotics, AI, and the questions in between.
 
-> This branch owns the 2D Notes experience. It does not apply to the 3D experience on `main`; see [BRANCHING.md](BRANCHING.md) before moving work between branches.
+> `main` owns the active 2D Notes experience. The earlier 3D experiment is retained only in `codex/3d-pending`; see [BRANCHING.md](BRANCHING.md) before working with that snapshot.
 
 ## Stack
 

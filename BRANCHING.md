@@ -1,29 +1,30 @@
 # Branch boundaries
 
-This repository intentionally maintains separate 2D and 3D experiences. They are not a staged migration of one application into the other.
+`main` is the single active production line for the 2D learning notebook. The earlier spatial experiment is retained only as a future reference; it is not a parallel product or deployment target.
 
-## `main` — spatial 3D experience
+## `main` — active 2D blog
 
-- Owns the existing WebGL/React Three Fiber portfolio.
-- Does not include Tailwind CSS or daisyUI.
-- Changes here must preserve the 3D runtime, its asset policy, and its production checks.
+- Owns the React/Vite learning notebook, its Markdown articles, and the production deployment.
+- Receives reviewed feature work through pull requests.
+- Uses Tailwind CSS 4 and the local UI primitives in `src/components/ui/`.
 
-## `codex/2dblog` — 2D workbench
+## `codex/*` — short-lived feature branches
 
-- Owns the fresh 2D workbench and its `Frame → Build → Verify → Publish` workflow.
-- Uses Tailwind CSS 4 and daisyUI 5, configured in `vite.config.js` and `src/styles/app.css`.
-- Starts with no inherited portfolio or blog content; new work is defined inside this branch.
+- Start feature work from `main`, for example `codex/home-link`.
+- Open a pull request back to `main` after local verification and preview review.
+- Delete the feature branch after it has merged.
 
-## `codex/3d-pending` — spatial snapshot
+## `codex/3d-pending` — retained spatial snapshot
 
-- Preserves the earlier switchable spatial/2D experiment for future reference.
-- It is not the active 2D workbench branch and must not be treated as the daisyUI target.
+- Preserves the earlier spatial experiment for recovery and future exploration.
+- Is not deployed and must not receive routine 2D blog work.
+- A future 3D restart requires an explicit product decision, a separate deployment target, and a new verification plan before code is reused.
 
 ## Working rules
 
-1. Do not merge the 2D branch's Tailwind, daisyUI, package, Vite, or page changes into `main` by default.
-2. A feature needed in both experiences is designed and implemented independently for each runtime.
-3. Documentation that describes the branch boundary should be kept in both active branches; runtime-specific documentation stays with its owning branch.
+1. Make all current blog changes against `main` through a short-lived feature branch.
+2. Do not merge `codex/3d-pending` into `main` by default.
+3. Configure the 2D Vercel project to use `main` as its production branch.
 4. Confirm the active branch before starting work:
 
    ```bash
