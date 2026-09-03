@@ -24,16 +24,17 @@ The phrase "convergent boundary" describes the current design principle: each ca
 ## Current implementation
 
 - The current-state copy is the `currentState` constant in `src/App.jsx`.
-- `entries` in `src/App.jsx` contains only the real `phyagent-opc` boundary; it does not encode `Article / Question / Memo` types.
-- The homepage renders the single real `.taotao-flip-card` centered in the page. Additional cards will be introduced only with real notes or works.
+- Published content lives in `src/content/articles/*.article.md`. Each file owns a validated YAML metadata block and Markdown body; the metadata generates its homepage card and the body renders at `/articles/<slug>`.
+- `src/content/articles.js` loads and validates each article during the Vite build. It rejects missing fields, malformed slugs, empty bodies, duplicate slugs, and invalid card ordering before deployment.
+- The homepage renders only the real `.taotao-flip-card` boundaries currently present in the content directory. New cards are introduced only by adding a real article file, not by editing a content-type taxonomy.
 - The card front uses the cropped `public/assets/phyagent-opc-cover.png` cover, with separated keyword and title positions; the keyword line has a translucent dark contrast band for legibility. Its reverse side uses a frosted-glass abstract surface with a readable divider and body text.
 - Article-page `Back to notes` links use the shared animated gradient button treatment while remaining semantic links through `Button asChild`.
 - The grid uses a constrained centered container on desktop and collapses to one column below `800px`, so the card group no longer appears left-biased when the viewport is wide.
 - On desktop, hovering anywhere inside the outer card flips it and keeps it flipped while the pointer remains within that card. Moving out returns it to the front. Keyboard focus uses the same flip state; touch devices keep the card as a direct link into the project note.
 - The card keeps the adapted Uiverse-style `preserve-3d` rotation as its core motion, with restrained edge, shadow, image-cover, and elevation layers added in `src/styles/app.css`. The implementation does not depend on the previous static card style.
-- Each card links to `/articles/<boundary-id>`. `/articles/phyagent-opc` opens the first project note with the evidence loop, implementation boundary, and local-delivery status; future destinations can remain intentionally blank until real content exists.
+- Each card links to `/articles/<slug>`. `/articles/phyagent-opc` opens the first project note with the evidence loop, implementation boundary, and local-delivery status; future destinations can remain intentionally blank until real content exists.
 - Visual acceptance is performed by Tao directly; screenshot or browser-based visual QA is not a completion requirement for this card work. Code-level checks remain required.
-- The page is still a static React/Vite surface. Timestamped snapshots of current-state edits are a planned content-history feature, not yet a backend capability.
+- The page is still a static React/Vite surface. Article Markdown is versioned in Git; timestamped snapshots of current-state edits are a planned content-history feature, not yet a backend capability.
 - `npm run build`, `npm run lint`, and `git diff --check` pass for the current shell.
 
 ## Homepage content update (2026-09-02)
@@ -56,7 +57,7 @@ The phrase "convergent boundary" describes the current design principle: each ca
 
 ## Open decisions
 
-- Decide whether article and work content should live in Markdown/MDX tracked by Git, or in a future private editing interface and database.
+- Keep article and work content in Markdown tracked by Git for the current stage. A future private editing interface and database remains a separate, unstarted option.
 - Review the integrated factory-floor crop visually and replace it only if a more representative, provenance-checked project asset is selected.
 - Decide the typography hierarchy and metadata that may eventually occupy the reserved title, keyword, and abstract areas; do not fill them with invented content in the meantime.
 - Populate the first real notes and works before designing deeper navigation or learning-trajectory views.
