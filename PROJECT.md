@@ -24,8 +24,8 @@ The phrase "convergent boundary" describes the current design principle: each ca
 ## Current implementation
 
 - The current-state copy is the `currentState` constant in `src/App.jsx`.
-- Published content lives in `src/content/articles/*.article.md`. Each file owns a validated YAML metadata block and Markdown body; the metadata generates its homepage card and the body renders at `/articles/<slug>`.
-- `src/content/articles.js` loads and validates each article during the Vite build. It rejects missing fields, malformed slugs, empty bodies, duplicate slugs, and invalid card ordering before deployment.
+- Published content lives in `src/content/articles/*.article.md`. Each file owns a validated YAML metadata block and Markdown body; the metadata generates its homepage card and the body renders at `/articles/<slug>`. The maintained authoring contract and required front-matter fields are in `src/content/articles/README.md`.
+- `src/content/articles.js` loads and validates each article during the Vite build. It rejects missing fields, malformed slugs, empty bodies, duplicate slugs, and non-integer `order` values before deployment; equal `order` values are deterministically ordered by `slug`.
 - The homepage renders only the real `.taotao-flip-card` boundaries currently present in the content directory. New cards are introduced only by adding a real article file, not by editing a content-type taxonomy.
 - The card front uses the cropped `public/assets/phyagent-opc-cover.png` cover, with separated keyword and title positions; the keyword line has a translucent dark contrast band for legibility. Its reverse side uses a frosted-glass abstract surface with a readable divider and body text.
 - Article-page `Back to notes` links use the shared animated gradient button treatment while remaining semantic links through `Button asChild`.
@@ -33,6 +33,7 @@ The phrase "convergent boundary" describes the current design principle: each ca
 - On desktop, hovering anywhere inside the outer card flips it and keeps it flipped while the pointer remains within that card. Moving out returns it to the front. Keyboard focus uses the same flip state; touch devices keep the card as a direct link into the project note.
 - The card keeps the adapted Uiverse-style `preserve-3d` rotation as its core motion, with restrained edge, shadow, image-cover, and elevation layers added in `src/styles/app.css`. The implementation does not depend on the previous static card style.
 - Each card links to `/articles/<slug>`. `/articles/phyagent-opc` opens the first project note with the evidence loop, implementation boundary, and local-delivery status; future destinations can remain intentionally blank until real content exists.
+- `vercel.json` rewrites every deployed request path to `/index.html`, so Vercel can serve direct visits and refreshes at `/articles/<slug>` while the client selects the article route.
 - Visual acceptance is performed by Tao directly; screenshot or browser-based visual QA is not a completion requirement for this card work. Code-level checks remain required.
 - The page is still a static React/Vite surface. Article Markdown is versioned in Git; timestamped snapshots of current-state edits are a planned content-history feature, not yet a backend capability.
 - `npm run build`, `npm run lint`, and `git diff --check` pass for the current shell.
