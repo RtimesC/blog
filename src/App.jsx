@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { AboutButton } from '@/components/about-button';
 import { Button } from '@/components/ui/button';
 import { articles, getArticleBySlug } from '@/content/articles';
 import { ThemeSwitch } from '@/components/theme-switch';
@@ -182,6 +183,8 @@ function HeroReel() {
 export default function App() {
   const [isDark, setIsDark] = useState(() => window.localStorage.getItem('theme') === 'dark');
   const [activeState, setActiveState] = useState('building');
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  const [themeControlVisible, setThemeControlVisible] = useState(true);
   const visibleArticles = articles.filter((entry) => entry.state === activeState);
 
   useEffect(() => {
@@ -191,12 +194,88 @@ export default function App() {
     window.localStorage.setItem('theme', theme);
   }, [isDark]);
 
+  useEffect(() => {
+    function handleInternalNavigation(event) {
+      const link = event.target.closest('a[href]');
+
+      if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target || link.hasAttribute('download')) {
+        return;
+      }
+
+      const destination = new URL(link.href, window.location.href);
+
+      if (destination.origin !== window.location.origin) {
+        return;
+      }
+
+      event.preventDefault();
+      window.history.pushState({}, '', `${destination.pathname}${destination.search}${destination.hash}`);
+      setCurrentPath(destination.pathname);
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+
+    function handleHistoryChange() {
+      setCurrentPath(window.location.pathname);
+    }
+
+    document.addEventListener('click', handleInternalNavigation);
+    window.addEventListener('popstate', handleHistoryChange);
+
+    return () => {
+      document.removeEventListener('click', handleInternalNavigation);
+      window.removeEventListener('popstate', handleHistoryChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let directionStartY = lastScrollY;
+    let direction = null;
+    let frameRequested = false;
+
+    function updateThemeControl() {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY <= 8) {
+        setThemeControlVisible(true);
+        direction = null;
+        directionStartY = currentScrollY;
+      } else if (currentScrollY !== lastScrollY) {
+        const nextDirection = currentScrollY > lastScrollY ? 'down' : 'up';
+
+        if (nextDirection !== direction) {
+          direction = nextDirection;
+          directionStartY = lastScrollY;
+        }
+
+        if (direction === 'down' && currentScrollY - directionStartY >= 48) {
+          setThemeControlVisible(false);
+        } else if (direction === 'up' && directionStartY - currentScrollY >= 20) {
+          setThemeControlVisible(true);
+        }
+      }
+
+      lastScrollY = currentScrollY;
+      frameRequested = false;
+    }
+
+    function handleScroll() {
+      if (!frameRequested) {
+        window.requestAnimationFrame(updateThemeControl);
+        frameRequested = true;
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   let page;
 
-  if (window.location.pathname === '/about') {
+  if (currentPath === '/about') {
     page = <AboutPage checked={isDark} onThemeChange={setIsDark} />;
-  } else if (window.location.pathname.startsWith('/articles/')) {
-    const slug = window.location.pathname.replace(/^\/articles\//, '').replace(/\/+$/, '');
+  } else if (currentPath.startsWith('/articles/')) {
+    const slug = currentPath.replace(/^\/articles\//, '').replace(/\/+$/, '');
     const article = getArticleBySlug(slug);
 
     page = article
@@ -224,7 +303,19 @@ export default function App() {
                 </svg>
               </h1>
             </div>
-            <ThemeSwitch checked={isDark} onChange={setIsDark} />
+            <div className="taotao-home-actions">
+              <div
+                aria-hidden={!themeControlVisible}
+                className={`taotao-theme-dock${themeControlVisible ? '' : ' is-hidden'}`}
+              >
+                <ThemeSwitch
+                  checked={isDark}
+                  onChange={setIsDark}
+                  tabIndex={themeControlVisible ? undefined : -1}
+                />
+              </div>
+              <AboutButton />
+            </div>
           </div>
 
           <HeroReel />

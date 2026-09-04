@@ -446,6 +446,39 @@
   margin-bottom: 0;
 }
 
+.taotao-home-actions {
+  --about-slot-width: 6.75rem;
+  --control-align-offset: 0.25rem;
+  --home-action-gap: 1rem;
+
+  display: grid;
+  grid-template-columns: calc(5.625em * 14 / 16) var(--about-slot-width);
+  align-items: center;
+  gap: var(--home-action-gap);
+  min-height: 2.5rem;
+}
+
+.taotao-home-about-slot {
+  grid-column: 2;
+  width: var(--about-slot-width);
+}
+
+.taotao-theme-dock {
+  position: fixed;
+  top: calc(clamp(2rem, 5vw, 5rem) + var(--control-align-offset));
+  right: calc(clamp(1.5rem, 4vw, 4rem) + var(--about-slot-width) + var(--home-action-gap));
+  z-index: 20;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 180ms ease, transform 220ms ease;
+}
+
+.taotao-theme-dock.is-hidden {
+  opacity: 0;
+  transform: translateY(-0.75rem);
+  pointer-events: none;
+}
+
 .taotao-hero {
   width: min(100%, 72rem);
   margin: 0 auto clamp(3rem, 6vw, 5rem);
@@ -1871,8 +1904,14 @@
     text-align: left;
   }
 
-  .taotao-home-header .theme-switch {
+  .taotao-home-actions {
+    order: -1;
     align-self: flex-end;
+  }
+
+  .taotao-theme-dock {
+    top: calc(2rem + var(--control-align-offset));
+    right: calc(1rem + var(--about-slot-width) + var(--home-action-gap));
   }
 
   .taotao-current-state {
@@ -1975,6 +2014,10 @@
   .theme-switch__moon,
   .theme-switch__clouds,
   .theme-switch__stars-container {
+    transition-duration: 1ms;
+  }
+
+  .taotao-theme-dock {
     transition-duration: 1ms;
   }
 

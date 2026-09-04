@@ -24,7 +24,7 @@ These states describe where a record sits in the learning process. They are not 
 
 ## Experience
 
-- The homepage opens with the animated `Welcome τaotao's blog` identity.
+- The homepage opens with the animated `Welcome τaotao's blog` identity. Its header keeps a normal-flow `About` entry at the far right and a separated day/night control to its left.
 - A wide Hero surface presents published article covers. One article uses a slow image drift; multiple articles form a continuous horizontal reel.
 - A thin frosted navigation switches between `Observing`, `Building`, and `Questioning` without displaying artificial sequence numbers or content counts.
 - The selected state shows a vertical list of consistent horizontal article cards. Each card contains a 16:9 poster, title, existing abstract, keywords, and article link.
@@ -50,7 +50,7 @@ For content with factual or technical claims, distinguish clearly between `已�
 - Stack: React, Vite, Tailwind CSS 4, and local shadcn/ui primitives.
 - Article routes are client-rendered; `vercel.json` rewrites requests to `/index.html` so direct article visits and refreshes work on Vercel.
 - Content is versioned Markdown. A private editor, database, and content-history interface are not part of the current product.
-- `src/content/about-me.md` is a deliberately incomplete author draft. The `/about` prototype route remains available, but the homepage exposes no About entry until its final form is decided.
+- `src/content/about-me.md` is a deliberately incomplete author draft. The homepage exposes its `/about` route from the far-right header entry; the entry scrolls away with the page, while the day/night control hides on downward scrolling and returns on upward scrolling or at the top.
 - The visual language uses a restrained background, editorial serif typography, lightly frosted state navigation, poster-led article cards, the animated identity, and the day/night switch.
 
 ## Working rules
@@ -64,7 +64,6 @@ For content with factual or technical claims, distinguish clearly between `已�
 ## Open decisions
 
 - Decide the language and publishing rhythm after several real records exist. The current abstract is English; article bodies may follow the needs of their content.
-- Decide how and when the About page should become discoverable from the homepage.
 - Reassess Hero repetition and reel timing after more than one real article exists.
 - Defer cross-article relationships and archive views until published records reveal a real need.
 - Keep a private editor and database as future options, not current requirements.
