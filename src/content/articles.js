@@ -42,8 +42,6 @@ function optionalVideo(data, path) {
   return Object.freeze({
     src: requiredString(data.video, 'src', path),
     poster: requiredString(data.video, 'poster', path),
-    label: requiredString(data.video, 'label', path),
-    caption: requiredString(data.video, 'caption', path),
   });
 }
 
@@ -91,8 +89,6 @@ function parseArticle(path, source) {
     cover: requiredString(data, 'cover', path),
     kicker: requiredString(data, 'kicker', path),
     lede: requiredString(data, 'lede', path),
-    status: requiredStringList(data, 'status', path),
-    note: requiredString(data, 'note', path),
     video: optionalVideo(data, path),
     body,
   });

@@ -1481,31 +1481,6 @@
   line-height: 1.16;
 }
 
-.taotao-article-status {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.7rem 1.25rem;
-  margin-top: 2rem;
-  padding-top: 0.9rem;
-  border-top: 1px solid #252525;
-  color: #4d4d4d;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-}
-
-.taotao-article-status span + span {
-  padding-left: 1.25rem;
-  border-left: 1px solid #bcbcbc;
-}
-
-.taotao-article-note {
-  margin: 1rem 0 0;
-  color: #666;
-  font-size: 0.78rem;
-  line-height: 1.5;
-}
-
 .taotao-article-video {
   width: min(100%, 56rem);
   margin: 0 0 clamp(4rem, 8vw, 7rem);
@@ -1516,23 +1491,6 @@
   width: 100%;
   aspect-ratio: 16 / 9;
   background: #111;
-}
-
-.taotao-article-video figcaption {
-  margin-top: 0.7rem;
-  color: #666;
-  font-size: 0.78rem;
-  line-height: 1.5;
-}
-
-.taotao-article-video figcaption span {
-  display: block;
-  margin-bottom: 0.2rem;
-  color: #444;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
 }
 
 .taotao-article-body {
@@ -1807,15 +1765,12 @@
 }
 
 :root[data-theme="dark"] .taotao-article-sheet,
-:root[data-theme="dark"] .taotao-article-status,
 :root[data-theme="dark"] .taotao-markdown h2 {
   border-color: #66655f;
 }
 
 :root[data-theme="dark"] .taotao-article-kicker,
 :root[data-theme="dark"] .taotao-article-label,
-:root[data-theme="dark"] .taotao-article-note,
-:root[data-theme="dark"] .taotao-article-video figcaption,
 :root[data-theme="dark"] .taotao-markdown img + em {
   color: #aaa9a3 !important;
 }
@@ -1827,13 +1782,8 @@
   color: #f1f1ed !important;
 }
 
-:root[data-theme="dark"] .taotao-article-status,
 :root[data-theme="dark"] .taotao-markdown p,
 :root[data-theme="dark"] .taotao-markdown li {
-  color: #d0d0cb;
-}
-
-:root[data-theme="dark"] .taotao-article-video figcaption span {
   color: #d0d0cb;
 }
 
@@ -1852,7 +1802,6 @@
   border-color: #595954;
 }
 
-:root[data-theme="dark"] .taotao-article-status span + span,
 :root[data-theme="dark"] .taotao-markdown li {
   border-color: #595954;
 }

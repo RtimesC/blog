@@ -12,16 +12,9 @@ abstract: >-
 cover: /assets/phyagent-opc-cover.png
 kicker: PhyAgent / 2026 息壤杯 OPC / 工业现场智能调查与调度系统
 lede: 工业系统往往知道异常在哪里，却不知道现场发生了什么。
-status:
-  - 已实现 / 本地 POC
-  - 演示模拟 / SimulatorAdapter
-  - 待实测 / 真实 Adapter
-note: PhyAgent 是基于模拟数据、模拟现场与 Mock/POC 的工业 Physical AI 概念验证。概念片和路演材料不宣称真实工厂部署、实测结果或已正式复产。
 video:
   src: /assets/phyagent-opc/phyagent-concept-film.mp4
   poster: /assets/phyagent-opc/concept-film-poster.jpg
-  label: 本地交付 / 最终概念片 / 58 秒
-  caption: SMT 贴装异常调查的 POC 示例，不代表真实工厂部署或实测结果。
 ---
 
 ## 现场为什么还需要调查

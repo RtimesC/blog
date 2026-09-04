@@ -70,10 +70,6 @@ function ArticleVideo({ video }) {
         <source src={video.src} type="video/mp4" />
         Your browser does not support embedded video.
       </video>
-      <figcaption>
-        <span>{video.label}</span>
-        {video.caption}
-      </figcaption>
     </figure>
   );
 }
@@ -87,10 +83,6 @@ function ArticlePage({ article, checked, onThemeChange }) {
           <p className="taotao-article-kicker">{article.kicker}</p>
           <h1>{article.title}</h1>
           <p className="taotao-article-lede">{article.lede}</p>
-          <div className="taotao-article-status" aria-label="Project status">
-            {article.status.map((item) => <span key={item}>{item}</span>)}
-          </div>
-          <p className="taotao-article-note">{article.note}</p>
         </header>
 
         <ArticleVideo video={article.video} />

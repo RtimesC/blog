@@ -17,10 +17,6 @@ abstract: Short English summary for the reverse card face.
 cover: /assets/cover-image.png
 kicker: Year / context / scope
 lede: Opening sentence for the article page.
-status:
-  - 已实现
-  - 演示模拟
-note: Scope or evidence note.
 ---
 ```
 
@@ -28,14 +24,14 @@ note: Scope or evidence note.
 
 Write the article below the second `---` using standard Markdown headings, paragraphs, ordered lists, unordered lists, emphasis, and links. The build stops with a clear error when required metadata is missing, a slug is invalid, or two articles use the same slug.
 
+Write factual status, implementation scope, simulation limits, uncertainty, and evidence boundaries as complete paragraphs in the article body. Do not place them in small-print header metadata, status labels, badges, disclaimer notes, or similar detached UI. These boundaries are part of the article's argument and must remain readable in the normal body flow.
+
 An article may also place one locally hosted MP4 between its header and body:
 
 ```yaml
 video:
   src: /assets/project/video.mp4
   poster: /assets/project/video-poster.jpg
-  label: Local delivery / 58 seconds
-  caption: What the video shows and what it does not prove.
 ```
 
-Video is optional. Keep factual boundaries in the visible label or caption; a concept film, simulation, or local demo must not be presented as field evidence.
+Video is optional. Do not place delivery status, simulation limits, evidence boundaries, or disclaimer copy in a small caption below the media. Explain that context in the article's normal body paragraphs. A concept film, simulation, or local demo must not be presented as field evidence.
