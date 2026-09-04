@@ -26,6 +26,8 @@ Write the article below the second `---` using standard Markdown headings, parag
 
 Write factual status, implementation scope, simulation limits, uncertainty, and evidence boundaries as complete paragraphs in the article body. Do not place them in small-print header metadata, status labels, badges, disclaimer notes, or similar detached UI. These boundaries are part of the article's argument and must remain readable in the normal body flow.
 
+Prefer plain, concrete language. Describe what the system reads, decides, selects, records, and has not yet tested instead of relying on presentation slogans or stacked technical nouns. Keep a necessary product or engineering term only when it preserves accuracy, and explain it in ordinary language when it first appears.
+
 An article may also place one locally hosted MP4 between its header and body:
 
 ```yaml
