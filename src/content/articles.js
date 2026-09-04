@@ -29,6 +29,23 @@ function requiredStringList(data, key, path) {
   return data[key].map((item) => item.trim());
 }
 
+function optionalVideo(data, path) {
+  if (data.video === undefined) {
+    return null;
+  }
+
+  if (!data.video || Array.isArray(data.video) || typeof data.video !== 'object') {
+    fail(path, 'front matter field "video" must be an object when provided.');
+  }
+
+  return Object.freeze({
+    src: requiredString(data.video, 'src', path),
+    poster: requiredString(data.video, 'poster', path),
+    label: requiredString(data.video, 'label', path),
+    caption: requiredString(data.video, 'caption', path),
+  });
+}
+
 function parseArticle(path, source) {
   const match = source.match(frontMatterPattern);
 
@@ -69,6 +86,7 @@ function parseArticle(path, source) {
     lede: requiredString(data, 'lede', path),
     status: requiredStringList(data, 'status', path),
     note: requiredString(data, 'note', path),
+    video: optionalVideo(data, path),
     body,
   });
 }
