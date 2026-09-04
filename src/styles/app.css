@@ -1435,7 +1435,6 @@
   width: min(100%, 64rem);
   min-height: 70svh;
   margin: clamp(3rem, 8vw, 7rem) auto 0;
-  border-top: 1px solid #252525;
 }
 
 .taotao-article-sheet--full {
@@ -1504,8 +1503,6 @@
 .taotao-markdown h2 {
   max-width: 42rem;
   margin: 4rem auto 1.25rem;
-  padding-top: 1rem;
-  border-top: 1px solid #252525;
   color: #111;
   font-size: 1.15rem;
   font-weight: 600;
@@ -1543,7 +1540,6 @@
 
 .taotao-markdown li {
   padding: 1rem 0;
-  border-bottom: 1px solid #c7c7c7;
 }
 
 .taotao-markdown strong {
@@ -1553,8 +1549,6 @@
 
 .taotao-markdown h3 {
   margin: 2.5rem auto 0.65rem;
-  padding-top: 0.9rem;
-  border-top: 1px solid #111;
   color: #111;
   font-size: 1rem;
   font-style: normal;
@@ -1760,11 +1754,6 @@
   box-shadow: 0 0 0 1px rgb(255 255 255 / 7%) inset, 0 1rem 2.5rem rgb(0 0 0 / 24%);
 }
 
-:root[data-theme="dark"] .taotao-article-sheet,
-:root[data-theme="dark"] .taotao-markdown h2 {
-  border-color: #66655f;
-}
-
 :root[data-theme="dark"] .taotao-article-kicker,
 :root[data-theme="dark"] .taotao-article-label,
 :root[data-theme="dark"] .taotao-markdown img + em {
@@ -1796,14 +1785,6 @@
 
 :root[data-theme="dark"] .taotao-markdown img {
   border-color: #595954;
-}
-
-:root[data-theme="dark"] .taotao-markdown li {
-  border-color: #595954;
-}
-
-:root[data-theme="dark"] .taotao-markdown h3 {
-  border-color: #f1f1ed;
 }
 
 @media (max-width: 800px) {

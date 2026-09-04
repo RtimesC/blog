@@ -28,6 +28,8 @@ Write factual status, implementation scope, simulation limits, uncertainty, and 
 
 Prefer plain, concrete language. Describe what the system reads, decides, selects, records, and has not yet tested instead of relying on presentation slogans or stacked technical nouns. Keep a necessary product or engineering term only when it preserves accuracy, and explain it in ordinary language when it first appears.
 
+Do not use horizontal divider lines to separate the article header, sections, headings, paragraphs, or list items. Build the reading structure with continuous paragraphs and whitespace instead.
+
 An article may also place one locally hosted MP4 between its header and body:
 
 ```yaml
