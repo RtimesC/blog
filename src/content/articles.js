@@ -8,6 +8,7 @@ const articleSources = import.meta.glob('./articles/*.article.md', {
 
 const frontMatterPattern = /^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/;
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const articleStates = new Set(['observing', 'building', 'questioning']);
 
 function fail(path, message) {
   throw new Error(`Invalid article ${path}: ${message}`);
@@ -60,9 +61,14 @@ function parseArticle(path, source) {
   }
 
   const slug = requiredString(data, 'slug', path);
+  const state = requiredString(data, 'state', path).toLowerCase();
 
   if (!slugPattern.test(slug)) {
     fail(path, '"slug" must use lowercase letters, numbers, and single hyphens.');
+  }
+
+  if (!articleStates.has(state)) {
+    fail(path, '"state" must be observing, building, or questioning.');
   }
 
   if (!Number.isInteger(data.order)) {
@@ -77,6 +83,7 @@ function parseArticle(path, source) {
 
   return Object.freeze({
     slug,
+    state,
     order: data.order,
     title: requiredString(data, 'title', path),
     keywords: requiredStringList(data, 'keywords', path),

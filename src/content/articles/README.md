@@ -7,6 +7,7 @@ Required front matter:
 ```yaml
 ---
 slug: lowercase-url-slug
+state: observing
 order: 2
 title: Visible card title
 keywords:
@@ -22,6 +23,8 @@ status:
 note: Scope or evidence note.
 ---
 ```
+
+`state` must be one of `observing`, `building`, or `questioning`. The home-page navigation and article list are generated from this field.
 
 Write the article below the second `---` using standard Markdown headings, paragraphs, ordered lists, unordered lists, emphasis, and links. The build stops with a clear error when required metadata is missing, a slug is invalid, or two articles use the same slug.
 
