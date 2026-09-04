@@ -26,7 +26,7 @@
     margin: 0;
     background: var(--background);
     color: var(--foreground);
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Instrument Serif", Georgia, serif;
   }
 }
 
@@ -199,7 +199,7 @@
 }
 
 .theme-switch {
-  --toggle-size: 20px;
+  --toggle-size: 14px;
   --container-width: 5.625em;
   --container-height: 2.5em;
   --container-radius: 6.25em;
@@ -364,11 +364,11 @@
   left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter));
 }
 
-.theme-switch__circle-container:hover {
+.theme-switch__container:hover .theme-switch__circle-container {
   left: calc(var(--circle-container-offset) + 0.187em);
 }
 
-.theme-switch__checkbox:checked + .theme-switch__container .theme-switch__circle-container:hover {
+.theme-switch__checkbox:checked + .theme-switch__container:hover .theme-switch__circle-container {
   left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter) - 0.187em);
 }
 
@@ -432,7 +432,162 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: clamp(1.5rem, 4vw, 4rem);
-  margin-bottom: clamp(3rem, 5vw, 5rem);
+  margin-bottom: clamp(2.25rem, 4vw, 3.5rem);
+}
+
+.taotao-home-identity {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.taotao-home-identity .btn-wrapper {
+  margin-bottom: 0;
+}
+
+.taotao-hero {
+  width: min(100%, 72rem);
+  margin: 0 auto clamp(3rem, 6vw, 5rem);
+  overflow: hidden;
+  border: 1px solid rgb(30 30 30 / 20%);
+  border-radius: 1.25rem;
+  background: #161b1e;
+  box-shadow: 0 1.5rem 4rem rgb(25 31 34 / 12%);
+}
+
+.taotao-hero__track {
+  display: flex;
+  width: 100%;
+}
+
+.taotao-hero--multiple .taotao-hero__track {
+  width: max-content;
+  animation: taotao-hero-flow 28s linear infinite;
+}
+
+.taotao-hero--multiple:hover .taotao-hero__track {
+  animation-play-state: paused;
+}
+
+.taotao-hero__slide {
+  position: relative;
+  display: block;
+  flex: 0 0 min(72rem, calc(100vw - 3rem));
+  aspect-ratio: 16 / 6.5;
+  overflow: hidden;
+  color: #fff;
+  text-decoration: none;
+}
+
+.taotao-hero:not(.taotao-hero--multiple) .taotao-hero__slide {
+  flex-basis: 100%;
+}
+
+.taotao-hero__slide img {
+  display: block;
+  width: 108%;
+  height: 108%;
+  object-fit: cover;
+  object-position: center;
+  transform: translate3d(-2%, -2%, 0);
+  animation: taotao-hero-drift 14s ease-in-out infinite alternate;
+}
+
+.taotao-hero__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgb(0 0 0 / 62%), rgb(0 0 0 / 10%) 62%, rgb(0 0 0 / 22%));
+}
+
+.taotao-hero__content {
+  position: absolute;
+  right: clamp(1.25rem, 4vw, 3rem);
+  bottom: clamp(1.25rem, 4vw, 2.5rem);
+  left: clamp(1.25rem, 4vw, 3rem);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.taotao-hero__content strong {
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.9;
+}
+
+.taotao-hero__content small {
+  font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+  line-height: 1.3;
+  text-align: right;
+}
+
+@keyframes taotao-hero-drift {
+  to {
+    transform: translate3d(-5%, -5%, 0) scale(1.035);
+  }
+}
+
+@keyframes taotao-hero-flow {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.taotao-about-sheet {
+  width: min(100%, 64rem);
+  margin: clamp(4rem, 10vw, 8rem) auto 0;
+  padding-bottom: clamp(4rem, 10vw, 8rem);
+}
+
+.taotao-about-sheet h1 {
+  margin: 1rem 0 1.5rem;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: clamp(4rem, 12vw, 8rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.85;
+}
+
+.taotao-about-lede {
+  max-width: 42rem;
+  margin: 0;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2.2rem);
+  font-style: italic;
+  line-height: 1.15;
+}
+
+.taotao-about-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: clamp(4rem, 8vw, 7rem);
+  padding-top: 1rem;
+  border-top: 1px solid #252525;
+}
+
+.taotao-about-grid section {
+  min-height: 7rem;
+}
+
+.taotao-about-grid p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.taotao-about-label {
+  margin-bottom: 0.7rem !important;
+  color: #666;
+  font-size: 0.78rem;
+  font-style: italic;
+}
+
+.taotao-about-grid a {
+  color: inherit;
+  text-underline-offset: 0.18em;
 }
 
 .taotao-page h1 {
@@ -482,33 +637,102 @@
 }
 
 .taotao-current-state {
-  width: min(100%, 64rem);
+  position: relative;
+  width: min(100%, 48rem);
   margin-inline: auto;
-  margin-bottom: clamp(5rem, 7vw, 7rem);
+  margin-bottom: clamp(3rem, 5vw, 4.5rem);
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 68%);
+  border-radius: 1.5rem;
+  padding: clamp(1.75rem, 3.5vw, 2.75rem) clamp(1.25rem, 4vw, 3rem);
+  background: linear-gradient(135deg, rgb(255 255 255 / 48%), rgb(255 255 255 / 18%));
+  box-shadow: 0 1px 0 rgb(255 255 255 / 72%) inset, 0 1.5rem 3.5rem rgb(39 46 50 / 8%);
+  -webkit-backdrop-filter: blur(22px) saturate(120%);
+  backdrop-filter: blur(22px) saturate(120%);
   opacity: 0;
-  animation: taotao-state-enter 680ms cubic-bezier(0.22, 1, 0.36, 1) 1.55s both;
+  animation: taotao-state-enter 680ms cubic-bezier(0.22, 1, 0.36, 1) 1.35s both;
+}
+
+.taotao-current-state::before {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, rgb(255 255 255 / 28%), transparent 42%);
+  content: "";
+  pointer-events: none;
 }
 
 .taotao-current-state__copy {
+  position: relative;
+  z-index: 1;
   width: 100%;
 }
 
 .taotao-current-state__copy p {
   margin: 0;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.taotao-current-state__identity {
   color: #242424;
   font-family: "Instrument Serif", Georgia, serif;
   font-size: clamp(1.35rem, 1.25rem + 0.55vw, 1.75rem);
   font-style: italic;
   font-weight: 400;
   line-height: 1.3;
-  text-align: center;
-  text-wrap: balance;
+}
+
+.taotao-current-state__purpose {
+  max-width: 32rem;
+  margin: 0.9rem auto 0 !important;
+  color: #4b4b4b;
+  font-size: clamp(0.95rem, 0.9rem + 0.16vw, 1.05rem);
+  line-height: 1.65;
+}
+
+.taotao-current-state__focus {
+  margin-top: 2rem;
+  opacity: 0;
+  animation: taotao-focus-enter 480ms cubic-bezier(0.22, 1, 0.36, 1) 1.8s both;
+}
+
+.taotao-current-state__label {
+  color: #666;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.taotao-current-state__topics {
+  margin-top: 0.4rem !important;
+  color: #202020;
+  font-family: inherit;
+  font-size: clamp(0.82rem, 0.78rem + 0.14vw, 0.92rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.6;
 }
 
 @keyframes taotao-state-enter {
   from {
     opacity: 0;
     transform: translateY(0.75rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes taotao-focus-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.35rem);
   }
 
   to {
@@ -541,21 +765,409 @@
   }
 }
 
-.taotao-card-list {
+.taotao-projects {
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 20rem));
-  gap: clamp(1.5rem, 3vw, 2.5rem);
-  width: min(100%, 72rem);
+  grid-template-columns: minmax(8rem, 0.32fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(1.75rem, 5vw, 3.5rem);
+  width: min(100%, 56rem);
+  margin-bottom: clamp(2rem, 5vw, 4rem);
   margin-inline: auto;
-  padding: 0.4rem 0 1.6rem;
-  justify-content: center;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 52%);
+  border-radius: 1.5rem;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  background: rgb(255 255 255 / 20%);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 58%) inset, 0 1.25rem 3rem rgb(39 46 50 / 5%);
+  -webkit-backdrop-filter: blur(16px) saturate(112%);
+  backdrop-filter: blur(16px) saturate(112%);
+}
+
+.taotao-projects::before {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, rgb(255 255 255 / 18%), transparent 38%);
+  content: "";
+  pointer-events: none;
+}
+
+.taotao-projects__heading {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.1rem;
+  width: auto;
+  margin: 0;
+  padding-top: 0.35rem;
+}
+
+.taotao-projects__eyebrow {
+  margin: 0;
+  color: #777;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: 1.25rem;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.taotao-state-track {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.taotao-state-track__item {
+  color: #292929;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.taotao-state-track__item--observing {
+  font-weight: 400;
+}
+
+.taotao-state-track__item--building {
+  font-weight: 700;
+  transform: translateY(-0.12rem);
+}
+
+.taotao-state-track__item--questioning {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: 1.05rem;
+  font-style: italic;
+}
+
+.taotao-state-track__line {
+  width: 1.2rem;
+  height: 1px;
+  background: #b9b9b9;
+}
+
+.taotao-working-state {
+  width: min(100%, 72rem);
+  margin: 0 auto clamp(2rem, 5vw, 4rem);
+}
+
+.taotao-working-state__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 0 0.15rem;
+}
+
+.taotao-working-state__hint {
+  max-width: 28rem;
+  margin: 0;
+  color: #777;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  line-height: 1.2;
+  text-align: right;
+}
+
+.taotao-state-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 55%);
+  border-radius: 1.5rem;
+  background: rgb(80 80 80 / 22%);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 60%) inset, 0 1.25rem 3rem rgb(39 46 50 / 7%);
+}
+
+.taotao-state-column {
+  min-height: 22rem;
+  padding: clamp(1.1rem, 2.5vw, 1.75rem);
+  background: rgb(255 255 255 / 30%);
+}
+
+.taotao-state-column__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid rgb(80 80 80 / 24%);
+}
+
+.taotao-state-column__index {
+  color: #888;
+  font-family: inherit;
+  font-size: 0.65rem;
+  letter-spacing: 0;
+}
+
+.taotao-state-column h2 {
+  margin: 0;
+  color: #292929;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: clamp(1.65rem, 2.5vw, 2.2rem);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 0.95;
+}
+
+.taotao-state-column__placeholder {
+  max-width: 13rem;
+  margin: 2.25rem 0 0;
+  color: #707070;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: 1.35rem;
+  font-style: italic;
+  line-height: 1.1;
+}
+
+.taotao-state-column .taotao-card-list {
+  display: block;
+  padding: 1.25rem 0 0;
+}
+
+.taotao-state-column .taotao-flip-card {
+  width: min(100%, 15rem);
+  margin: 0 auto;
+}
+
+.taotao-state-nav {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  min-height: 5.5rem;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 52%);
+  border-radius: 1.25rem;
+  background: rgb(255 255 255 / 18%);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 58%) inset, 0 1rem 2.5rem rgb(39 46 50 / 5%);
+  -webkit-backdrop-filter: blur(16px) saturate(112%);
+  backdrop-filter: blur(16px) saturate(112%);
+}
+
+.taotao-state-nav button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 1rem clamp(0.8rem, 2.5vw, 1.75rem);
+  border-right: 1px solid rgb(80 80 80 / 20%);
+  border-top: 0;
+  border-bottom: 0;
+  border-left: 0;
+  background: transparent;
+  color: #353535;
+  font-family: inherit;
+  font-size: clamp(1.28rem, 1.16rem + 0.5vw, 1.55rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.15;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+
+.taotao-state-nav button:last-child {
+  border-right: 0;
+}
+
+.taotao-state-nav button:hover,
+.taotao-state-nav button.is-active {
+  color: #222;
+}
+
+.taotao-state-nav button::after {
+  position: absolute;
+  right: clamp(0.8rem, 2.5vw, 1.75rem);
+  bottom: 0;
+  left: clamp(0.8rem, 2.5vw, 1.75rem);
+  height: 2px;
+  background: currentColor;
+  content: "";
+  opacity: 0;
+  transform: scaleX(0.35);
+  transform-origin: left;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.taotao-state-nav button:hover::after,
+.taotao-state-nav button.is-active::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.taotao-state-nav button.is-active::before {
+  position: absolute;
+  right: clamp(0.8rem, 2.5vw, 1.75rem);
+  bottom: 0.65rem;
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 50%;
+  background: currentColor;
+  content: "";
+}
+
+.taotao-field-record {
+  width: min(100%, 72rem);
+  margin: clamp(2rem, 4vw, 2.5rem) auto 0;
+}
+
+.taotao-field-record__heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid #252525;
+  padding-bottom: 0.8rem;
+}
+
+.taotao-field-record__heading h2 {
+  margin: 0;
+  font-family: inherit;
+  font-size: clamp(1.6rem, 2.7vw, 2.25rem);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.taotao-field-record__heading span {
+  color: #777;
+  font-size: 0.78rem;
+}
+
+.taotao-reading-entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(18rem, 55%) minmax(0, 1fr) 2rem;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.6rem;
+  border: 1px solid rgb(30 30 30 / 22%);
+  border-radius: 0.5rem;
+  background: rgb(255 255 255 / 26%);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 180ms ease, border-color 180ms ease;
+}
+
+.taotao-reading-entry + .taotao-reading-entry {
+  margin-top: 1rem;
+}
+
+.taotao-reading-entry:hover {
+  background: rgb(255 255 255 / 34%);
+  border-color: rgb(30 30 30 / 38%);
+}
+
+.taotao-reading-entry__poster {
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 0.3rem;
+  background: #273640;
+}
+
+.taotao-reading-entry__poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 240ms ease, filter 240ms ease;
+}
+
+.taotao-reading-entry:hover .taotao-reading-entry__poster img {
+  filter: brightness(1.08);
+  transform: scale(1.025);
+}
+
+.taotao-reading-entry__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  font-family: "Instrument Serif", Georgia, serif;
+}
+
+.taotao-reading-entry__title {
+  color: #171717;
+  font-size: clamp(1.5rem, 1.35rem + 0.55vw, 1.8rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.taotao-reading-entry__keywords {
+  color: #444;
+  font-size: clamp(1.02rem, 0.96rem + 0.2vw, 1.12rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.taotao-reading-entry__abstract {
+  display: -webkit-box;
+  overflow: hidden;
+  color: #555;
+  font-size: clamp(1rem, 0.94rem + 0.2vw, 1.1rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.taotao-reading-entry__arrow {
+  justify-self: end;
+  color: #777;
+  font-size: 1.2rem;
+  transition: transform 180ms ease, color 180ms ease;
+}
+
+.taotao-reading-entry:hover .taotao-reading-entry__arrow {
+  color: inherit;
+  transform: translateX(0.2rem);
+}
+
+.taotao-reading-entry--empty {
+  min-height: 9rem;
+  border-style: dashed;
+  border-color: rgb(30 30 30 / 14%);
+  background: rgb(255 255 255 / 10%);
+}
+
+.taotao-reading-entry--empty .taotao-reading-entry__poster {
+  background: rgb(80 80 80 / 7%);
+}
+
+.taotao-reading-empty {
+  margin: 1.25rem 0 0;
+  color: #777;
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+.taotao-card-list {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 17rem));
+  gap: clamp(1.25rem, 3vw, 1.75rem);
+  width: 100%;
+  margin: 0;
+  padding: 0.4rem 0 0.25rem;
+  justify-content: start;
 }
 
 .taotao-flip-card {
   position: relative;
-  width: min(100%, 20rem);
+  width: min(100%, 17rem);
   justify-self: center;
-  aspect-ratio: 190 / 254;
+  aspect-ratio: 3 / 4;
   overflow: visible;
   perspective: 1200px;
   isolation: isolate;
@@ -669,7 +1281,7 @@
   border-top: 1px solid #252525;
   padding-top: 1rem;
   color: #383838;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: inherit;
   font-size: clamp(0.78rem, 0.72rem + 0.2vw, 0.9rem);
   line-height: 1.55;
   overflow-wrap: anywhere;
@@ -1034,9 +1646,116 @@
   outline-color: #f1f1ed;
 }
 
-:root[data-theme="dark"] .taotao-current-state__copy p,
+:root[data-theme="dark"] .taotao-current-state__identity,
 :root[data-theme="dark"] .taotao-article-lede {
   color: #ddddda;
+}
+
+:root[data-theme="dark"] .taotao-current-state__purpose,
+:root[data-theme="dark"] .taotao-current-state__label {
+  color: #aaa9a3;
+}
+
+:root[data-theme="dark"] .taotao-current-state__topics {
+  color: #f1f1ed;
+}
+
+:root[data-theme="dark"] .taotao-current-state {
+  border-color: rgb(255 255 255 / 11%);
+  background: linear-gradient(135deg, rgb(255 255 255 / 8%), rgb(255 255 255 / 2%));
+  box-shadow: 0 1px 0 rgb(255 255 255 / 8%) inset, 0 1.5rem 3.5rem rgb(0 0 0 / 22%);
+}
+
+:root[data-theme="dark"] .taotao-current-state::before {
+  background: linear-gradient(115deg, rgb(255 255 255 / 5%), transparent 42%);
+}
+
+:root[data-theme="dark"] .taotao-projects {
+  border-color: rgb(255 255 255 / 9%);
+  background: rgb(255 255 255 / 4%);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 7%) inset, 0 1.25rem 3rem rgb(0 0 0 / 18%);
+}
+
+:root[data-theme="dark"] .taotao-projects::before {
+  background: linear-gradient(115deg, rgb(255 255 255 / 4%), transparent 38%);
+}
+
+:root[data-theme="dark"] .taotao-projects__eyebrow,
+:root[data-theme="dark"] .taotao-state-track__item {
+  color: #d0d0cb;
+}
+
+:root[data-theme="dark"] .taotao-state-track__line {
+  background: #595954;
+}
+
+:root[data-theme="dark"] .taotao-state-nav {
+  border-color: rgb(255 255 255 / 10%);
+  background: rgb(255 255 255 / 4%);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 8%) inset, 0 1rem 2.5rem rgb(0 0 0 / 18%);
+}
+
+:root[data-theme="dark"] .taotao-state-nav button {
+  border-color: rgb(255 255 255 / 14%);
+  color: #ddddda;
+}
+
+:root[data-theme="dark"] .taotao-state-nav button:hover,
+:root[data-theme="dark"] .taotao-state-nav button.is-active,
+:root[data-theme="dark"] .taotao-reading-entry__title {
+  color: #f1f1ed;
+}
+
+:root[data-theme="dark"] .taotao-reading-entry__keywords,
+:root[data-theme="dark"] .taotao-reading-entry__abstract {
+  color: #c9c9c4;
+}
+
+:root[data-theme="dark"] .taotao-reading-entry {
+  border-color: rgb(255 255 255 / 16%);
+  background: rgb(255 255 255 / 4%);
+}
+
+:root[data-theme="dark"] .taotao-reading-entry:hover {
+  border-color: rgb(255 255 255 / 28%);
+  background: rgb(255 255 255 / 7%);
+}
+
+:root[data-theme="dark"] .taotao-reading-entry--empty {
+  border-color: rgb(255 255 255 / 10%);
+  background: rgb(255 255 255 / 2%);
+}
+
+:root[data-theme="dark"] .taotao-reading-entry--empty .taotao-reading-entry__poster {
+  background: rgb(255 255 255 / 4%);
+}
+
+:root[data-theme="dark"] .taotao-hero {
+  border-color: rgb(255 255 255 / 14%);
+  box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 24%);
+}
+
+:root[data-theme="dark"] .taotao-working-state__hint,
+:root[data-theme="dark"] .taotao-state-column__placeholder {
+  color: #aaa9a3;
+}
+
+:root[data-theme="dark"] .taotao-state-grid {
+  border-color: rgb(255 255 255 / 10%);
+  background: rgb(255 255 255 / 12%);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 8%) inset, 0 1.25rem 3rem rgb(0 0 0 / 20%);
+}
+
+:root[data-theme="dark"] .taotao-state-column {
+  background: rgb(255 255 255 / 5%);
+}
+
+:root[data-theme="dark"] .taotao-state-column__header {
+  border-color: rgb(255 255 255 / 16%);
+}
+
+:root[data-theme="dark"] .taotao-state-column h2 {
+  color: #f1f1ed;
 }
 
 :root[data-theme="dark"] .taotao-flip-card .back {
@@ -1120,7 +1839,36 @@
   .taotao-home-header {
     flex-direction: column;
     align-items: stretch;
+    margin-bottom: 2.25rem;
+  }
+
+  .taotao-home-identity {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .taotao-home-identity .btn-wrapper {
+    margin-bottom: 0;
+  }
+
+  .taotao-hero {
     margin-bottom: 3rem;
+    border-radius: 1rem;
+  }
+
+  .taotao-hero__slide {
+    flex-basis: calc(100vw - 2rem);
+    aspect-ratio: 16 / 9;
+  }
+
+  .taotao-hero__content {
+    display: block;
+  }
+
+  .taotao-hero__content small {
+    display: block;
+    margin-top: 0.6rem;
+    text-align: left;
   }
 
   .taotao-home-header .theme-switch {
@@ -1128,16 +1876,91 @@
   }
 
   .taotao-current-state {
-    margin-bottom: 4rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .taotao-about-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .taotao-projects {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 1.25rem 1rem 1.5rem;
+  }
+
+  .taotao-projects__heading {
+    padding-top: 0;
+  }
+
+  .taotao-working-state__header {
+    display: block;
+  }
+
+  .taotao-working-state__hint {
+    margin-top: 0.65rem;
+    text-align: left;
+  }
+
+  .taotao-state-nav button {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.85rem 0.5rem;
+    font-size: clamp(1.05rem, 4vw, 1.25rem);
+  }
+
+  .taotao-state-nav button::after {
+    right: 0.5rem;
+    left: 0.5rem;
+  }
+
+  .taotao-state-nav button.is-active::before {
+    right: 0.5rem;
+  }
+
+  .taotao-reading-entry {
+    grid-template-columns: minmax(7.5rem, 42%) minmax(0, 1fr) 1.5rem;
+    gap: 0.75rem;
+    padding: 0.55rem;
+  }
+
+  .taotao-reading-entry__arrow {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .taotao-reading-entry__abstract {
+    font-size: 0.95rem;
+    line-height: 1.45;
+    -webkit-line-clamp: 2;
+  }
+
+  .taotao-state-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .taotao-state-column {
+    min-height: 12rem;
+  }
+
+  .taotao-state-column .taotao-card-list {
+    padding-top: 1rem;
   }
 
   .taotao-card-list {
     grid-template-columns: minmax(0, 1fr);
     width: min(100%, 24rem);
+    justify-content: center;
+  }
+
+  .taotao-projects__heading {
+    width: min(100%, 18rem);
   }
 
   .taotao-flip-card {
-    width: min(100%, 18rem);
+    width: min(100%, 17rem);
   }
 
   .taotao-article-header {
@@ -1162,9 +1985,15 @@
     stroke-opacity: 0;
   }
 
-  .taotao-current-state {
+  .taotao-current-state,
+  .taotao-current-state__focus {
     animation: none;
     opacity: 1;
+  }
+
+  .taotao-hero__track,
+  .taotao-hero__slide img {
+    animation: none !important;
   }
 
   .gradient-layer,

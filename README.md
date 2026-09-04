@@ -1,4 +1,4 @@
-# τaotao
+# τaotao's blog
 
 A small public-learning notebook for robotics, AI, and the questions in between.
 
@@ -18,6 +18,8 @@ The active product, content principle, implementation boundaries, and branch rul
 - `npm run build` — create a production build
 - `npm run preview` — preview the production build
 
-## Writing articles
+## Writing
 
-Published cards and their article pages come from `src/content/articles/*.article.md`. See [the authoring guide](src/content/articles/README.md) for the required metadata and Markdown format.
+Published records and their article pages come from `src/content/articles/*.article.md`. Each record declares one home-page state: `observing`, `building`, or `questioning`. See [the authoring guide](src/content/articles/README.md) for the required metadata and Markdown format.
+
+The personal introduction draft lives in `src/content/about-me.md`. It is not yet connected to the visible home-page navigation.
