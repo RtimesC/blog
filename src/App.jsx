@@ -27,6 +27,25 @@ function BlankArticlePage({ checked, onThemeChange }) {
   );
 }
 
+function ArticleVideo({ video }) {
+  if (!video) {
+    return null;
+  }
+
+  return (
+    <figure className="taotao-article-video">
+      <video controls playsInline preload="metadata" poster={video.poster}>
+        <source src={video.src} type="video/mp4" />
+        Your browser does not support embedded video.
+      </video>
+      <figcaption>
+        <span>{video.label}</span>
+        {video.caption}
+      </figcaption>
+    </figure>
+  );
+}
+
 function ArticlePage({ article, checked, onThemeChange }) {
   return (
     <main className="taotao-article-page">
@@ -41,6 +60,8 @@ function ArticlePage({ article, checked, onThemeChange }) {
           </div>
           <p className="taotao-article-note">{article.note}</p>
         </header>
+
+        <ArticleVideo video={article.video} />
 
         <div className="taotao-article-body">
           <div className="taotao-markdown">
