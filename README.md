@@ -2,7 +2,7 @@
 
 A small public-learning notebook for robotics, AI, and the questions in between.
 
-> `main` owns the active 2D Notes experience. The earlier 3D experiment is retained only in `codex/3d-pending`; see [BRANCHING.md](BRANCHING.md) before working with that snapshot.
+The active product, content principle, implementation boundaries, and branch rules are maintained in [PROJECT.md](PROJECT.md).
 
 ## Stack
 

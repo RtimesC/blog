@@ -17,4 +17,4 @@ The complete license is included as [`LICENSE-OFL-1.1.txt`](public/fonts/LICENSE
 
 ## Local-only review assets
 
-`tmp/local-reference/zorti-corridor-portrait-v2.png` remains a local, untracked character-reference preview only. It is not currently referenced by the corridor and must not be committed, pushed, or deployed until its source, author, licence or permission, and required attribution have been documented. See [PROJECT.md](PROJECT.md) for the current review boundary.
+`tmp/local-reference/zorti-corridor-portrait-v2.png` remains a local, untracked character-reference preview only. It is not currently referenced by the corridor and must not be committed, pushed, or deployed until its source, author, licence or permission, and required attribution have been documented.
