@@ -2,7 +2,7 @@
 slug: phyagent-opc
 state: building
 order: 1
-title: 数据不够时，AI 去现场找答案
+title: PhyAgent
 keywords:
   - OPC
   - Physical AI
@@ -11,7 +11,7 @@ abstract: >-
   PhyAgent is an industrial investigation and orchestration system between factory data and field devices. Its local POC demonstrates how an AI can request physical evidence, select a suitable device, and keep the investigation open until the required evidence is available. Factory data and device actions are simulated for the 2026 息壤杯 OPC competition.
 cover: /assets/phyagent-opc-cover.png
 kicker: PhyAgent / 2026 息壤杯 OPC / 工业现场智能调查与调度系统
-lede: 工业系统往往知道异常在哪里，却不知道现场发生了什么。
+lede: 数据不够时，AI 去现场找答案。
 video:
   src: /assets/phyagent-opc/phyagent-concept-film.mp4
   poster: /assets/phyagent-opc/concept-film-poster.jpg
