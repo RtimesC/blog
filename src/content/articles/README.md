@@ -30,6 +30,8 @@ Prefer plain, concrete language. Describe what the system reads, decides, select
 
 Do not use horizontal divider lines to separate the article header, sections, headings, paragraphs, or list items. Build the reading structure with continuous paragraphs and whitespace instead.
 
+Open with a concrete scene, event, or question before introducing the project or product that addresses it. Let the reader understand the problem first, then name and explain the solution. Preserve official product names exactly when they appear.
+
 An article may also place one locally hosted MP4 between its header and body:
 
 ```yaml

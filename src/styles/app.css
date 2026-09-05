@@ -1443,7 +1443,7 @@
 }
 
 .taotao-article-header {
-  width: min(100%, 42rem);
+  width: min(100%, 52rem);
   margin: 0 auto;
   padding: 3rem 0 4rem;
   text-align: center;
@@ -1471,7 +1471,7 @@
 }
 
 .taotao-article-lede {
-  max-width: 42rem;
+  max-width: 52rem;
   margin: 0;
   color: #242424;
   font-size: 1rem;
@@ -1479,7 +1479,7 @@
 }
 
 .taotao-article-video {
-  width: min(100%, 36rem);
+  width: min(100%, 44rem);
   margin: 0 auto 4rem;
 }
 
@@ -1491,7 +1491,7 @@
 }
 
 .taotao-article-body {
-  width: min(100%, 42rem);
+  width: min(100%, 52rem);
   margin: 0 auto;
   text-align: center;
 }
@@ -1501,7 +1501,7 @@
 }
 
 .taotao-markdown h2 {
-  max-width: 42rem;
+  max-width: 52rem;
   margin: 4rem auto 1.25rem;
   color: #111;
   font-size: 1.15rem;
@@ -1519,12 +1519,12 @@
 .taotao-markdown > blockquote,
 .taotao-markdown > pre,
 .taotao-markdown > h3 {
-  max-width: 42rem;
+  max-width: 52rem;
 }
 
 .taotao-markdown p,
 .taotao-markdown li {
-  max-width: 42rem;
+  max-width: 52rem;
   margin: 0 auto 1rem;
   color: #303030;
   font-size: 1rem;
@@ -1562,7 +1562,7 @@
 }
 
 .taotao-markdown blockquote {
-  max-width: 42rem;
+  max-width: 52rem;
   margin: 0 auto;
   padding: 0 0 0 1.25rem;
   border-left: 2px solid #111;
@@ -1578,7 +1578,7 @@
 }
 
 .taotao-markdown pre {
-  max-width: 42rem;
+  max-width: 52rem;
   margin: 1.5rem auto;
   padding: 1.15rem 1.25rem;
   overflow-x: auto;
@@ -1592,7 +1592,7 @@
 .taotao-markdown img {
   display: block;
   width: 100%;
-  max-width: 36rem;
+  max-width: 44rem;
   height: auto;
   margin: 2rem auto 0.8rem;
   border: 1px solid #bcbcbc;
@@ -1607,12 +1607,12 @@
 }
 
 .taotao-markdown p:has(> img:only-child) {
-  max-width: 36rem;
+  max-width: 44rem;
   margin-bottom: 0;
 }
 
 .taotao-markdown p:has(> img:only-child) + p:has(> em:only-child) {
-  max-width: 36rem;
+  max-width: 44rem;
   margin: 0 auto 2rem;
   color: #666;
   font-size: 1rem;

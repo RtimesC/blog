@@ -2,7 +2,7 @@
 slug: phyagent-opc
 state: building
 order: 1
-title: PhyAgent
+title: 3 号 SMT 产线为什么连续出现贴装异常？
 keywords:
   - OPC
   - Physical AI
@@ -10,22 +10,22 @@ keywords:
 abstract: >-
   PhyAgent is an industrial investigation and orchestration system between factory data and field devices. Its local POC demonstrates how an AI can request physical evidence, select a suitable device, and keep the investigation open until the required evidence is available. Factory data and device actions are simulated for the 2026 息壤杯 OPC competition.
 cover: /assets/phyagent-opc-cover.png
-kicker: PhyAgent / 2026 息壤杯 OPC / 工业现场智能调查与调度系统
-lede: 数据不够时，AI 去现场找答案。
+kicker: 一次从数字记录走向现场的调查
+lede: MES 和 AOI 已经指出异常位置，但真正的原因还藏在现场。
 video:
   src: /assets/phyagent-opc/phyagent-concept-film.mp4
   poster: /assets/phyagent-opc/concept-film-poster.jpg
 ---
 
-## 现场为什么还需要调查
+在当前演示里，用户只说了一句话：“3号 SMT 产线今天连续出现贴装异常，请帮我调查原因。”MES、AOI 和维护记录很快把范围缩小到 Mounter-02，却仍然不能回答现场到底发生了什么。送料是否正常、连接有没有松动、关键位置是否被遮挡，这些情况不在现有记录里，必须到机器旁边看一眼才能继续判断。
 
-工厂里已经有 MES、AOI、告警、维修记录和设备手册。这些系统很擅长告诉人们哪条产线报警了、哪台设备出现异常，却不一定能解释现场到底发生了什么。送料是否正常、连接有没有松动、关键位置是否被遮挡，这些情况往往还要到机器旁边看。传统做法通常由人先决定去哪里、拍什么，再让机器人按设定好的路线执行。机器人能完成任务，但不会自己追问还缺少什么信息。
+传统流程通常需要人先决定去哪里、拍什么，再让机器人沿设定好的路线执行。这样可以完成巡检，却很难随着调查结果改变下一步行动。如果第一次观察没有找到原因，人还要重新查看材料、提出新的检查要求，再安排设备执行。问题并不是工厂没有数据或没有机器人，而是两者之间缺少一个能把问题继续查下去的系统。
 
-PhyAgent 想做的事情很直接。用户只需要提出一个问题，例如“帮我调查 3 号产线为什么连续出现贴装异常”，不必先设计巡检路线。系统会先查已有记录。如果这些记录还不能说明原因，它就判断下一步要去现场看什么，再选择能够完成这次观察的设备。小车、无人机、机器狗和机械臂不再只会重复固定任务，它们也可以成为 AI 查清问题时使用的现场工具。当前 POC 从 SMT 贴装异常开始演示，但这个思路也可以用于其他生产设备、厂务设施和园区仓储。
+## PhyAgent 怎样接着查下去
 
-## PhyAgent 怎样连接数据和现场设备
+PhyAgent 就是为这一步设计的。用户提出要调查的问题，不必先给出巡检路线。系统会先查已有记录，弄清楚已经知道什么、还缺什么。如果数字记录仍然不能说明原因，它就决定下一步要去现场看什么，再选择能够完成这次观察的设备。需要在地面移动并近距离拍摄时可以选择 Rover，需要从高处观察或跨区域移动时可以选择 Drone。小车、无人机、机器狗和机械臂不再只会重复固定任务，它们也可以成为 AI 查清问题时使用的现场工具。
 
-PhyAgent 放在工厂数据和现场设备之间。一边是 MES、AOI、手册和历史记录，另一边是 Rover、Drone 和其他能够进入现场的设备。系统收到问题后，先弄清楚要调查什么、已经知道什么、还缺什么，再去查手册和 SOP。到了需要现场观察的时候，它会先说明这次任务需要哪些能力，然后从已经登记的设备中选择合适的一台。需要在地面移动并近距离拍摄时可以选择 Rover，需要从高处观察或跨区域移动时可以选择 Drone。设备没有被写死在某一条流程里，系统每次都根据眼前的问题来选择。
+PhyAgent 放在工厂数据和现场设备之间。一边是 MES、AOI、手册和历史记录，另一边是 Rover、Drone 和其他能够进入现场的设备。它会把一个问题拆成几次具体的查询和观察，先查手册和 SOP，再说明现场任务需要哪些能力，然后从已经登记的设备中选择合适的一台。设备没有被写死在某一条流程里，系统每次都根据眼前的问题来选择。当前 POC 从 SMT 贴装异常开始演示，但这个思路也可以用于其他生产设备、厂务设施和园区仓储。
 
 模型、PhyAgent 和机器人各自负责不同的事情。模型理解问题，提出下一步要查什么以及为什么要查。PhyAgent 决定调用哪个工具、选择哪台设备，并把调查过程和取得的信息记录下来。机器人继续负责导航、避障和运动控制，自己判断怎样安全到达目标位置。大模型不能直接控制轮子，也不能跳过系统规定的步骤。5G 负责在设备移动时保持连接，用来下发任务和传回现场图像或视频；它不会替 AI 作判断，也不会代替机器人的本地控制。
 
