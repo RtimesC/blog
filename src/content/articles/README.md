@@ -9,8 +9,8 @@
 ```yaml
 ---
 slug: my-note
+publishedAt: 2026-09-06
 state: observing
-order: 2
 title: "[文章标题]"
 authors:
   - "[作者署名]"
@@ -24,7 +24,7 @@ references: []
 
 第二条 `---` 后是 Markdown 正文。不要重复填写主标题、作者、摘要、关键词或参考文献标题，这些由页面生成。正文按需使用 `##`、`###` 分级标题，不强制固定章节名称。
 
-`slug` 仅使用小写字母、数字与单个连字符，对应 `/articles/<slug>`；`state` 为 `observing`、`building`、`questioning` 之一；`order` 为整数。`authors`、`keywords` 必须是非空字符串列表。`references` 为必填列表，无文献写 `[]`。缺少必填字段或重复 slug 会使构建失败。
+`slug` 仅使用小写字母、数字与单个连字符，对应 `/articles/<slug>`；`publishedAt` 是作者确定的公开记录日期，必须使用真实的 `YYYY-MM-DD` 日期；`state` 为 `observing`、`building`、`questioning` 之一。首页按 `publishedAt` 从新到旧排列。`authors`、`keywords` 必须是非空字符串列表。`references` 为必填列表，无文献写 `[]`。缺少必填字段或重复 slug 会使构建失败。
 
 ## 引用
 
