@@ -14,21 +14,14 @@ One article is one independently readable record that can be understood in a few
 
 An article may document a project step, technical question, experiment, observation, failure, unresolved uncertainty, or viewpoint. It does not need to answer a prescribed set of questions, nor must it be a completed project. When a topic develops into a distinct new stage or idea, create another article instead of making the previous record carry unrelated material.
 
-The homepage is organized by working state rather than conventional content type:
-
-- `observing`: material currently being learned or examined;
-- `building`: authored work, experiments, and implementations;
-- `questioning`: unresolved questions and uncertainties.
-
-These states describe where a record sits in the learning process. They are not claims about completion or technical validation.
+The homepage is a direct, reverse-chronological reading list. Article state remains content metadata but is not currently exposed as visitor navigation.
 
 ## Experience
 
-- The homepage opens with the animated `Welcome τaotao's blog` identity. Its header keeps a normal-flow `About` entry at the far right and a theme selector.
-- A wide Hero surface presents published article covers. One article uses a slow image drift; multiple articles form a continuous horizontal reel.
-- A thin frosted navigation switches between `Observing`, `Building`, and `Questioning` without displaying artificial sequence numbers or content counts.
-- The selected state shows large article cards with a 16:9 poster above a distinct title-and-keywords area. The entire card links to the article. Authors and abstracts appear only on article pages. Shared styles live in `src/styles/article-list.css`.
-- Empty categories explicitly say that no articles are available.
+- The homepage header presents `τaotao` as the identity, a lightweight welcome line, a normal-flow `About` entry at the far right, and a theme selector.
+- Published articles appear directly in reverse chronological order. One article stays centered; multiple articles use up to two columns when the available width allows it.
+- Article cards put the title first, then a large 16:9 poster, then a lightweight date and keywords. The entire card links to the article. Authors and abstracts appear only on article pages. Shared styles live in `src/styles/article-list.css`.
+- When no articles exist, the homepage explicitly says so.
 - An article opens `/articles/<slug>`, where the full Markdown record appears with its context, status, and scope note.
 - The existing published article is `PhyAgent`, a local OPC competition POC in the `building` state.
 - Light and dark themes, keyboard focus, touch interaction, and reduced-motion support are implemented.
@@ -38,9 +31,10 @@ These states describe where a record sits in the learning process. They are not 
 Published records live at `src/content/articles/*.article.md`.
 
 - The YAML front matter creates the homepage card and article header.
-- The required `state` field drives home-page selection and filtering. It accepts only `observing`, `building`, or `questioning`.
+- The required `publishedAt` field records the author-selected public date in `YYYY-MM-DD` form and determines homepage order.
+- The required `state` field accepts `observing`, `building`, or `questioning`; it is retained as content metadata for future use.
 - The Markdown body creates the article itself.
-- `src/content/articles.js` validates states, required fields, slugs, non-empty bodies, integer ordering, and unique slugs at build time.
+- `src/content/articles.js` validates states, publication dates, required fields, slugs, non-empty bodies, and unique slugs at build time.
 - The exact authoring format is maintained in [src/content/articles/README.md](src/content/articles/README.md).
 - Article pages use a fixed paper-style template in `src/styles/article.css`. The template renders title, authors, abstract, keywords, body, and references. Visual parameters and author/AI editing boundaries are maintained in [ARTICLE_STYLE_GUIDE.md](ARTICLE_STYLE_GUIDE.md); the first implementation awaits Tao’s visual acceptance.
 
@@ -52,7 +46,7 @@ For content with factual or technical claims, distinguish clearly between `已�
 - Article routes are client-rendered; `vercel.json` rewrites requests to `/index.html` so direct article visits and refreshes work on Vercel.
 - Content is versioned Markdown. A private editor, database, and content-history interface are not part of the current product.
 - `src/content/about-me.md` is a deliberately incomplete author draft. The homepage exposes its `/about` route from the far-right header entry; the entry scrolls away with the page, alongside the theme selector.
-- The visual language uses a restrained background, editorial serif typography, lightly frosted state navigation, poster-and-title article cards, the animated identity, and the theme selector.
+- The visual language uses a restrained background, editorial serif typography, poster-led article cards, a light identity line, and the theme selector.
 
 ## Working rules
 
@@ -65,7 +59,7 @@ For content with factual or technical claims, distinguish clearly between `已�
 ## Open decisions
 
 - Decide the language and publishing rhythm after several real records exist. Abstracts and article bodies may follow the needs of their content.
-- Reassess Hero repetition and reel timing after more than one real article exists.
+- Reassess whether article state should return as visitor navigation after several real records exist.
 - Defer cross-article relationships and archive views until published records reveal a real need.
 - Keep a private editor and database as future options, not current requirements.
 

@@ -6,7 +6,13 @@ import { articles, getArticleBySlug } from '@/content/articles';
 import { ThemeSwitch } from '@/components/theme-switch';
 import { useTheme } from '@/hooks/use-theme';
 
-const pageTitle = "Welcome τaotao's blog";
+const homeBrand = 'τaotao';
+const homeWelcome = "Welcome τaotao's blog";
+const homeDocumentTitle = 'τaotao — learning in public';
+
+function formatPublishedAt(value) {
+  return value.replaceAll('-', '.');
+}
 
 function ArticleToolbar({ theme, onChange, plain = false }) {
   return (
@@ -19,16 +25,21 @@ function ArticleToolbar({ theme, onChange, plain = false }) {
   );
 }
 
-function BlankArticlePage({ theme, onThemeChange }) {
+function MissingArticlePage({ theme, onThemeChange, headingRef }) {
   return (
     <main className="taotao-article-page">
       <ArticleToolbar theme={theme} onChange={onThemeChange} />
-      <article className="taotao-article-sheet" aria-label="Blank page" />
+      <article className="taotao-article-sheet">
+        <header className="taotao-article-header">
+          <h1 ref={headingRef} tabIndex={-1}>未找到文章</h1>
+          <p className="taotao-article-lede">这篇文章可能尚未发布、已移动，或链接不正确。你可以返回首页继续浏览。</p>
+        </header>
+      </article>
     </main>
   );
 }
 
-function AboutPage({ theme, onThemeChange }) {
+function AboutPage({ theme, onThemeChange, headingRef }) {
   return (
     <main className="taotao-article-page taotao-about-page">
       <div className="taotao-article-toolbar">
@@ -39,7 +50,7 @@ function AboutPage({ theme, onThemeChange }) {
       </div>
       <article className="taotao-about-sheet">
         <p className="taotao-article-kicker">About me</p>
-        <h1>τaotao</h1>
+        <h1 ref={headingRef} tabIndex={-1}>τaotao</h1>
         <p className="taotao-about-lede">I study Mechatronics and Robotics through building, testing, and questioning.</p>
         <div className="taotao-about-grid">
           <section>
@@ -75,13 +86,13 @@ function ArticleVideo({ video }) {
   );
 }
 
-function ArticlePage({ article, theme, onThemeChange }) {
+function ArticlePage({ article, theme, onThemeChange, headingRef }) {
   return (
     <main className="taotao-article-page paper-article">
       <ArticleToolbar theme={theme} onChange={onThemeChange} plain />
       <article className="taotao-article-sheet taotao-article-sheet--full">
         <header className="taotao-article-header">
-          <h1>{article.title}</h1>
+          <h1 ref={headingRef} tabIndex={-1}>{article.title}</h1>
           <p className="paper-authors"><span className="paper-field-label">作者</span>{article.authors.join(' · ')}</p>
         </header>
 
@@ -167,32 +178,22 @@ function FlipCard({ entry }) {
   );
 }
 
-function HeroReel() {
-  const reelEntries = articles.length > 1 ? [...articles, ...articles] : articles;
-
-  return (
-    <section className={`taotao-hero${articles.length > 1 ? ' taotao-hero--multiple' : ''}`} aria-label="Featured articles">
-      <div className="taotao-hero__track">
-        {reelEntries.map((entry, index) => (
-          <a className="taotao-hero__slide" href={`/articles/${entry.slug}`} key={`${entry.slug}-${index}`}>
-            <img src={entry.cover} alt="" />
-            <span className="taotao-hero__shade" aria-hidden="true" />
-            <span className="taotao-hero__content">
-              <strong>{entry.title}</strong>
-              <small>{entry.keywords.join(' · ')}</small>
-            </span>
-          </a>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 export default function App() {
   const { theme, setTheme } = useTheme();
-  const [activeState, setActiveState] = useState('building');
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
-  const visibleArticles = articles.filter((entry) => entry.state === activeState);
+  const pageHeadingRef = useRef(null);
+  const shouldFocusAfterNavigationRef = useRef(false);
+  const currentArticle = currentPath.startsWith('/articles/')
+    ? getArticleBySlug(currentPath.replace(/^\/articles\//, '').replace(/\/+$/, ''))
+    : null;
+  const isMissingArticle = currentPath.startsWith('/articles/') && !currentArticle;
+  const documentTitle = currentPath === '/about'
+    ? 'About — τaotao'
+    : currentArticle
+      ? `${currentArticle.title} — τaotao`
+      : isMissingArticle
+        ? '未找到文章 — τaotao'
+        : homeDocumentTitle;
 
   useEffect(() => {
     function handleInternalNavigation(event) {
@@ -209,12 +210,14 @@ export default function App() {
       }
 
       event.preventDefault();
+      shouldFocusAfterNavigationRef.current = true;
       window.history.pushState({}, '', `${destination.pathname}${destination.search}${destination.hash}`);
       setCurrentPath(destination.pathname);
       window.scrollTo({ top: 0, behavior: 'auto' });
     }
 
     function handleHistoryChange() {
+      shouldFocusAfterNavigationRef.current = true;
       setCurrentPath(window.location.pathname);
     }
 
@@ -227,38 +230,35 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    document.title = documentTitle;
+
+    if (!shouldFocusAfterNavigationRef.current) {
+      return;
+    }
+
+    shouldFocusAfterNavigationRef.current = false;
+    pageHeadingRef.current?.focus({ preventScroll: true });
+  }, [currentPath, documentTitle]);
+
   let page;
 
   if (currentPath === '/about') {
-    page = <AboutPage theme={theme} onThemeChange={setTheme} />;
+    page = <AboutPage theme={theme} onThemeChange={setTheme} headingRef={pageHeadingRef} />;
   } else if (currentPath.startsWith('/articles/')) {
-    const slug = currentPath.replace(/^\/articles\//, '').replace(/\/+$/, '');
-    const article = getArticleBySlug(slug);
-
-    page = article
-      ? <ArticlePage article={article} theme={theme} onThemeChange={setTheme} />
-      : <BlankArticlePage theme={theme} onThemeChange={setTheme} />;
+    page = currentArticle
+      ? <ArticlePage article={currentArticle} theme={theme} onThemeChange={setTheme} headingRef={pageHeadingRef} />
+      : <MissingArticlePage theme={theme} onThemeChange={setTheme} headingRef={pageHeadingRef} />;
   } else {
     page = (
       <main className="taotao-page">
         <div className="taotao-shell">
           <div className="taotao-home-header">
             <div className="taotao-home-identity">
-              <h1 aria-label={pageTitle}>
-                <svg aria-hidden="true" className="taotao-title" focusable="false" viewBox="0 0 900 100">
-                  <text className="taotao-title__text" x="5" xmlSpace="preserve" y="77">
-                    {Array.from(pageTitle).map((character, index) => (
-                      <tspan
-                        className={`taotao-title__character${character === 'τ' ? ' taotao-title__tau' : ''}`}
-                        key={`${character}-${index}`}
-                        style={{ '--character-delay': `${index * 75}ms` }}
-                      >
-                        {character}
-                      </tspan>
-                    ))}
-                  </text>
-                </svg>
+              <h1 className="taotao-home-brand" ref={pageHeadingRef} tabIndex={-1}>
+                <a className="taotao-home-brand__link" href="/">{homeBrand}</a>
               </h1>
+              <p className="taotao-home-welcome">{homeWelcome}</p>
             </div>
             <div className="taotao-home-actions">
               <AboutButton />
@@ -266,29 +266,22 @@ export default function App() {
             </div>
           </div>
 
-          <HeroReel />
-
-          <section className="taotao-working-state" aria-label="Working state">
-            <nav className="taotao-state-nav" aria-label="Working states">
-              <button className={activeState === 'observing' ? 'is-active' : ''} onClick={() => setActiveState('observing')} type="button">Observing</button>
-              <button className={activeState === 'building' ? 'is-active' : ''} onClick={() => setActiveState('building')} type="button">Building</button>
-              <button className={activeState === 'questioning' ? 'is-active' : ''} onClick={() => setActiveState('questioning')} type="button">Questioning</button>
-            </nav>
-          </section>
-
-          <section className="paper-index" aria-label="文章列表">
+          <section className={`paper-index${articles.length === 1 ? ' paper-index--single' : ' paper-index--multiple'}`} aria-label="文章列表">
             <div className="paper-index__list">
-              {visibleArticles.length > 0 ? visibleArticles.map((entry) => (
+              {articles.length > 0 ? articles.map((entry) => (
                 <article className="paper-index__entry" key={entry.slug} aria-labelledby={`title-${entry.slug}`}>
                   <a className="paper-index__card" href={`/articles/${entry.slug}`}>
-                    <div className="paper-index__poster"><img src={entry.cover} alt="" loading="lazy" /></div>
-                    <div className="paper-index__content">
+                    <div className="paper-index__content paper-index__content--heading">
                       <h2 id={`title-${entry.slug}`}>{entry.title}</h2>
+                    </div>
+                    <div className="paper-index__poster"><img src={entry.cover} alt="" loading="lazy" /></div>
+                    <div className="paper-index__content paper-index__content--meta">
+                      <time className="paper-index__date" dateTime={entry.publishedAt}>{formatPublishedAt(entry.publishedAt)}</time>
                       <p className="paper-index__keywords">{entry.keywords.join(' · ')}</p>
                     </div>
                   </a>
                 </article>
-              )) : <p className="paper-index__empty" role="status">这个分类下暂时没有文章。</p>}
+              )) : <p className="paper-index__empty" role="status">暂时还没有文章。</p>}
             </div>
           </section>
         </div>

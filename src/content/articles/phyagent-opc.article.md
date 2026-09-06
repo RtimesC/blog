@@ -1,7 +1,7 @@
 ---
 slug: phyagent-opc
+publishedAt: 2026-09-01
 state: building
-order: 1
 title: PhyAgent：面向工业异常调查的多平台物理智能体系统
 authors:
   - Taotao
