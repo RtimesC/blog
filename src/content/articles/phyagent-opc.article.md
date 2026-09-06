@@ -4,7 +4,8 @@ state: building
 order: 1
 title: PhyAgent：面向工业异常调查的多平台物理智能体系统
 authors:
-  - τaotao
+  - Taotao
+  - Yangbadger
 references: []
 keywords:
   - 工业异常调查
