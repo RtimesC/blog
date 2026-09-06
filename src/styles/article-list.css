@@ -1,0 +1,49 @@
+/* Article fields are the only source for the home-page reading list. */
+.paper-index {
+  --index-text: #292e35;
+  --index-heading: #171c23;
+  --index-muted: #626a75;
+  --index-link: #245ca6;
+  width: min(100%, 48rem);
+  margin: 3rem auto 0;
+  padding-bottom: 3rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: var(--index-text);
+  text-align: left;
+}
+
+:root[data-theme="dark"] .paper-index {
+  --index-text: #d5d9df;
+  --index-heading: #f0f2f5;
+  --index-muted: #a3acb8;
+  --index-link: #92bfff;
+}
+
+.paper-index__entry + .paper-index__entry { margin-top: 2rem; }
+.paper-index__card {
+  display: block;
+  overflow: hidden;
+  border: 1px solid rgb(30 35 45 / 18%);
+  border-radius: 1rem;
+  background: #f7f7f5;
+  box-shadow: 0 0.5rem 1.75rem rgb(30 35 45 / 6%);
+  color: inherit;
+  text-decoration: none;
+}
+.paper-index__poster { aspect-ratio: 16 / 9; overflow: hidden; background: #d5d8da; }
+.paper-index__poster img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.paper-index__content { padding: 1.75rem 2rem 2rem; }
+.paper-index__entry h2 { margin: 0 0 0.875rem; color: var(--index-heading); font-size: 1.5rem; font-weight: 650; line-height: 1.5; text-wrap: pretty; }
+.paper-index__keywords { margin: 0; font-size: 0.875rem; line-height: 1.8; color: var(--index-muted); }
+.paper-index__card:hover { border-color: var(--index-muted); }
+.paper-index__card:focus-visible { outline: 2px solid var(--index-link); outline-offset: 5px; }
+.paper-index__empty { margin: 0; padding: 2rem; border: 1px solid rgb(30 35 45 / 18%); border-radius: 1rem; font-size: 0.9375rem; line-height: 1.8; color: var(--index-muted); }
+:root[data-theme="dark"] .paper-index__card { background: #292d32; border-color: #454b53; box-shadow: 0 0.5rem 1.75rem rgb(0 0 0 / 14%); }
+:root[data-theme="dark"] .paper-index__card:hover { border-color: var(--index-muted); }
+:root[data-theme="dark"] .paper-index__empty { border-color: #454b53; }
+
+@media (max-width: 600px) {
+  .paper-index { margin-top: 2rem; }
+  .paper-index__entry h2 { font-size: 1.25rem; }
+  .paper-index__content { padding: 1.25rem; }
+}
