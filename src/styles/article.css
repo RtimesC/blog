@@ -11,7 +11,8 @@
   --note-media-surface: #f3f4f4;
   --note-shadow: 0 1rem 3rem rgb(30 35 45 / 6%);
   --note-sheet-width: 56rem;
-  --note-media-width: 28rem;
+  --note-image-width: 28rem;
+  --note-video-width: 32rem;
   min-height: 100svh;
   padding: 2rem 1.5rem 6rem;
   background: var(--note-bg);
@@ -94,7 +95,6 @@
 :root .paper-article .taotao-article-video,
 :root .paper-article .taotao-markdown p:has(> img:only-child) {
   box-sizing: border-box;
-  width: min(100%, var(--note-media-width));
   margin: 2rem auto 0;
   padding: 0.5rem;
   border: 1px solid var(--note-border);
@@ -102,6 +102,8 @@
   background: var(--note-media-surface);
   box-shadow: 0 0.625rem 1.75rem rgb(30 35 45 / 7%);
 }
+:root .paper-article .taotao-article-video { width: min(100%, var(--note-video-width)); }
+:root .paper-article .taotao-markdown p:has(> img:only-child) { width: min(100%, var(--note-image-width)); }
 :root[data-theme="dark"] .paper-article .taotao-article-video,
 :root[data-theme="dark"] .paper-article .taotao-markdown p:has(> img:only-child) {
   box-shadow: 0 0.625rem 1.75rem rgb(0 0 0 / 20%);
