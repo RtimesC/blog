@@ -1,0 +1,181 @@
+/* Fixed paper-style article template. See ARTICLE_STYLE_GUIDE.md. */
+.paper-article {
+  --note-bg: #fafaf9;
+  --note-text: #292e35;
+  --note-heading: #171c23;
+  --note-muted: #626a75;
+  --note-code: #eeefef;
+  --note-border: #d8dce0;
+  --note-link: #245ca6;
+  min-height: 100svh;
+  padding: 2rem 1.5rem 6rem;
+  background: var(--note-bg);
+  color: var(--note-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+:root[data-theme="dark"] .paper-article {
+  --note-bg: #191c20;
+  --note-text: #d5d9df;
+  --note-heading: #f0f2f5;
+  --note-muted: #a3acb8;
+  --note-code: #242930;
+  --note-border: #3c4550;
+  --note-link: #92bfff;
+}
+
+:root .paper-article .taotao-article-toolbar {
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+:root .paper-article .taotao-article-back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--note-muted);
+  font-size: 0.875rem;
+}
+
+:root .paper-article .taotao-article-sheet {
+  width: min(100%, 48rem);
+  margin: 3.5rem auto 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+:root .paper-article .taotao-article-header {
+  width: 100%;
+  padding: 0 0 2rem;
+  text-align: left;
+}
+
+:root .paper-article .taotao-article-header h1 {
+  margin: 0 0 1rem;
+  color: var(--note-heading) !important;
+  font-family: inherit;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+
+:root .paper-article .taotao-article-body,
+:root .paper-article .taotao-article-video {
+  width: 100%;
+}
+
+:root .paper-article .taotao-article-video { margin: 0 0 2rem; }
+:root .paper-article .taotao-article-video video { border-radius: 0.375rem; }
+:root .paper-article .taotao-markdown { font-size: 1rem; line-height: 1.85; }
+
+:root .paper-article .taotao-markdown p,
+:root .paper-article .taotao-markdown li {
+  max-width: none;
+  color: var(--note-text);
+  font-size: inherit;
+  line-height: inherit;
+}
+
+:root .paper-article .taotao-markdown p { margin: 0 0 1.125rem; }
+:root .paper-article .taotao-markdown :is(h2, h3, h4, h5, h6, strong) {
+  color: var(--note-heading) !important;
+  font-weight: 650;
+}
+:root .paper-article .taotao-markdown h2 { margin: 2.5rem 0 0.875rem; font-size: 1.375rem; line-height: 1.5; }
+:root .paper-article .taotao-markdown h3 { margin: 1.75rem 0 0.625rem; font-size: 1.125rem; line-height: 1.6; }
+:root .paper-article .taotao-markdown :is(h4, h5, h6) { margin: 1.5rem 0 0.5rem; font-size: 1rem; }
+:root .paper-article .taotao-markdown > :first-child { margin-top: 0; }
+
+:root .paper-article .taotao-markdown :is(ul, ol) {
+  margin: 0 0 1.125rem;
+  padding-left: 1.5rem;
+  list-style-position: outside;
+}
+:root .paper-article .taotao-markdown ul { list-style-type: disc; }
+:root .paper-article .taotao-markdown ol { list-style-type: decimal; }
+:root .paper-article .taotao-markdown li { margin: 0.375rem 0; padding: 0; }
+:root .paper-article .taotao-markdown li > :is(ul, ol) { margin: 0.375rem 0; }
+:root .paper-article .taotao-markdown li > p { margin-bottom: 0.375rem; }
+:root .paper-article .taotao-markdown li::marker { color: var(--note-muted); }
+
+:root .paper-article .taotao-markdown a { color: var(--note-link); text-decoration: underline; }
+.paper-article a:focus-visible { outline: 2px solid var(--note-link); outline-offset: 4px; }
+:root .paper-article .taotao-markdown blockquote {
+  margin: 1.5rem 0;
+  padding: 0.125rem 0 0.125rem 1rem;
+  border-left: 3px solid var(--note-border);
+  color: var(--note-muted);
+  font-size: inherit;
+  line-height: inherit;
+}
+:root .paper-article .taotao-markdown blockquote p { color: inherit; }
+:root .paper-article .taotao-markdown blockquote > :last-child { margin-bottom: 0; }
+
+:root .paper-article .taotao-markdown code {
+  padding: 0.125em 0.3em;
+  border-radius: 0.25rem;
+  background: var(--note-code);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.875em;
+  overflow-wrap: anywhere;
+}
+:root .paper-article .taotao-markdown pre {
+  max-width: 100%;
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--note-border);
+  border-radius: 0.375rem;
+  background: var(--note-code);
+  color: var(--note-text);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  overflow-x: auto;
+}
+:root .paper-article .taotao-markdown pre code { padding: 0; background: none; font-size: inherit; overflow-wrap: normal; }
+:root .paper-article .taotao-markdown img {
+  width: auto;
+  max-width: 100%;
+  margin: 1.75rem auto 0;
+  border: 0;
+  border-radius: 0.25rem;
+}
+:root .paper-article .taotao-markdown p:has(> img:only-child) { max-width: 100%; margin-bottom: 1.5rem; }
+:root .paper-article .taotao-markdown p:has(> img:only-child):has(+ p > em:only-child) { margin-bottom: 0; }
+:root .paper-article .taotao-markdown p:has(> img:only-child) + p:has(> em:only-child) {
+  max-width: 100%;
+  margin: 0.625rem 0 1.75rem;
+  text-align: left;
+  color: var(--note-muted);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 600px) {
+  .paper-article { padding: 1.25rem 1.25rem 4rem; }
+  :root .paper-article .taotao-article-sheet { margin-top: 2.5rem; padding: 0; }
+  :root .paper-article .taotao-markdown h2 { font-size: 1.25rem; }
+}
+
+/* Metadata and bibliography are rendered by the template, never by article prose. */
+:root .paper-article .paper-authors { margin: 0; font-size: 0.9375rem; line-height: 1.7; color: var(--note-text); }
+.paper-field-label { margin-right: 0.75rem; color: var(--note-muted); }
+.paper-abstract { margin-bottom: 2.5rem; }
+.paper-abstract h2, .paper-references h2 { margin: 0 0 0.875rem; font-size: 1.125rem; line-height: 1.6; font-weight: 650; color: var(--note-heading); }
+.paper-abstract h2 span, .paper-references h2 span { margin-left: 0.5rem; font-size: 0.8125rem; font-weight: 400; color: var(--note-muted); }
+.paper-abstract > p { margin: 0 0 1rem; font-size: 0.9375rem; line-height: 1.85; overflow-wrap: anywhere; }
+.paper-keywords { display: flex; align-items: baseline; gap: 0.75rem; }
+.paper-keywords strong { flex-shrink: 0; font-weight: 650; color: var(--note-heading); }
+.paper-references { margin-top: 3rem; font-size: 0.875rem; line-height: 1.8; }
+.paper-references ol { margin: 0; padding: 0; list-style: none; }
+.paper-references li { display: flex; gap: 0.75rem; margin-bottom: 0.75rem; scroll-margin-top: 2rem; overflow-wrap: anywhere; }
+.paper-reference-number { flex: 0 0 2rem; font-variant-numeric: tabular-nums; }
+.paper-references a { color: var(--note-link); text-decoration: underline; text-underline-offset: 0.18em; }
+.paper-references li:target { background: var(--note-code); outline: 2px solid var(--note-border); outline-offset: 4px; }
+.paper-empty-references { margin: 0; color: var(--note-muted); }

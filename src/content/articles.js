@@ -45,6 +45,21 @@ function optionalVideo(data, path) {
   });
 }
 
+function parseReferences(data, path) {
+  if (!Array.isArray(data.references)) {
+    fail(path, '"references" must be a list (use [] when none are supplied).');
+  }
+  return Object.freeze(data.references.map((reference, index) => {
+    if (!reference || typeof reference !== 'object' || Array.isArray(reference)) {
+      fail(path, `reference ${index + 1} must be an object.`);
+    }
+    const text = requiredString(reference, 'text', path);
+    const url = reference.url === undefined ? null : requiredString(reference, 'url', path);
+    if (url && !/^https?:\/\//i.test(url)) fail(path, 'reference URLs must use http or https.');
+    return Object.freeze({ text, url });
+  }));
+}
+
 function parseArticle(path, source) {
   const match = source.match(frontMatterPattern);
 
@@ -79,16 +94,23 @@ function parseArticle(path, source) {
     fail(path, 'article body cannot be empty.');
   }
 
+  const references = parseReferences(data, path);
+  for (const citation of body.matchAll(/\[\[(\d+)\]\]\(#ref-(\d+)\)/g)) {
+    const number = Number(citation[2]);
+    if (Number(citation[1]) !== number) fail(path, 'citation label must match its reference number.');
+    if (number < 1 || number > references.length) fail(path, `citation #ref-${number} has no reference.`);
+  }
+
   return Object.freeze({
     slug,
     state,
     order: data.order,
     title: requiredString(data, 'title', path),
+    authors: requiredStringList(data, 'authors', path),
     keywords: requiredStringList(data, 'keywords', path),
     abstract: requiredString(data, 'abstract', path),
     cover: requiredString(data, 'cover', path),
-    kicker: requiredString(data, 'kicker', path),
-    lede: requiredString(data, 'lede', path),
+    references,
     video: optionalVideo(data, path),
     body,
   });

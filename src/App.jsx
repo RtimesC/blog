@@ -4,37 +4,38 @@ import { AboutButton } from '@/components/about-button';
 import { Button } from '@/components/ui/button';
 import { articles, getArticleBySlug } from '@/content/articles';
 import { ThemeSwitch } from '@/components/theme-switch';
+import { useTheme } from '@/hooks/use-theme';
 
 const pageTitle = "Welcome τaotao's blog";
 
-function ArticleToolbar({ checked, onChange }) {
+function ArticleToolbar({ theme, onChange, plain = false }) {
   return (
     <div className="taotao-article-toolbar">
-      <Button asChild size="sm">
+      {plain ? <a className="taotao-article-back" href="/">← 首页</a> : <Button asChild size="sm">
         <a className="taotao-article-back" href="/">Home</a>
-      </Button>
-      <ThemeSwitch checked={checked} onChange={onChange} />
+      </Button>}
+      <ThemeSwitch value={theme} onChange={onChange} />
     </div>
   );
 }
 
-function BlankArticlePage({ checked, onThemeChange }) {
+function BlankArticlePage({ theme, onThemeChange }) {
   return (
     <main className="taotao-article-page">
-      <ArticleToolbar checked={checked} onChange={onThemeChange} />
+      <ArticleToolbar theme={theme} onChange={onThemeChange} />
       <article className="taotao-article-sheet" aria-label="Blank page" />
     </main>
   );
 }
 
-function AboutPage({ checked, onThemeChange }) {
+function AboutPage({ theme, onThemeChange }) {
   return (
     <main className="taotao-article-page taotao-about-page">
       <div className="taotao-article-toolbar">
         <Button asChild size="sm">
           <a className="taotao-article-back" href="/">Home</a>
         </Button>
-        <ThemeSwitch checked={checked} onChange={onThemeChange} />
+        <ThemeSwitch value={theme} onChange={onThemeChange} />
       </div>
       <article className="taotao-about-sheet">
         <p className="taotao-article-kicker">About me</p>
@@ -74,24 +75,39 @@ function ArticleVideo({ video }) {
   );
 }
 
-function ArticlePage({ article, checked, onThemeChange }) {
+function ArticlePage({ article, theme, onThemeChange }) {
   return (
-    <main className="taotao-article-page">
-      <ArticleToolbar checked={checked} onChange={onThemeChange} />
+    <main className="taotao-article-page paper-article">
+      <ArticleToolbar theme={theme} onChange={onThemeChange} plain />
       <article className="taotao-article-sheet taotao-article-sheet--full">
         <header className="taotao-article-header">
-          <p className="taotao-article-kicker">{article.kicker}</p>
           <h1>{article.title}</h1>
-          <p className="taotao-article-lede">{article.lede}</p>
+          <p className="paper-authors"><span className="paper-field-label">作者</span>{article.authors.join(' · ')}</p>
         </header>
 
-        <ArticleVideo video={article.video} />
+        <section className="paper-abstract" aria-labelledby="abstract-heading">
+          <h2 id="abstract-heading">摘要 <span lang="en">Abstract</span></h2>
+          <p>{article.abstract}</p>
+          <p className="paper-keywords"><strong>关键词</strong><span>{article.keywords.join('；')}</span></p>
+        </section>
 
         <div className="taotao-article-body">
+          <ArticleVideo video={article.video} />
           <div className="taotao-markdown">
             <ReactMarkdown>{article.body}</ReactMarkdown>
           </div>
         </div>
+        <section className="paper-references" aria-labelledby="references-heading">
+          <h2 id="references-heading">参考文献 <span lang="en">References</span></h2>
+          {article.references.length ? <ol>
+            {article.references.map((reference, index) => (
+              <li id={`ref-${index + 1}`} key={index} tabIndex={-1}>
+                <span className="paper-reference-number">[{index + 1}]</span>
+                <span>{reference.url ? <a href={reference.url}>{reference.text}</a> : reference.text}</span>
+              </li>
+            ))}
+          </ol> : <p className="paper-empty-references">本文尚未列出参考文献。</p>}
+        </section>
       </article>
     </main>
   );
@@ -173,18 +189,10 @@ function HeroReel() {
 }
 
 export default function App() {
-  const [isDark, setIsDark] = useState(() => window.localStorage.getItem('theme') === 'dark');
+  const { theme, setTheme } = useTheme();
   const [activeState, setActiveState] = useState('building');
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
-  const [themeControlVisible, setThemeControlVisible] = useState(true);
   const visibleArticles = articles.filter((entry) => entry.state === activeState);
-
-  useEffect(() => {
-    const theme = isDark ? 'dark' : 'light';
-    document.documentElement.dataset.theme = theme;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', isDark ? '#212121' : '#e8e8e8');
-    window.localStorage.setItem('theme', theme);
-  }, [isDark]);
 
   useEffect(() => {
     function handleInternalNavigation(event) {
@@ -196,7 +204,7 @@ export default function App() {
 
       const destination = new URL(link.href, window.location.href);
 
-      if (destination.origin !== window.location.origin) {
+      if (destination.origin !== window.location.origin || (destination.pathname === window.location.pathname && destination.hash)) {
         return;
       }
 
@@ -219,60 +227,17 @@ export default function App() {
     };
   }, []);
 
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-    let directionStartY = lastScrollY;
-    let direction = null;
-    let frameRequested = false;
-
-    function updateThemeControl() {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY <= 8) {
-        setThemeControlVisible(true);
-        direction = null;
-        directionStartY = currentScrollY;
-      } else if (currentScrollY !== lastScrollY) {
-        const nextDirection = currentScrollY > lastScrollY ? 'down' : 'up';
-
-        if (nextDirection !== direction) {
-          direction = nextDirection;
-          directionStartY = lastScrollY;
-        }
-
-        if (direction === 'down' && currentScrollY - directionStartY >= 48) {
-          setThemeControlVisible(false);
-        } else if (direction === 'up' && directionStartY - currentScrollY >= 20) {
-          setThemeControlVisible(true);
-        }
-      }
-
-      lastScrollY = currentScrollY;
-      frameRequested = false;
-    }
-
-    function handleScroll() {
-      if (!frameRequested) {
-        window.requestAnimationFrame(updateThemeControl);
-        frameRequested = true;
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   let page;
 
   if (currentPath === '/about') {
-    page = <AboutPage checked={isDark} onThemeChange={setIsDark} />;
+    page = <AboutPage theme={theme} onThemeChange={setTheme} />;
   } else if (currentPath.startsWith('/articles/')) {
     const slug = currentPath.replace(/^\/articles\//, '').replace(/\/+$/, '');
     const article = getArticleBySlug(slug);
 
     page = article
-      ? <ArticlePage article={article} checked={isDark} onThemeChange={setIsDark} />
-      : <BlankArticlePage checked={isDark} onThemeChange={setIsDark} />;
+      ? <ArticlePage article={article} theme={theme} onThemeChange={setTheme} />
+      : <BlankArticlePage theme={theme} onThemeChange={setTheme} />;
   } else {
     page = (
       <main className="taotao-page">
@@ -296,17 +261,8 @@ export default function App() {
               </h1>
             </div>
             <div className="taotao-home-actions">
-              <div
-                aria-hidden={!themeControlVisible}
-                className={`taotao-theme-dock${themeControlVisible ? '' : ' is-hidden'}`}
-              >
-                <ThemeSwitch
-                  checked={isDark}
-                  onChange={setIsDark}
-                  tabIndex={themeControlVisible ? undefined : -1}
-                />
-              </div>
               <AboutButton />
+              <ThemeSwitch value={theme} onChange={setTheme} />
             </div>
           </div>
 
@@ -320,24 +276,19 @@ export default function App() {
             </nav>
           </section>
 
-          <section className="taotao-field-record" aria-label="Notes">
-            <div className="taotao-reading-list">
+          <section className="paper-index" aria-label="文章列表">
+            <div className="paper-index__list">
               {visibleArticles.length > 0 ? visibleArticles.map((entry) => (
-                <a className="taotao-reading-entry" href={`/articles/${entry.slug}`} key={entry.slug}>
-                  <span className="taotao-reading-entry__poster">
-                    <img src={entry.cover} alt="" />
-                  </span>
-                  <span className="taotao-reading-entry__body">
-                    <span className="taotao-reading-entry__title">{entry.title}</span>
-                    <span className="taotao-reading-entry__abstract">{entry.abstract}</span>
-                    <span className="taotao-reading-entry__keywords">{entry.keywords.join(' · ')}</span>
-                  </span>
-                  <span className="taotao-reading-entry__arrow" aria-hidden="true">↗</span>
-                </a>
-              )) : <div className="taotao-reading-entry taotao-reading-entry--empty" aria-hidden="true">
-                <span className="taotao-reading-entry__poster" />
-                <span className="taotao-reading-entry__body" />
-              </div>}
+                <article className="paper-index__entry" key={entry.slug} aria-labelledby={`title-${entry.slug}`}>
+                  <a className="paper-index__card" href={`/articles/${entry.slug}`}>
+                    <div className="paper-index__poster"><img src={entry.cover} alt="" loading="lazy" /></div>
+                    <div className="paper-index__content">
+                      <h2 id={`title-${entry.slug}`}>{entry.title}</h2>
+                      <p className="paper-index__keywords">{entry.keywords.join(' · ')}</p>
+                    </div>
+                  </a>
+                </article>
+              )) : <p className="paper-index__empty" role="status">这个分类下暂时没有文章。</p>}
             </div>
           </section>
         </div>

@@ -1,43 +1,62 @@
-# Article authoring
+# 文章编写说明
 
-Create one `*.article.md` file per published card. The filename is only for people; the `slug` in the YAML front matter is the public URL at `/articles/<slug>`.
+共用结构和 AI 编辑边界见 [论文式排版规范](../../../ARTICLE_STYLE_GUIDE.md)。文章使用固定模板：标题、作者、摘要、关键词、正文、参考文献。
 
-Required front matter:
+## 文件格式
+
+每篇使用一个 `*.article.md` 文件。下面是格式示例，方括号内的提示需由作者填写；不要直接作为真实文章发布。
 
 ```yaml
 ---
-slug: lowercase-url-slug
+slug: my-note
 state: observing
 order: 2
-title: Visible card title
+title: "[文章标题]"
+authors:
+  - "[作者署名]"
+abstract: "[作者提供或确认的摘要]"
 keywords:
-  - First keyword
-  - Second keyword
-abstract: Short English summary for the reverse card face.
-cover: /assets/cover-image.png
-kicker: Year / context / scope
-lede: Opening sentence for the article page.
+  - "[关键词]"
+cover: /assets/my-note/cover.png
+references: []
 ---
 ```
 
-`state` must be one of `observing`, `building`, or `questioning`. The home-page navigation and article list are generated from this field.
+第二条 `---` 后是 Markdown 正文。不要重复填写主标题、作者、摘要、关键词或参考文献标题，这些由页面生成。正文按需使用 `##`、`###` 分级标题，不强制固定章节名称。
 
-Write the article below the second `---` using standard Markdown headings, paragraphs, ordered lists, unordered lists, emphasis, and links. The build stops with a clear error when required metadata is missing, a slug is invalid, or two articles use the same slug.
+`slug` 仅使用小写字母、数字与单个连字符，对应 `/articles/<slug>`；`state` 为 `observing`、`building`、`questioning` 之一；`order` 为整数。`authors`、`keywords` 必须是非空字符串列表。`references` 为必填列表，无文献写 `[]`。缺少必填字段或重复 slug 会使构建失败。
 
-Write factual status, implementation scope, simulation limits, uncertainty, and evidence boundaries as complete paragraphs in the article body. Do not place them in small-print header metadata, status labels, badges, disclaimer notes, or similar detached UI. These boundaries are part of the article's argument and must remain readable in the normal body flow.
+## 引用
 
-Prefer plain, concrete language. Describe what the system reads, decides, selects, records, and has not yet tested instead of relying on presentation slogans or stacked technical nouns. Keep a necessary product or engineering term only when it preserves accuracy, and explain it in ordinary language when it first appears.
+有真实来源后，把 `references: []` 改成以下结构。条目内容由作者提供，模板不替作者编造书目信息：
 
-Do not use horizontal divider lines to separate the article header, sections, headings, paragraphs, or list items. Build the reading structure with continuous paragraphs and whitespace instead.
+```yaml
+references:
+  - text: "[作者、文献标题、年份等真实书目信息]"
+    url: https://example.com/source
+  - text: "[没有网络地址的真实纸本文献]"
+```
 
-Open with a concrete scene, event, or question before introducing the project or product that addresses it. Let the reader understand the problem first, then name and explain the solution. Preserve official product names exactly when they appear.
+上面的地址仅作格式示例。`url` 可省略，填写时只接受 HTTP 或 HTTPS 地址。数组顺序就是编号顺序。
 
-An article may also place one locally hosted MP4 between its header and body:
+正文写 `[[1]](#ref-1)`，页面显示可点击的 `[1]` 并跳到文末第一条来源。第二条为 `[[2]](#ref-2)`。增删或重排文献时同时检查正文编号；指向不存在编号的此类链接会使构建失败。普通文本 `[1]` 不自动转成链接。代码块中的引用语法示例也会被当前基础校验扫描，写作时避免在文章代码示例中放入不存在的 `#ref-N` 目标。
+
+## 媒体与当前能力
+
+图片素材放在 `public/assets/<文章标识>/`，正文使用 `![替代文字](/assets/<文章标识>/image.png)`。图片单独成段；其后的独立斜体段落作为图注。封面不会自动插入正文。
+
+可选视频字段：
 
 ```yaml
 video:
-  src: /assets/project/video.mp4
-  poster: /assets/project/video-poster.jpg
+  src: /assets/my-note/video.mp4
+  poster: /assets/my-note/poster.jpg
 ```
 
-Video is optional. Do not place delivery status, simulation limits, evidence boundaries, or disclaimer copy in a small caption below the media. Explain that context in the article's normal body paragraphs. A concept film, simulation, or local demo must not be presented as field evidence.
+视频在摘要、关键词之后的正文区域显示。不要将模拟、概念片或本地演示描述成现场实测。范围和不确定性写在相关正文中，不缩成免责声明或图注。
+
+当前支持基础 Markdown 标题、段落、列表、引用、图片、链接与代码。GFM 表格、数学公式渲染与语法高亮尚未接入，不能仅因采用论文结构就视为已经支持。不要依赖原始 HTML 或水平分隔线排版。
+
+## 草稿与预览
+
+本目录没有草稿过滤，符合格式的文件都会进入站点构建。私人草稿保存在目录之外。运行 `npm run dev` 后打开本地文章地址预览；保存和构建不等于发布。发布须由作者明确要求。

@@ -20,6 +20,8 @@ The active product, content principle, implementation boundaries, and branch rul
 
 ## Writing
 
+文章的共用排版、作者与 AI 的编辑分工、预览和发布流程见 [Article 视觉排版与编辑规范](ARTICLE_STYLE_GUIDE.md)。
+
 Published records and their article pages come from `src/content/articles/*.article.md`. Each record declares one home-page state: `observing`, `building`, or `questioning`. See [the authoring guide](src/content/articles/README.md) for the required metadata and Markdown format.
 
 The personal introduction draft lives in `src/content/about-me.md`. It is not yet connected to the visible home-page navigation.
