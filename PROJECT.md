@@ -43,6 +43,7 @@ A personal knowledge space built primarily for its author and open to readers. L
 ## Related documents
 
 - [README.md](README.md): project entry and local commands.
+- [GIT_WORKFLOW.md](GIT_WORKFLOW.md): the project's branch, commit, merge, verification, and recovery conventions.
 - [src/content/articles/README.md](src/content/articles/README.md): article-file authoring contract.
 - [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md): third-party attribution and asset restrictions.
 
