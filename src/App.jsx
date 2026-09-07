@@ -6,12 +6,12 @@ import { getArticleBySlug } from '@/content/articles';
 import { ThemeSwitch } from '@/components/theme-switch';
 import { useTheme } from '@/hooks/use-theme';
 
-const homeDocumentTitle = '知识空间';
+const homeDocumentTitle = 'Knowledge Space';
 
 function ArticleToolbar({ theme, onChange, plain = false }) {
   return (
     <div className="taotao-article-toolbar">
-      {plain ? <a className="taotao-article-back" href="/">← 首页</a> : <Button asChild size="sm">
+      {plain ? <a className="taotao-article-back" href="/">← Home</a> : <Button asChild size="sm">
         <a className="taotao-article-back" href="/">Home</a>
       </Button>}
       <ThemeSwitch value={theme} onChange={onChange} />
@@ -25,8 +25,8 @@ function MissingArticlePage({ theme, onThemeChange, headingRef }) {
       <ArticleToolbar theme={theme} onChange={onThemeChange} />
       <article className="taotao-article-sheet">
         <header className="taotao-article-header">
-          <h1 ref={headingRef} tabIndex={-1}>未找到文章</h1>
-          <p className="taotao-article-lede">这篇文章可能尚未发布、已移动，或链接不正确。你可以返回首页继续浏览。</p>
+          <h1 ref={headingRef} tabIndex={-1}>Article not found</h1>
+          <p className="taotao-article-lede">This article may be unpublished, moved, or linked incorrectly. Return home to keep browsing.</p>
         </header>
       </article>
     </main>
@@ -87,13 +87,13 @@ function ArticlePage({ article, theme, onThemeChange, headingRef }) {
       <article className="taotao-article-sheet taotao-article-sheet--full">
         <header className="taotao-article-header">
           <h1 ref={headingRef} tabIndex={-1}>{article.title}</h1>
-          {article.authors.length > 0 && <p className="paper-authors"><span className="paper-field-label">作者</span>{article.authors.join(' · ')}</p>}
+          {article.authors.length > 0 && <p className="paper-authors"><span className="paper-field-label">Authors</span>{article.authors.join(' · ')}</p>}
         </header>
 
         <section className="paper-abstract" aria-labelledby="abstract-heading">
-          <h2 id="abstract-heading">摘要 <span lang="en">Abstract</span></h2>
+          <h2 id="abstract-heading">Abstract</h2>
           <p>{article.abstract}</p>
-          <p className="paper-keywords"><strong>关键词</strong><span>{article.keywords.join('；')}</span></p>
+          <p className="paper-keywords"><strong>Keywords</strong><span>{article.keywords.join(' · ')}</span></p>
         </section>
 
         <div className="taotao-article-body">
@@ -103,7 +103,7 @@ function ArticlePage({ article, theme, onThemeChange, headingRef }) {
           </div>
         </div>
         {article.references.length > 0 && <section className="paper-references" aria-labelledby="references-heading">
-          <h2 id="references-heading">参考文献 <span lang="en">References</span></h2>
+          <h2 id="references-heading">References</h2>
           <ol>
             {article.references.map((reference, index) => (
               <li id={`ref-${index + 1}`} key={index} tabIndex={-1}>
@@ -132,7 +132,7 @@ export default function App() {
     : currentArticle
       ? `${currentArticle.title} — τaotao`
       : isMissingArticle
-        ? '未找到文章 — τaotao'
+        ? 'Article not found — τaotao'
         : homeDocumentTitle;
 
   useEffect(() => {
