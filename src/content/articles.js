@@ -9,7 +9,6 @@ const articleSources = import.meta.glob('./articles/*.article.md', {
 const frontMatterPattern = /^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/;
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const publishedAtPattern = /^\d{4}-\d{2}-\d{2}$/;
-const articleStates = new Set(['observing', 'building', 'questioning']);
 
 function fail(path, message) {
   throw new Error(`Invalid article ${path}: ${message}`);
@@ -31,18 +30,18 @@ function requiredStringList(data, key, path) {
   return data[key].map((item) => item.trim());
 }
 
-function requiredPublishedAt(data, path) {
-  const value = requiredString(data, 'publishedAt', path);
+function requiredPublishedAt(data, path, key = 'publishedAt') {
+  const value = requiredString(data, key, path);
 
   if (!publishedAtPattern.test(value)) {
-    fail(path, 'front matter field "publishedAt" must use YYYY-MM-DD.');
+    fail(path, `front matter field "${key}" must use YYYY-MM-DD.`);
   }
 
   const [year, month, day] = value.split('-').map(Number);
   const date = new Date(Date.UTC(year, month - 1, day));
 
   if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) {
-    fail(path, 'front matter field "publishedAt" must be a real calendar date.');
+    fail(path, `front matter field "${key}" must be a real calendar date.`);
   }
 
   return value;
@@ -64,6 +63,7 @@ function optionalVideo(data, path) {
 }
 
 function parseReferences(data, path) {
+  if (data.references === undefined) return Object.freeze([]);
   if (!Array.isArray(data.references)) {
     fail(path, '"references" must be a list (use [] when none are supplied).');
   }
@@ -92,16 +92,14 @@ function parseArticle(path, source) {
   }
 
   const slug = requiredString(data, 'slug', path);
-  const state = requiredString(data, 'state', path).toLowerCase();
   const publishedAt = requiredPublishedAt(data, path);
 
   if (!slugPattern.test(slug)) {
     fail(path, '"slug" must use lowercase letters, numbers, and single hyphens.');
   }
 
-  if (!articleStates.has(state)) {
-    fail(path, '"state" must be observing, building, or questioning.');
-  }
+  const revisedAt = data.revisedAt === undefined ? null : requiredPublishedAt(data, path, 'revisedAt');
+  if (revisedAt && revisedAt < publishedAt) fail(path, 'revisedAt cannot precede publishedAt.');
 
   const body = match[2].trim();
 
@@ -118,10 +116,11 @@ function parseArticle(path, source) {
 
   return Object.freeze({
     slug,
-    state,
     publishedAt,
+    revisedAt,
+    activityAt: revisedAt || publishedAt,
     title: requiredString(data, 'title', path),
-    authors: requiredStringList(data, 'authors', path),
+    authors: data.authors === undefined ? [] : requiredStringList(data, 'authors', path),
     keywords: requiredStringList(data, 'keywords', path),
     abstract: requiredString(data, 'abstract', path),
     cover: requiredString(data, 'cover', path),
@@ -134,7 +133,7 @@ function parseArticle(path, source) {
 export const articles = Object.freeze(
   Object.entries(articleSources)
     .map(([path, source]) => parseArticle(path, source))
-    .sort((first, second) => second.publishedAt.localeCompare(first.publishedAt) || first.slug.localeCompare(second.slug)),
+    .sort((first, second) => second.activityAt.localeCompare(first.activityAt) || first.slug.localeCompare(second.slug)),
 );
 
 if (new Set(articles.map((article) => article.slug)).size !== articles.length) {
