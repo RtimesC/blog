@@ -220,3 +220,22 @@
 .paper-references a { color: var(--note-link); text-decoration: underline; text-underline-offset: 0.18em; }
 .paper-references li:target { background: var(--note-code); outline: 2px solid var(--note-border); outline-offset: 4px; }
 .paper-empty-references { margin: 0; color: var(--note-muted); }
+
+/* About supplies its own Markdown structure; only typography is shared. */
+.paper-article .taotao-about-content {
+  width: min(100%, var(--note-sheet-width));
+  margin: clamp(3rem, 7vw, 5rem) auto 0;
+  overflow-wrap: anywhere;
+}
+.paper-article .taotao-about-content h1 {
+  margin: 0 0 2rem;
+  color: var(--note-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 650;
+  line-height: 1.3;
+}
+.paper-article .taotao-about-content:focus { outline: none; }
+.paper-article .taotao-about-content:focus-visible {
+  outline: 2px solid var(--note-link);
+  outline-offset: 8px;
+}

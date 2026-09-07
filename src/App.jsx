@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+import aboutMarkdown from '@/content/about-me.md?raw';
 import { HomePage } from '@/components/home-page';
 import { Button } from '@/components/ui/button';
 import { getArticleBySlug } from '@/content/articles';
@@ -35,31 +36,10 @@ function MissingArticlePage({ theme, onThemeChange, headingRef }) {
 
 function AboutPage({ theme, onThemeChange, headingRef }) {
   return (
-    <main className="taotao-article-page taotao-about-page">
-      <div className="taotao-article-toolbar">
-        <Button asChild size="sm">
-          <a className="taotao-article-back" href="/">Home</a>
-        </Button>
-        <ThemeSwitch value={theme} onChange={onThemeChange} />
-      </div>
-      <article className="taotao-about-sheet">
-        <p className="taotao-article-kicker">About me</p>
-        <h1 ref={headingRef} tabIndex={-1}>τaotao</h1>
-        <p className="taotao-about-lede">I study Mechatronics and Robotics through building, testing, and questioning.</p>
-        <div className="taotao-about-grid">
-          <section>
-            <p className="taotao-about-label">Background</p>
-            <p>Mechatronics and Robotics</p>
-          </section>
-          <section>
-            <p className="taotao-about-label">Currently exploring</p>
-            <p>SLAM · Deep Learning · STM32</p>
-          </section>
-          <section>
-            <p className="taotao-about-label">Elsewhere</p>
-            <p><a href="https://github.com/" rel="noreferrer">GitHub ↗</a></p>
-          </section>
-        </div>
+    <main className="taotao-article-page paper-article taotao-about-page">
+      <ArticleToolbar theme={theme} onChange={onThemeChange} plain />
+      <article className="taotao-about-content taotao-markdown" ref={headingRef} tabIndex={-1}>
+        <ReactMarkdown>{aboutMarkdown}</ReactMarkdown>
       </article>
     </main>
   );
@@ -128,7 +108,7 @@ export default function App() {
     : null;
   const isMissingArticle = currentPath.startsWith('/articles/') && !currentArticle;
   const documentTitle = currentPath === '/about'
-    ? 'About — τaotao'
+    ? `About — ${homeDocumentTitle}`
     : currentArticle
       ? `${currentArticle.title} — τaotao`
       : isMissingArticle

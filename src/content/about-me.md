@@ -1,27 +1,21 @@
-# About me
+# About
 
-Hi, I'm τaotao.
+This is a personal knowledge space: built first for its author, and open to anyone who may find something useful here.
 
-Write a short introduction here.
+It exists to turn learning, practice, and writing into knowledge that can be revisited, tested, revised, and connected over time.
 
-## How I work
+## What appears here
 
-I usually move between these three modes:
+Each entry begins with one coherent thing: a specific question, a complete project, a failed attempt, an observation, or an idea that needs further thought. The form is not fixed; the aim is to leave enough context to understand the work later.
 
-- **Observing** — Things I am learning about and noticing.
-- **Building** — Things I am making.
-- **Questioning** — Questions I do not have answers to yet.
+The subjects will change. Current articles do not define the limits of this space.
 
-## Currently
+## Why keep it public
 
-- Add what you are currently learning here.
-- For example: SLAM, Deep Learning, and STM32.
+Writing makes thinking more precise. Publishing leaves room for others to follow along, challenge an assumption, or reuse something that proves useful.
 
-## What I keep here
+This is not a claim to expertise. Technical confidence is built gradually—through understanding, making, testing, and returning to what is still unclear.
 
-Describe how you want to document and share what you learn.
+## A living record
 
-## Elsewhere
-
-- [GitHub](https://github.com/)
-- [Other link]
+Entries may be revised when the understanding behind them materially changes. The latest important revision is reflected in the timeline, while ordinary edits do not rewrite its history.

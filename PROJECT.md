@@ -14,7 +14,7 @@ A personal knowledge space built primarily for its author and open to readers. L
 - Content is unified as articles with freely organized Markdown bodies. Required metadata: slug, title, publishedAt, abstract, keywords, cover. Authors and references are optional; no empty reference section appears. State is no longer required.
 - Optional revisedAt records the most recent substantial revision. Sort descending by revisedAt or publishedAt, then slug. Each article appears once. Routine edits do not alter these dates.
 - Article sources remain in src/content/articles/*.article.md. Their authoring contract is in src/content/articles/README.md.
-- About content is existing material and still needs a separate identity review. Homepage name and introduction are provisional.
+- About reads src/content/about-me.md directly as Markdown, the sole source of its visible content. The page provides only shared typography and navigation; no required sections or front matter. Existing placeholder copy still needs a separate identity review. Homepage name and introduction are provisional.
 - Visual acceptance remains the author's decision.
 
 ## Implementation
@@ -22,7 +22,7 @@ A personal knowledge space built primarily for its author and open to readers. L
 - Stack: React, Vite, Tailwind CSS 4, and local shadcn/ui primitives.
 - Article routes are client-rendered; `vercel.json` rewrites requests to `/index.html` so direct article visits and refreshes work on Vercel.
 - Content is versioned Markdown. A private editor, database, and content-history interface are not part of the current product.
-- `src/content/about-me.md` is a deliberately incomplete author draft. The homepage exposes its `/about` route from the far-right header entry; the entry scrolls away with the page, alongside the theme selector.
+- `src/content/about-me.md` is the About page’s sole content source, currently containing incomplete author copy. The homepage exposes its `/about` route from the far-right header entry; the entry scrolls away with the page, alongside the theme selector.
 - The visual language uses a restrained background, sans-serif homepage typography, single-column article entries, a compact identity introduction, and the theme selector.
 
 ## Working rules
