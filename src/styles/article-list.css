@@ -29,7 +29,7 @@
 .knowledge-tools nav :is(button, a) { border: 0; background: none; color: var(--home-muted); font-size: 13px; padding: 12px 0; }
 .knowledge-tools nav :is(button, a):hover, .knowledge-tools nav button[aria-expanded="true"] { color: var(--home-accent); }
 .knowledge-intro, .knowledge-feed, .home-discovery { max-width: 800px; margin-inline: auto; }
-.knowledge-intro { padding-top: 80px; padding-bottom: 66px; }
+.knowledge-intro { padding-top: 48px; padding-bottom: 40px; }
 .home-eyebrow { color: var(--home-accent); font-size: 12px; letter-spacing: .13em; margin: 0 0 20px; }
 .knowledge-intro h1 { margin: 0 0 20px; font-size: clamp(28px, 3.2vw, 40px); font-weight: 650; line-height: 1.35; letter-spacing: -.035em; }
 .knowledge-intro > p:last-child { margin: 0; color: var(--home-muted); font-size: 15px; line-height: 1.9; }
@@ -63,17 +63,12 @@
 .home-empty p { color: var(--home-muted); font-size: 14px; }
 .home-skip { position: absolute; top: -100px; padding: 12px; background: var(--home-bg); z-index: 10; }
 .home-skip:focus { top: 8px; }
-.knowledge-home .theme-control { border: 0; border-radius: 4px; padding: 3px; background: var(--home-soft); box-shadow: none; --control-ink: var(--home-muted); --control-active: var(--home-accent); }
-.knowledge-home .theme-control .theme-control__highlight { top: 3px; bottom: 3px; left: 3px; width: calc((100% - 6px) / 3); border: 0; border-radius: 3px; background: var(--home-bg); box-shadow: none; }
-.knowledge-home .theme-control button { min-height: 36px; padding: 0 9px; border-radius: 3px; }
-.knowledge-home .theme-control button span { display: none; }
-.knowledge-home .theme-control button svg { width: 15px; height: 15px; }
 @media (max-width: 700px) {
   .knowledge-home { padding: 20px 22px 64px; }
   .knowledge-header { flex-wrap: wrap; gap: 18px; }
   .knowledge-tools { width: 100%; justify-content: space-between; gap: 20px; }
   .knowledge-tools nav { gap: 24px; }
-  .knowledge-intro { padding-top: 50px; padding-bottom: 44px; }
+  .knowledge-intro { padding-top: 32px; padding-bottom: 32px; }
   .entry-heading { flex-direction: column; gap: 8px; margin-bottom: 16px; }
   .paper-index__list { gap: 48px; }
   .home-discovery { padding: 18px; }

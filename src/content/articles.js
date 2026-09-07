@@ -122,7 +122,7 @@ function parseArticle(path, source) {
     title: requiredString(data, 'title', path),
     authors: data.authors === undefined ? [] : requiredStringList(data, 'authors', path),
     keywords: requiredStringList(data, 'keywords', path),
-    abstract: requiredString(data, 'abstract', path),
+    abstract: data.abstract === undefined ? '' : requiredString(data, 'abstract', path),
     cover: requiredString(data, 'cover', path),
     references,
     video: optionalVideo(data, path),

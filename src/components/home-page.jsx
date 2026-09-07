@@ -1,11 +1,11 @@
-import { useState } from 'react';
 import { articles } from '@/content/articles';
 import { ThemeSwitch } from '@/components/theme-switch';
 
-export function HomePage({ theme, onThemeChange, headingRef }) {
-  const [panel, setPanel] = useState(null);
-  const [query, setQuery] = useState('');
-  const [topic, setTopic] = useState('');
+export function HomePage({ theme, onThemeChange, headingRef, discovery, setDiscovery }) {
+  const { panel, query, topic } = discovery;
+  const setPanel = (panel) => setDiscovery((state) => ({ ...state, panel }));
+  const setQuery = (query) => setDiscovery((state) => ({ ...state, query }));
+  const setTopic = (topic) => setDiscovery((state) => ({ ...state, topic }));
   const topics = [...new Set(articles.flatMap((article) => article.keywords))].sort((a, b) => a.localeCompare(b, 'zh-CN'));
   const terms = query.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
   const results = articles.filter((article) => {

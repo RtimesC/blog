@@ -1,20 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import aboutMarkdown from '@/content/about-me.md?raw';
 import { HomePage } from '@/components/home-page';
-import { Button } from '@/components/ui/button';
 import { getArticleBySlug } from '@/content/articles';
 import { ThemeSwitch } from '@/components/theme-switch';
 import { useTheme } from '@/hooks/use-theme';
 
 const homeDocumentTitle = 'Knowledge Space';
 
-function ArticleToolbar({ theme, onChange, plain = false }) {
+function ArticleToolbar({ theme, onChange }) {
   return (
     <div className="taotao-article-toolbar">
-      {plain ? <a className="taotao-article-back" href="/">← Home</a> : <Button asChild size="sm">
-        <a className="taotao-article-back" href="/">Home</a>
-      </Button>}
+      <a className="taotao-article-back" href="/">← Home</a>
       <ThemeSwitch value={theme} onChange={onChange} />
     </div>
   );
@@ -22,7 +19,7 @@ function ArticleToolbar({ theme, onChange, plain = false }) {
 
 function MissingArticlePage({ theme, onThemeChange, headingRef }) {
   return (
-    <main className="taotao-article-page">
+    <main className="taotao-article-page paper-article">
       <ArticleToolbar theme={theme} onChange={onThemeChange} />
       <article className="taotao-article-sheet">
         <header className="taotao-article-header">
@@ -37,7 +34,7 @@ function MissingArticlePage({ theme, onThemeChange, headingRef }) {
 function AboutPage({ theme, onThemeChange, headingRef }) {
   return (
     <main className="taotao-article-page paper-article taotao-about-page">
-      <ArticleToolbar theme={theme} onChange={onThemeChange} plain />
+      <ArticleToolbar theme={theme} onChange={onThemeChange} />
       <article className="taotao-about-content taotao-markdown" ref={headingRef} tabIndex={-1}>
         <ReactMarkdown>{aboutMarkdown}</ReactMarkdown>
       </article>
@@ -63,18 +60,20 @@ function ArticleVideo({ video }) {
 function ArticlePage({ article, theme, onThemeChange, headingRef }) {
   return (
     <main className="taotao-article-page paper-article">
-      <ArticleToolbar theme={theme} onChange={onThemeChange} plain />
+      <ArticleToolbar theme={theme} onChange={onThemeChange} />
       <article className="taotao-article-sheet taotao-article-sheet--full">
         <header className="taotao-article-header">
           <h1 ref={headingRef} tabIndex={-1}>{article.title}</h1>
           {article.authors.length > 0 && <p className="paper-authors"><span className="paper-field-label">Authors</span>{article.authors.join(' · ')}</p>}
         </header>
 
-        <section className="paper-abstract" aria-labelledby="abstract-heading">
+        <div className="paper-metadata">
+          {article.abstract && <section className="paper-abstract" aria-labelledby="abstract-heading">
           <h2 id="abstract-heading">Abstract</h2>
           <p>{article.abstract}</p>
+          </section>}
           <p className="paper-keywords"><strong>Keywords</strong><span>{article.keywords.join(' · ')}</span></p>
-        </section>
+        </div>
 
         <div className="taotao-article-body">
           <ArticleVideo video={article.video} />
@@ -101,6 +100,8 @@ function ArticlePage({ article, theme, onThemeChange, headingRef }) {
 export default function App() {
   const { theme, setTheme } = useTheme();
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  const [discovery, setDiscovery] = useState({ panel: null, query: '', topic: '' });
+  const scrollPositions = useRef(new Map());
   const pageHeadingRef = useRef(null);
   const shouldFocusAfterNavigationRef = useRef(false);
   const currentArticle = currentPath.startsWith('/articles/')
@@ -110,12 +111,15 @@ export default function App() {
   const documentTitle = currentPath === '/about'
     ? `About — ${homeDocumentTitle}`
     : currentArticle
-      ? `${currentArticle.title} — τaotao`
+      ? `${currentArticle.title} — Knowledge Space`
       : isMissingArticle
-        ? 'Article not found — τaotao'
+        ? 'Article not found — Knowledge Space'
         : homeDocumentTitle;
 
   useEffect(() => {
+    const previousRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = 'manual';
+
     function handleInternalNavigation(event) {
       const link = event.target.closest('a[href]');
 
@@ -130,13 +134,14 @@ export default function App() {
       }
 
       event.preventDefault();
+      scrollPositions.current.set(currentPath, window.scrollY);
       shouldFocusAfterNavigationRef.current = true;
       window.history.pushState({}, '', `${destination.pathname}${destination.search}${destination.hash}`);
       setCurrentPath(destination.pathname);
-      window.scrollTo({ top: 0, behavior: 'auto' });
     }
 
     function handleHistoryChange() {
+      scrollPositions.current.set(currentPath, window.scrollY);
       shouldFocusAfterNavigationRef.current = true;
       setCurrentPath(window.location.pathname);
     }
@@ -145,12 +150,13 @@ export default function App() {
     window.addEventListener('popstate', handleHistoryChange);
 
     return () => {
+      window.history.scrollRestoration = previousRestoration;
       document.removeEventListener('click', handleInternalNavigation);
       window.removeEventListener('popstate', handleHistoryChange);
     };
-  }, []);
+  }, [currentPath]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.title = documentTitle;
 
     if (!shouldFocusAfterNavigationRef.current) {
@@ -158,6 +164,7 @@ export default function App() {
     }
 
     shouldFocusAfterNavigationRef.current = false;
+    window.scrollTo({ top: scrollPositions.current.get(currentPath) || 0, behavior: 'instant' });
     pageHeadingRef.current?.focus({ preventScroll: true });
   }, [currentPath, documentTitle]);
 
@@ -170,7 +177,7 @@ export default function App() {
       ? <ArticlePage article={currentArticle} theme={theme} onThemeChange={setTheme} headingRef={pageHeadingRef} />
       : <MissingArticlePage theme={theme} onThemeChange={setTheme} headingRef={pageHeadingRef} />;
   } else {
-    page = <HomePage theme={theme} onThemeChange={setTheme} headingRef={pageHeadingRef} />;
+    page = <HomePage discovery={discovery} setDiscovery={setDiscovery} theme={theme} onThemeChange={setTheme} headingRef={pageHeadingRef} />;
   }
 
   return page;
