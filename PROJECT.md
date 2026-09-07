@@ -4,41 +4,18 @@ _Last reviewed: 2026-09-04_
 
 ## Purpose
 
-`τaotao` is a public-learning notebook about the path from mechatronics to robotics and AI. It records real learning, experiments, technical decisions, small projects, and reflections in a form that is useful to its future author and legible to interested readers or collaborators.
+A personal knowledge space built primarily for its author and open to readers. Learning, practice, and writing help form a knowledge system and gradually develop technical confidence. The independent name and identity copy remain provisional; do not infer identity from the local username or existing sample article.
 
-The active product is the 2D React/Vite blog on `main`. The earlier 3D experiment is retained only in Git history and `codex/3d-pending`; it is neither a parallel product nor a deployment target.
+## Experience and content model
 
-## Content principle
-
-One article is one independently readable record that can be understood in a few minutes. It should stay about one coherent thing, but it is not a fixed article template.
-
-An article may document a project step, technical question, experiment, observation, failure, unresolved uncertainty, or viewpoint. It does not need to answer a prescribed set of questions, nor must it be a completed project. When a topic develops into a distinct new stage or idea, create another article instead of making the previous record carry unrelated material.
-
-The homepage is a direct, reverse-chronological reading list. Article state remains content metadata but is not currently exposed as visitor navigation.
-
-## Experience
-
-- The homepage header presents `τaotao` as the identity, a lightweight welcome line, a normal-flow `About` entry at the far right, and a theme selector.
-- Published articles appear directly in reverse chronological order. One article stays centered; multiple articles use up to two columns when the available width allows it.
-- Article cards put the title first, then a large 16:9 poster, then a lightweight date and keywords. The entire card links to the article. Authors and abstracts appear only on article pages. Shared styles live in `src/styles/article-list.css`.
-- When no articles exist, the homepage explicitly says so.
-- An article opens `/articles/<slug>`, where the full Markdown record appears with its context, status, and scope note.
-- The existing published article is `PhyAgent`, a local OPC competition POC in the `building` state.
-- Light and dark themes, keyboard focus, touch interaction, and reduced-motion support are implemented.
-
-## Content model
-
-Published records live at `src/content/articles/*.article.md`.
-
-- The YAML front matter creates the homepage card and article header.
-- The required `publishedAt` field records the author-selected public date in `YYYY-MM-DD` form and determines homepage order.
-- The required `state` field accepts `observing`, `building`, or `questioning`; it is retained as content metadata for future use.
-- The Markdown body creates the article itself.
-- `src/content/articles.js` validates states, publication dates, required fields, slugs, non-empty bodies, and unique slugs at build time.
-- The exact authoring format is maintained in [src/content/articles/README.md](src/content/articles/README.md).
-- Article pages use a fixed paper-style template in `src/styles/article.css`. The template renders title, authors, abstract, keywords, body, and references. Visual parameters and author/AI editing boundaries are maintained in [ARTICLE_STYLE_GUIDE.md](ARTICLE_STYLE_GUIDE.md); the first implementation awaits Tao’s visual acceptance.
-
-For content with factual or technical claims, distinguish clearly between `已实现`, `演示模拟`, and `待实测`. A local build, demo, or artifact is not evidence of production deployment or real-world validation.
+- Homepage: compact identity introduction, then a single article stream, with a clear technical visual style. Neutral colors, sans-serif typography, restrained blue accents, and whitespace instead of card borders.
+- Each article presents title/date, a 16:9 cover, then clickable keywords. Abstracts appear only on article pages.
+- Topics are indexed from existing keywords. Search matches title, abstract, keywords, and body and combines with keyword filtering.
+- Content is unified as articles with freely organized Markdown bodies. Required metadata: slug, title, publishedAt, abstract, keywords, cover. Authors and references are optional; no empty reference section appears. State is no longer required.
+- Optional revisedAt records the most recent substantial revision. Sort descending by revisedAt or publishedAt, then slug. Each article appears once. Routine edits do not alter these dates.
+- Article sources remain in src/content/articles/*.article.md. Their authoring contract is in src/content/articles/README.md.
+- About content is existing material and still needs a separate identity review. Homepage name and introduction are provisional.
+- Visual acceptance remains the author's decision.
 
 ## Implementation
 
@@ -46,7 +23,7 @@ For content with factual or technical claims, distinguish clearly between `已�
 - Article routes are client-rendered; `vercel.json` rewrites requests to `/index.html` so direct article visits and refreshes work on Vercel.
 - Content is versioned Markdown. A private editor, database, and content-history interface are not part of the current product.
 - `src/content/about-me.md` is a deliberately incomplete author draft. The homepage exposes its `/about` route from the far-right header entry; the entry scrolls away with the page, alongside the theme selector.
-- The visual language uses a restrained background, editorial serif typography, poster-led article cards, a light identity line, and the theme selector.
+- The visual language uses a restrained background, sans-serif homepage typography, single-column article entries, a compact identity introduction, and the theme selector.
 
 ## Working rules
 
@@ -59,7 +36,7 @@ For content with factual or technical claims, distinguish clearly between `已�
 ## Open decisions
 
 - Decide the language and publishing rhythm after several real records exist. Abstracts and article bodies may follow the needs of their content.
-- Reassess whether article state should return as visitor navigation after several real records exist.
+- Finalize the independent space name and introduction.
 - Defer cross-article relationships and archive views until published records reveal a real need.
 - Keep a private editor and database as future options, not current requirements.
 

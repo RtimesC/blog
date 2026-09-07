@@ -1,18 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { AboutButton } from '@/components/about-button';
+import { HomePage } from '@/components/home-page';
 import { Button } from '@/components/ui/button';
-import { articles, getArticleBySlug } from '@/content/articles';
+import { getArticleBySlug } from '@/content/articles';
 import { ThemeSwitch } from '@/components/theme-switch';
 import { useTheme } from '@/hooks/use-theme';
 
-const homeBrand = 'τaotao';
-const homeWelcome = "Welcome τaotao's blog";
-const homeDocumentTitle = 'τaotao — learning in public';
-
-function formatPublishedAt(value) {
-  return value.replaceAll('-', '.');
-}
+const homeDocumentTitle = '知识空间';
 
 function ArticleToolbar({ theme, onChange, plain = false }) {
   return (
@@ -93,7 +87,7 @@ function ArticlePage({ article, theme, onThemeChange, headingRef }) {
       <article className="taotao-article-sheet taotao-article-sheet--full">
         <header className="taotao-article-header">
           <h1 ref={headingRef} tabIndex={-1}>{article.title}</h1>
-          <p className="paper-authors"><span className="paper-field-label">作者</span>{article.authors.join(' · ')}</p>
+          {article.authors.length > 0 && <p className="paper-authors"><span className="paper-field-label">作者</span>{article.authors.join(' · ')}</p>}
         </header>
 
         <section className="paper-abstract" aria-labelledby="abstract-heading">
@@ -108,73 +102,19 @@ function ArticlePage({ article, theme, onThemeChange, headingRef }) {
             <ReactMarkdown>{article.body}</ReactMarkdown>
           </div>
         </div>
-        <section className="paper-references" aria-labelledby="references-heading">
+        {article.references.length > 0 && <section className="paper-references" aria-labelledby="references-heading">
           <h2 id="references-heading">参考文献 <span lang="en">References</span></h2>
-          {article.references.length ? <ol>
+          <ol>
             {article.references.map((reference, index) => (
               <li id={`ref-${index + 1}`} key={index} tabIndex={-1}>
                 <span className="paper-reference-number">[{index + 1}]</span>
                 <span>{reference.url ? <a href={reference.url}>{reference.text}</a> : reference.text}</span>
               </li>
             ))}
-          </ol> : <p className="paper-empty-references">本文尚未列出参考文献。</p>}
-        </section>
+          </ol>
+        </section>}
       </article>
     </main>
-  );
-}
-
-function FlipCard({ entry }) {
-  const [touchFlipped, setTouchFlipped] = useState(false);
-  const lastPointerType = useRef(null);
-
-  function handlePointerDown(event) {
-    lastPointerType.current = event.pointerType;
-  }
-
-  function handlePointerCancel() {
-    lastPointerType.current = null;
-  }
-
-  function handleClick(event) {
-    // Touch has no hover state: reserve the first tap for revealing the abstract.
-    // Keyboard and mouse activation retain normal link behaviour.
-    if (lastPointerType.current === 'touch' && !touchFlipped) {
-      event.preventDefault();
-      setTouchFlipped(true);
-    }
-
-    lastPointerType.current = null;
-  }
-
-  return (
-    <article className={`taotao-flip-card${touchFlipped ? ' is-touch-flipped' : ''}`}>
-      <a
-        className="content"
-        href={`/articles/${entry.slug}`}
-        aria-label={entry.title ? `Open ${entry.title}` : 'Open card'}
-        onPointerDown={handlePointerDown}
-        onPointerCancel={handlePointerCancel}
-        onClick={handleClick}
-      >
-        <span className="front" aria-hidden="true">
-          <span className="front-cover" aria-hidden="true">
-            <img className="front-cover-image" src={entry.cover} alt="" />
-          </span>
-          <span className="front-overlay" aria-hidden="true" />
-          <span className="front-content">
-            <span className="front-keywords">{entry.keywords.join(' / ')}</span>
-            <span className="front-title">{entry.title}</span>
-          </span>
-        </span>
-        <span className="back" aria-hidden="true">
-          <span className="back-content">
-            <span className="abstract-label">Abstract</span>
-            <span className="abstract-body">{entry.abstract}</span>
-          </span>
-        </span>
-      </a>
-    </article>
   );
 }
 
@@ -250,43 +190,7 @@ export default function App() {
       ? <ArticlePage article={currentArticle} theme={theme} onThemeChange={setTheme} headingRef={pageHeadingRef} />
       : <MissingArticlePage theme={theme} onThemeChange={setTheme} headingRef={pageHeadingRef} />;
   } else {
-    page = (
-      <main className="taotao-page">
-        <div className="taotao-shell">
-          <div className="taotao-home-header">
-            <div className="taotao-home-identity">
-              <h1 className="taotao-home-brand" ref={pageHeadingRef} tabIndex={-1}>
-                <a className="taotao-home-brand__link" href="/">{homeBrand}</a>
-              </h1>
-              <p className="taotao-home-welcome">{homeWelcome}</p>
-            </div>
-            <div className="taotao-home-actions">
-              <AboutButton />
-              <ThemeSwitch value={theme} onChange={setTheme} />
-            </div>
-          </div>
-
-          <section className={`paper-index${articles.length === 1 ? ' paper-index--single' : ' paper-index--multiple'}`} aria-label="文章列表">
-            <div className="paper-index__list">
-              {articles.length > 0 ? articles.map((entry) => (
-                <article className="paper-index__entry" key={entry.slug} aria-labelledby={`title-${entry.slug}`}>
-                  <a className="paper-index__card" href={`/articles/${entry.slug}`}>
-                    <div className="paper-index__content paper-index__content--heading">
-                      <h2 id={`title-${entry.slug}`}>{entry.title}</h2>
-                    </div>
-                    <div className="paper-index__poster"><img src={entry.cover} alt="" loading="lazy" /></div>
-                    <div className="paper-index__content paper-index__content--meta">
-                      <time className="paper-index__date" dateTime={entry.publishedAt}>{formatPublishedAt(entry.publishedAt)}</time>
-                      <p className="paper-index__keywords">{entry.keywords.join(' · ')}</p>
-                    </div>
-                  </a>
-                </article>
-              )) : <p className="paper-index__empty" role="status">暂时还没有文章。</p>}
-            </div>
-          </section>
-        </div>
-      </main>
-    );
+    page = <HomePage theme={theme} onThemeChange={setTheme} headingRef={pageHeadingRef} />;
   }
 
   return page;
