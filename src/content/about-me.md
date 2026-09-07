@@ -2,26 +2,26 @@
 
 Hi, I'm τaotao.
 
-这里写一段关于自己的简短介绍。
+Write a short introduction here.
 
 ## How I work
 
-我通常在这三个状态之间工作：
+I usually move between these three modes:
 
-- **Observing** — 正在学习和观察的内容。
-- **Building** — 自己正在制作的作品。
-- **Questioning** — 目前还没有答案的疑惑。
+- **Observing** — Things I am learning about and noticing.
+- **Building** — Things I am making.
+- **Questioning** — Questions I do not have answers to yet.
 
 ## Currently
 
-- 在这里写当前正在学习的方向。
-- 例如：SLAM、Deep Learning、STM32。
+- Add what you are currently learning here.
+- For example: SLAM, Deep Learning, and STM32.
 
 ## What I keep here
 
-这里写你希望如何记录和分享自己的学习过程。
+Describe how you want to document and share what you learn.
 
 ## Elsewhere
 
 - [GitHub](https://github.com/)
-- [其他链接]
+- [Other link]
