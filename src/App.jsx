@@ -6,12 +6,12 @@ import { getArticleBySlug } from '@/content/articles';
 import { ThemeSwitch } from '@/components/theme-switch';
 import { useTheme } from '@/hooks/use-theme';
 
-const homeDocumentTitle = 'Knowledge Space';
+const homeDocumentTitle = 'taotao — learning in public';
 
 function ArticleToolbar({ theme, onChange }) {
   return (
     <div className="taotao-article-toolbar">
-      <a className="taotao-article-back" href="/">← Home</a>
+      <a className="taotao-article-back" href="/"><span aria-hidden="true" className="toolbar-mark"><i /><i /><i /></span><span>taotao</span><span className="toolbar-back-label">/ Home</span></a>
       <ThemeSwitch value={theme} onChange={onChange} />
     </div>
   );
@@ -111,9 +111,9 @@ export default function App() {
   const documentTitle = currentPath === '/about'
     ? `About — ${homeDocumentTitle}`
     : currentArticle
-      ? `${currentArticle.title} — Knowledge Space`
+      ? `${currentArticle.title} — taotao`
       : isMissingArticle
-        ? 'Article not found — Knowledge Space'
+        ? 'Article not found — taotao'
         : homeDocumentTitle;
 
   useEffect(() => {
