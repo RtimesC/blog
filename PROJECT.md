@@ -15,6 +15,7 @@ A personal knowledge space built primarily for its author and open to readers. L
 - Optional revisedAt records the most recent substantial revision. Sort descending by revisedAt or publishedAt, then slug. Each article appears once. Routine edits do not alter these dates.
 - Article sources remain in src/content/articles/*.article.md. Their authoring contract is in src/content/articles/README.md.
 - About reads src/content/about-me.md directly as Markdown, the sole source of its visible content. The page provides only shared typography and navigation; no required sections or front matter. Existing placeholder copy still needs a separate identity review. Homepage name and introduction are provisional.
+- IELTS Study Space (/ielts): a lightweight workbench for IELTS preparation covering Listening, Reading, and Writing. Focuses on question types, methods, weak points, and curated external resources without heavy database or AI dependencies. Sources live in `src/content/ielts/data.js` and `src/content/ielts/notes/*.md`.
 - Visual acceptance remains the author's decision.
 
 ## Implementation
