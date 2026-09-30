@@ -7,13 +7,13 @@
 }
 
 :root {
-  --background: #e8e8e8;
-  --foreground: #111111;
+  --background: #f4f6f3;
+  --foreground: #16232b;
 }
 
 :root[data-theme="dark"] {
-  --background: #212121;
-  --foreground: #f1f1ed;
+  --background: #151c20;
+  --foreground: #edf2ed;
   color-scheme: dark;
 }
 

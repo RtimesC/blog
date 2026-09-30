@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Radio interference source autonomous search</title>
+  <desc id="desc">A vector field map showing bearing uncertainty, coverage stations, candidate geometry, and a route through the search arena.</desc>
+  <defs>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#294047" stroke-width="1"/></pattern>
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="12" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1600" height="900" fill="#102027"/><rect width="1600" height="900" fill="url(#grid)" opacity=".42"/>
+  <path d="M0 728H1600" stroke="#294047" stroke-width="2"/><path d="M84 104H652" stroke="#f18b70" stroke-width="5"/>
+  <text x="86" y="154" fill="#9bbab2" font-family="Arial, Helvetica, sans-serif" font-size="22" letter-spacing="5">CUMCM 2026 / PROBLEM B</text>
+  <text x="86" y="270" fill="#f4f6f3" font-family="Arial, 'PingFang SC', sans-serif" font-size="76" font-weight="700" letter-spacing="-2">无线电干扰源</text>
+  <text x="86" y="352" fill="#f18b70" font-family="Arial, 'PingFang SC', sans-serif" font-size="66" font-weight="700" letter-spacing="-2">自主搜索与清除</text>
+  <text x="88" y="430" fill="#b7cac5" font-family="Arial, 'PingFang SC', sans-serif" font-size="25">从几何定位，到覆盖巡航，再到在线决策</text>
+  <g transform="translate(120 584)">
+    <text x="0" y="0" fill="#f4f6f3" font-family="Arial, Helvetica, sans-serif" font-size="17" letter-spacing="3">GEOMETRY</text><text x="0" y="34" fill="#8ec5b5" font-family="Arial, Helvetica, sans-serif" font-size="18">HALF-PLANE INTERSECTION</text>
+    <text x="310" y="0" fill="#f4f6f3" font-family="Arial, Helvetica, sans-serif" font-size="17" letter-spacing="3">COVERAGE</text><text x="310" y="34" fill="#8ec5b5" font-family="Arial, Helvetica, sans-serif" font-size="18">7 / 25 STATIONS</text>
+    <text x="570" y="0" fill="#f4f6f3" font-family="Arial, Helvetica, sans-serif" font-size="17" letter-spacing="3">CERTIFICATION</text><text x="570" y="34" fill="#8ec5b5" font-family="Arial, Helvetica, sans-serif" font-size="18">MEC ≤ 20 M</text>
+  </g>
+  <g transform="translate(1190 424)">
+    <circle r="300" fill="#122a31" stroke="#40616a" stroke-width="2"/><circle r="250" fill="none" stroke="#6b9697" stroke-width="2" stroke-dasharray="9 15"/><circle r="178" fill="none" stroke="#496d76" stroke-width="2" stroke-dasharray="4 12"/><circle r="76" fill="none" stroke="#f18b70" stroke-width="3" stroke-dasharray="3 9" opacity=".9"/>
+    <path d="M0 0L220 -42L178 112L42 180L-96 162L-210 65L-234 -82L-132 -190L-18 -245L112 -216L218 -130L245 -4L222 106L116 203L-19 238L-144 185L-222 82L-239 -50L-184 -155L-78 -226L47 -242L157 -186L231 -90L239 27L190 138L95 213L-31 226L-142 169L-213 67L-228 -49L-172 -147L-75 -209L40 -225L140 -174L203 -84L210 22L169 121L83 185L-28 199L-127 150L-189 61L-201 -39L-151 -127L-69 -184L30 -198L118 -154L170 -76L174 12L140 94L69 150L-20 162L-96 124L-142 55L-149 -22L-113 -90L-50 -132L24 -140L87 -110L126 -53L126 15L101 72L52 112L-11 119L-64 92L-95 45L-98 -8L-73 -54L-31 -79L18 -81L56 -58L75 -20L68 22L42 52L1 67L-38 54L-59 22L-58 -14L-38 -43L-7 -54L23 -42L37 -17L31 11L12 28L-14 28L-28 10L-24 -12L-7 -23L11 -17L16 -1" fill="none" stroke="#f18b70" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/>
+    <path d="M0 0L-244 -78L-138 -218L0 -300L182 -238L278 -80L268 104L142 246L-41 294L-215 210L-300 28L-250 -144L-90 -274L98 -283L250 -166L294 15L230 190L66 282L-122 250L-263 126L-282 -61L-182 -233L-4 -299L175 -243L280 -96L275 91L158 235L-28 297" fill="none" stroke="#8ec5b5" stroke-width="2.4" stroke-dasharray="1 12" stroke-linecap="round"/>
+    <g fill="#f4f6f3" stroke="#f18b70" stroke-width="3"><circle cx="0" cy="-300" r="7"/><circle cx="234" cy="-188" r="7"/><circle cx="292" cy="67" r="7"/><circle cx="130" cy="270" r="7"/><circle cx="-130" cy="270" r="7"/><circle cx="-292" cy="67" r="7"/><circle cx="-234" cy="-188" r="7"/></g>
+    <g fill="#8ec5b5"><circle cx="0" cy="-178" r="5"/><circle cx="89" cy="-154" r="5"/><circle cx="154" cy="-89" r="5"/><circle cx="178" cy="0" r="5"/><circle cx="154" cy="89" r="5"/><circle cx="89" cy="154" r="5"/><circle cx="0" cy="178" r="5"/><circle cx="-89" cy="154" r="5"/><circle cx="-154" cy="89" r="5"/><circle cx="-178" cy="0" r="5"/><circle cx="-154" cy="-89" r="5"/><circle cx="-89" cy="-154" r="5"/></g>
+    <circle r="10" fill="#f18b70" filter="url(#softGlow)"/><path d="M-24 0H24M0 -24V24" stroke="#f4f6f3" stroke-width="2" opacity=".9"/>
+    <text x="-54" y="-326" fill="#b7cac5" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="2">1800 M ARENA</text><text x="198" y="329" fill="#b7cac5" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="2">±1° BEARING</text>
+  </g>
+  <g transform="translate(1090 780)"><circle cx="0" cy="0" r="6" fill="#f18b70"/><text x="18" y="6" fill="#f4f6f3" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="2">MEC</text><circle cx="120" cy="0" r="6" fill="#8ec5b5"/><text x="138" y="6" fill="#f4f6f3" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="2">TSP ROUTE</text></g>
+</svg>
