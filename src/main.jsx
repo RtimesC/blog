@@ -5,6 +5,7 @@ import './styles/app.css'
 import './styles/article.css'
 import './styles/theme.css'
 import './styles/article-list.css'
+import './styles/ielts.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

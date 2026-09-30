@@ -5,6 +5,10 @@ import { HomePage } from '@/components/home-page';
 import { getArticleBySlug } from '@/content/articles';
 import { ThemeSwitch } from '@/components/theme-switch';
 import { useTheme } from '@/hooks/use-theme';
+import { IeltsHomePage } from '@/components/ielts/ielts-home';
+import { IeltsModulePage } from '@/components/ielts/ielts-module-page';
+import { IeltsNotePage } from '@/components/ielts/ielts-note-page';
+import { getIeltsNoteBySlug } from '@/content/ielts/ielts-content';
 
 const homeDocumentTitle = 'taotao — learning in public';
 
@@ -108,13 +112,33 @@ export default function App() {
     ? getArticleBySlug(currentPath.replace(/^\/articles\//, '').replace(/\/+$/, ''))
     : null;
   const isMissingArticle = currentPath.startsWith('/articles/') && !currentArticle;
-  const documentTitle = currentPath === '/about'
-    ? `About — ${homeDocumentTitle}`
-    : currentArticle
+
+  const currentIeltsSlug = currentPath.startsWith('/ielts/notes/')
+    ? currentPath.replace(/^\/ielts\/notes\//, '').replace(/\/+$/, '')
+    : null;
+  const currentIeltsNote = currentIeltsSlug ? getIeltsNoteBySlug(currentIeltsSlug) : null;
+  const ieltsModuleMatch = currentPath.match(/^\/ielts\/(listening|reading|writing)\/?$/);
+  const currentIeltsModule = ieltsModuleMatch ? ieltsModuleMatch[1] : null;
+
+  let documentTitle = homeDocumentTitle;
+  if (currentPath === '/about') {
+    documentTitle = `About — ${homeDocumentTitle}`;
+  } else if (currentPath.startsWith('/articles/')) {
+    documentTitle = currentArticle
       ? `${currentArticle.title} — taotao`
       : isMissingArticle
         ? 'Article not found — taotao'
         : homeDocumentTitle;
+  } else if (currentPath === '/ielts' || currentPath === '/ielts/') {
+    documentTitle = 'IELTS Study Space — taotao';
+  } else if (currentIeltsNote) {
+    documentTitle = `${currentIeltsNote.title} — IELTS`;
+  } else if (currentIeltsSlug && !currentIeltsNote) {
+    documentTitle = 'Note not found — IELTS';
+  } else if (currentIeltsModule) {
+    const modCap = currentIeltsModule.charAt(0).toUpperCase() + currentIeltsModule.slice(1);
+    documentTitle = `${modCap} — IELTS`;
+  }
 
   useEffect(() => {
     const previousRestoration = window.history.scrollRestoration;
@@ -176,6 +200,12 @@ export default function App() {
     page = currentArticle
       ? <ArticlePage article={currentArticle} theme={theme} onThemeChange={setTheme} headingRef={pageHeadingRef} />
       : <MissingArticlePage theme={theme} onThemeChange={setTheme} headingRef={pageHeadingRef} />;
+  } else if (currentPath === '/ielts' || currentPath === '/ielts/') {
+    page = <IeltsHomePage theme={theme} onThemeChange={setTheme} headingRef={pageHeadingRef} />;
+  } else if (currentPath.startsWith('/ielts/notes/')) {
+    page = <IeltsNotePage slug={currentIeltsSlug} theme={theme} onThemeChange={setTheme} headingRef={pageHeadingRef} />;
+  } else if (currentIeltsModule) {
+    page = <IeltsModulePage moduleId={currentIeltsModule} theme={theme} onThemeChange={setTheme} headingRef={pageHeadingRef} />;
   } else {
     page = <HomePage discovery={discovery} setDiscovery={setDiscovery} theme={theme} onThemeChange={setTheme} headingRef={pageHeadingRef} />;
   }

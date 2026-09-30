@@ -62,6 +62,7 @@ export function HomePage({ theme, onThemeChange, headingRef, discovery, setDisco
             <nav aria-label="Main navigation">
               <button aria-expanded={panel === 'topics'} aria-controls="home-discovery" onClick={() => setPanel(panel === 'topics' ? null : 'topics')}>Topics</button>
               <button aria-expanded={panel === 'search'} aria-controls="home-discovery" aria-keyshortcuts="/" onClick={() => setPanel(panel === 'search' ? null : 'search')}>Search <span className="nav-shortcut">/</span></button>
+              <a href="/ielts">IELTS</a>
               <a href="/about">About</a>
             </nav>
             <ThemeSwitch value={theme} onChange={onThemeChange} />
