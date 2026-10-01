@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Vision-language navigation research</title>
+  <desc id="desc">A research poster showing language, vision, spatial memory and continuous action in a navigation loop.</desc>
+  <defs>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M44 0H0V44" fill="none" stroke="#263a45" stroke-width="1"/></pattern>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="11" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1600" height="900" fill="#0f1d25"/><rect width="1600" height="900" fill="url(#grid)" opacity=".45"/>
+  <path d="M86 102H560" stroke="#ee9179" stroke-width="5"/>
+  <text x="88" y="154" fill="#9eb9b5" font-family="Arial, Helvetica, sans-serif" font-size="21" letter-spacing="5">VLN / RESEARCH REPORT</text>
+  <text x="88" y="265" fill="#f5f2eb" font-family="Arial, 'PingFang SC', sans-serif" font-size="76" font-weight="700">视觉语言导航</text>
+  <text x="88" y="344" fill="#ee9179" font-family="Arial, 'PingFang SC', sans-serif" font-size="63" font-weight="700">从观察到行动</text>
+  <text x="90" y="416" fill="#b5c8c3" font-family="Arial, 'PingFang SC', sans-serif" font-size="24">语言目标、视觉证据、空间记忆与连续控制</text>
+  <g transform="translate(102 584)">
+    <text x="0" y="0" fill="#f5f2eb" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="3">INPUT</text>
+    <text x="0" y="33" fill="#8fc2b4" font-family="Arial, Helvetica, sans-serif" font-size="19">RGB + LANGUAGE</text>
+    <text x="250" y="0" fill="#f5f2eb" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="3">MEMORY</text>
+    <text x="250" y="33" fill="#8fc2b4" font-family="Arial, Helvetica, sans-serif" font-size="19">EVIDENCE + SPACE</text>
+    <text x="520" y="0" fill="#f5f2eb" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="3">ACTION</text>
+    <text x="520" y="33" fill="#8fc2b4" font-family="Arial, Helvetica, sans-serif" font-size="19">v · ω · STOP</text>
+  </g>
+  <g transform="translate(1180 420)">
+    <circle r="270" fill="#142a34" stroke="#43656e" stroke-width="2"/>
+    <circle r="215" fill="none" stroke="#5b888c" stroke-width="2" stroke-dasharray="5 13"/>
+    <circle r="153" fill="none" stroke="#ee9179" stroke-width="2" stroke-dasharray="3 11"/>
+    <path d="M0 -224C122 -224 224 -123 224 0C224 122 122 224 0 224C-122 224 -224 122 -224 0C-224 -123 -122 -224 0 -224Z" fill="none" stroke="#8fc2b4" stroke-width="2.5" stroke-dasharray="2 14" stroke-linecap="round"/>
+    <path d="M0 -153C85 -153 153 -85 153 0C153 85 85 153 0 153C-85 153 -153 85 -153 0C-153 -85 -85 -153 0 -153Z" fill="none" stroke="#ee9179" stroke-width="3" opacity=".88"/>
+    <path d="M-153 0C-115 -54 -60 -84 0 -84C62 -84 118 -48 153 0C117 48 62 84 0 84C-60 84 -115 54 -153 0Z" fill="none" stroke="#8fc2b4" stroke-width="3"/>
+    <path d="M-204 138L-105 65L-32 118L58 38L125 74L204 0" fill="none" stroke="#ee9179" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <g fill="#f5f2eb" stroke="#ee9179" stroke-width="3"><circle cx="-204" cy="138" r="7"/><circle cx="-105" cy="65" r="7"/><circle cx="-32" cy="118" r="7"/><circle cx="58" cy="38" r="7"/><circle cx="125" cy="74" r="7"/><circle cx="204" cy="0" r="7"/></g>
+    <circle r="12" fill="#ee9179" filter="url(#glow)"/><path d="M-25 0H25M0 -25V25" stroke="#f5f2eb" stroke-width="2"/>
+    <text x="-35" y="-292" fill="#b5c8c3" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="2">SPATIAL MEMORY</text>
+    <text x="158" y="286" fill="#b5c8c3" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="2">CONTINUOUS WORLD</text>
+  </g>
+  <g transform="translate(1080 774)">
+    <circle cx="0" cy="0" r="6" fill="#ee9179"/><text x="18" y="6" fill="#f5f2eb" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="2">OBSERVE</text>
+    <circle cx="145" cy="0" r="6" fill="#8fc2b4"/><text x="163" y="6" fill="#f5f2eb" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="2">UPDATE</text>
+    <circle cx="270" cy="0" r="6" fill="#ee9179"/><text x="288" y="6" fill="#f5f2eb" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="2">ACT</text>
+  </g>
+</svg>

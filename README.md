@@ -1,29 +1,39 @@
 # τaotao's blog
 
-A small public-learning notebook for robotics, AI, and the questions in between.
+一个记录机器人、AI 与学习实践的公开笔记空间。
 
-The active product, content principle, implementation boundaries, and branch rules are maintained in [PROJECT.md](PROJECT.md).
+<p align="center">
+  <img src="public/assets/vln-research-report/poster.svg" alt="视觉语言导航研究报告海报" width="860" />
+</p>
 
-## Stack
+<p align="center"><em>从研究问题，到可复现的文章与实验记录。</em></p>
 
-- React + Vite
-- Tailwind CSS 4
-- shadcn/ui primitives, kept in `src/components/ui/`
-- Brand tokens, kept in `src/styles/app.css`
+<p align="center">
+  <img src="public/assets/readme-research-loop.svg" alt="Observe, write, test, share and return research loop" width="860" />
+</p>
 
-## Commands
+## 本地运行
 
-- `npm run dev` — start the local workspace
-- `npm run lint` — check source code
-- `npm run build` — create a production build
-- `npm run preview` — preview the production build
+技术栈：React、Vite、Tailwind CSS 4，以及 `src/components/ui/` 中的 shadcn/ui 基础组件。
 
-## Content & Writing
+```bash
+npm install
+npm run dev
+```
 
-文章的共用排版、作者与 AI 的编辑分工、预览和发布流程见 [Article 视觉排版与编辑规范](ARTICLE_STYLE_GUIDE.md)。
+其他命令：`npm run lint` 检查代码，`npm run build` 生成生产构建，`npm run preview` 预览构建结果。
 
-- **Technical Articles**: Published records and their article pages come from `src/content/articles/*.article.md`. See [the authoring guide](src/content/articles/README.md) for the required metadata and Markdown format.
-- **IELTS Study Space**: A lightweight preparation workbench at `/ielts` focusing on Listening, Reading, and Writing.
-  - Configuration & External Resources: `src/content/ielts/data.js`
-  - Notes & Method Summaries: `src/content/ielts/notes/*.md` (YAML front matter + Markdown body)
-- **About**: Personal introduction lives in `src/content/about-me.md`, connected to the top navigation at `/about`.
+## 内容入口
+
+- 技术文章：`src/content/articles/*.article.md`，编写方式见下方文章指南。
+- IELTS 学习区：`/ielts`；资源配置位于 `src/content/ielts/data.js`，学习笔记位于 `src/content/ielts/notes/*.md`（YAML 元数据与 Markdown 正文）。
+- About：`/about`，内容位于 `src/content/about-me.md`。
+
+## 文档导航
+
+| 文档 | 职责 |
+| --- | --- |
+| [项目说明](PROJECT.md) | 产品目标、范围、稳定原则与待决事项 |
+| [文章编写与编辑指南](src/content/articles/README.md) | 文件格式、媒体、引用、预览与 AI 编辑边界 |
+| [Git 速查](GIT_WORKFLOW.md) | 分支、提交、检查、合并与恢复 |
+| [第三方声明](THIRD_PARTY_NOTICES.md) | 项目来源、字体与素材归属 |

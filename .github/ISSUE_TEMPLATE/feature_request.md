@@ -1,19 +1,19 @@
 ---
 name: Feature Request
-about: Suggest an idea for a new Room or 3D interaction
+about: 提出博客阅读、写作或 IELTS 学习区的改进需求
 title: '[FEAT] '
 labels: 'enhancement'
 assignees: ''
 ---
 
-## Is your feature request related to a problem? Please describe.
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+## 使用需求
 
-## Describe the solution you'd like
-A clear and concise description of what you want to happen (e.g., new 3D model, new GSAP animation, new page).
+<!-- 描述具体场景，以及当前遇到的困难。 -->
 
-## Describe alternatives you've considered
-A clear and concise description of any alternative solutions or features you've considered.
+## 建议改进
 
-## Additional context
-Add any other context or screenshots about the feature request here.
+<!-- 说明希望得到的行为与涉及页面。 -->
+
+## 验收方式
+
+<!-- 怎样判断改进解决了问题？如有更简单的替代方案，也可在此说明。 -->

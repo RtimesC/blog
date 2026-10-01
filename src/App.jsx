@@ -4,6 +4,7 @@ import aboutMarkdown from '@/content/about-me.md?raw';
 import { HomePage } from '@/components/home-page';
 import { getArticleBySlug } from '@/content/articles';
 import { ThemeSwitch } from '@/components/theme-switch';
+import { ReadingLayout } from '@/components/reading-layout';
 import { useTheme } from '@/hooks/use-theme';
 import { IeltsHomePage } from '@/components/ielts/ielts-home';
 import { IeltsModulePage } from '@/components/ielts/ielts-module-page';
@@ -63,15 +64,17 @@ function ArticleVideo({ video }) {
 
 function ArticlePage({ article, theme, onThemeChange, headingRef }) {
   return (
-    <main className="taotao-article-page paper-article">
+    <main className="taotao-article-page paper-article reading-page">
       <ArticleToolbar theme={theme} onChange={onThemeChange} />
+      <ReadingLayout key={article.slug} contentKey={article.slug}>
       <article className="taotao-article-sheet taotao-article-sheet--full">
         <header className="taotao-article-header">
+          <div className="article-heading-meta"><span>Article</span><time dateTime={article.activityAt}>{article.revisedAt ? 'Updated ' : ''}{article.activityAt.replaceAll('-', '.')}</time></div>
           <h1 ref={headingRef} tabIndex={-1}>{article.title}</h1>
           {article.authors.length > 0 && <p className="paper-authors"><span className="paper-field-label">Authors</span>{article.authors.join(' · ')}</p>}
         </header>
 
-        <div className="paper-metadata">
+        <div className="paper-metadata article-intro-card">
           {article.abstract && <section className="paper-abstract" aria-labelledby="abstract-heading">
           <h2 id="abstract-heading">Abstract</h2>
           <p>{article.abstract}</p>
@@ -86,7 +89,7 @@ function ArticlePage({ article, theme, onThemeChange, headingRef }) {
           </div>
         </div>
         {article.references.length > 0 && <section className="paper-references" aria-labelledby="references-heading">
-          <h2 id="references-heading">References</h2>
+          <h2 id="references-heading"><span>Sources</span> References</h2>
           <ol>
             {article.references.map((reference, index) => (
               <li id={`ref-${index + 1}`} key={index} tabIndex={-1}>
@@ -96,7 +99,9 @@ function ArticlePage({ article, theme, onThemeChange, headingRef }) {
             ))}
           </ol>
         </section>}
+        <footer className="article-endcap"><span>End of note</span><a href="/">Back to all notes <span aria-hidden="true">↗</span></a></footer>
       </article>
+      </ReadingLayout>
     </main>
   );
 }

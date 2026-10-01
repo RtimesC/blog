@@ -1,3 +1,4 @@
+import { ReadingLayout } from '@/components/reading-layout';
 import ReactMarkdown from 'react-markdown';
 import { getIeltsNoteBySlug } from '@/content/ielts/ielts-content';
 import { IeltsToolbar } from './ielts-toolbar';
@@ -31,7 +32,7 @@ export function IeltsNotePage({ slug, theme, onThemeChange, headingRef }) {
   const moduleName = note.module.charAt(0).toUpperCase() + note.module.slice(1);
 
   return (
-    <main className="taotao-article-page paper-article">
+    <main className="taotao-article-page paper-article reading-page">
       <IeltsToolbar
         theme={theme}
         onChange={onThemeChange}
@@ -41,6 +42,7 @@ export function IeltsNotePage({ slug, theme, onThemeChange, headingRef }) {
           { label: note.title },
         ]}
       />
+      <ReadingLayout key={note.slug || slug} contentKey={slug}>
 
       <article className="taotao-article-sheet taotao-article-sheet--full">
         <header className="taotao-article-header">
@@ -52,7 +54,7 @@ export function IeltsNotePage({ slug, theme, onThemeChange, headingRef }) {
         </header>
 
         {note.summary && (
-          <div className="paper-metadata">
+          <div className="paper-metadata article-intro-card">
             <section className="paper-abstract" aria-label="Note summary">
               <p>{note.summary}</p>
             </section>
@@ -65,12 +67,13 @@ export function IeltsNotePage({ slug, theme, onThemeChange, headingRef }) {
           </div>
         </div>
 
-        <footer style={{ marginTop: '4rem', borderTop: '1px solid var(--note-border)', paddingTop: '2rem' }}>
+        <footer className="article-endcap"><span>End of note</span>
           <a href={`/ielts/${note.module}`} className="ielts-back-btn">
             ← 返回 {moduleName} 模块
           </a>
         </footer>
       </article>
+      </ReadingLayout>
     </main>
   );
 }

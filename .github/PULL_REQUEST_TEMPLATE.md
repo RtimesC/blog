@@ -1,22 +1,14 @@
-## Description
-<!-- Please include a summary of the changes and the related issue. -->
+## 改动说明
 
-## Type of Change
-<!-- Check the appropriate box using [x] -->
-- [ ] 🐛 Bug fix (non-breaking change which fixes an issue)
-- [ ] ✨ New feature (non-breaking change which adds functionality)
-- [ ] 🚀 Performance optimization (WebGL, shaders, React re-renders)
-- [ ] 🧹 Refactoring (no functional changes, no api changes)
-- [ ] 📚 Documentation Update
+<!-- 描述具体问题、改动后的行为与涉及范围。 -->
 
-## Performance Impact (WebGL/Three.js)
-<!-- If applicable, detail the performance impact. Did you run the React Profiler or measure FPS? -->
-- [ ] Has no negative impact on 60 FPS target
-- [ ] Optimizes Draw Calls or Shader complexity
-- [ ] Reduces bundle size / texture VRAM footprint
+## 验证
 
-## Checklist:
-- [ ] My code follows the style guidelines of this project
-- [ ] I have performed a self-review of my own code
-- [ ] I have commented my code, particularly in hard-to-understand WebGL areas
-- [ ] My changes generate no new React or Three.js warnings
+<!-- 文档改动：检查链接和规则一致性；代码或页面改动：填写实际检查结果。 -->
+
+- [ ] 已核对改动范围与 diff
+- [ ] `git diff --check` 通过
+- [ ] 代码或内容系统改动：`npm run lint`、`npm run build` 通过（不适用时说明）
+- [ ] 页面改动：已检查桌面、窄屏、明暗模式与相关交互（不适用时说明）
+
+<!-- 补充尚待核对的内容、已知限制或必要截图。 -->

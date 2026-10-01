@@ -1,28 +1,27 @@
 ---
 name: Bug Report
-about: Create a report to help us improve the 3D Experience
+about: 报告博客页面、文章显示或导航问题
 title: '[BUG] '
 labels: 'bug, needs triage'
 assignees: ''
 ---
 
-## Describe the bug
-A clear and concise description of what the bug is. 
+## 问题描述
 
-## To Reproduce
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Enter room '...'
-3. Click on '....'
-4. See error/stutter
+<!-- 哪个页面出现了什么问题？附页面地址。 -->
 
-## Expected behavior
-A clear and concise description of what you expected to happen.
+## 复现步骤
 
-## Environment (please complete the following information):
- - OS: [e.g. iOS, Windows]
- - Browser: [e.g. Chrome, Safari]
- - Device Tier: [e.g. High-end Desktop, Low-end Mobile]
+1. 打开……
+2. 操作……
+3. 观察……
 
-## Additional context (FPS Drops, Errors)
-Add any other context about the problem here, e.g., browser console logs or FPS monitor results.
+## 预期与实际结果
+
+<!-- 说明预期行为与实际表现，按需附截图或控制台错误。 -->
+
+## 环境
+
+- 系统与浏览器：
+- 设备或窗口宽度：
+- 明暗模式：

@@ -1,4 +1,4 @@
-/* Shared reading layout. See ARTICLE_STYLE_GUIDE.md. */
+/* Shared reading layout. See src/content/articles/README.md. */
 .paper-article {
   --note-bg: #fafbfc;
   --note-text: #202630;
@@ -261,3 +261,72 @@
 :root .paper-article .taotao-article-sheet { margin-top: 5rem; }
 :root .paper-article .taotao-article-header h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; letter-spacing: -.035em; }
 @media (max-width: 600px) { :root .paper-article .taotao-article-sheet { margin-top: 3.5rem; } .toolbar-back-label { display: none; } }
+
+/* Article detail layout: navigation rail and a compact single reading column. */
+:root .reading-page { padding: 1.4rem 2rem 3.5rem; }
+:root .reading-page .taotao-article-toolbar { max-width: 70rem; padding: 0 0 1.25rem; border: 0; }
+.reading-layout { display: grid; grid-template-columns: 13rem minmax(0, 50rem); justify-content: center; gap: 2.5rem; width: min(100%, 70rem); margin: 1.7rem auto 0; align-items: start; }
+.reading-content { grid-column: 2; min-width: 0; }
+.reading-sidebar { grid-column: 1; grid-row: 1; position: sticky; top: 1.6rem; max-height: calc(100svh - 3.2rem); overflow-y: auto; scrollbar-width: thin; }
+.reading-desktop-nav > p { margin: 0 0 1.2rem; padding-left: .75rem; font-size: .6875rem; font-weight: 650; letter-spacing: .09em; color: var(--note-muted); text-transform: uppercase; }
+.reading-sidebar ol { margin: 0; padding: 0; list-style: none; }
+.reading-sidebar li + li { margin-top: .2rem; }
+.reading-sidebar a { display: flex; align-items: baseline; gap: .65rem; padding: .65rem .75rem; border-radius: .7rem; color: var(--note-muted); text-decoration: none; font-size: .8125rem; line-height: 1.6; transition: background-color 160ms ease, color 160ms ease; }
+.reading-sidebar a > span { flex-shrink: 0; color: var(--note-muted); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .65rem; }
+.reading-sidebar a:hover, .reading-sidebar a[aria-current] { background: var(--note-code); color: var(--note-heading); }
+.reading-sidebar a[aria-current] > span { color: var(--note-link); }
+.reading-mobile-nav { display: none; }
+.reading-progress { position: fixed; inset: 0 0 auto; z-index: 30; height: 2px; pointer-events: none; }
+.reading-progress > span { display: block; height: 100%; background: var(--note-link); transform: scaleX(0); transform-origin: left; }
+:root .reading-page .taotao-article-sheet { width: 100%; margin: 0; padding: 0; }
+:root .reading-page .taotao-article-header { padding: 0 0 1.15rem; }
+.article-heading-meta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .75rem; color: var(--note-muted); font-size: .6875rem; letter-spacing: .04em; }
+.article-heading-meta > span { color: var(--note-link); font-weight: 650; text-transform: uppercase; letter-spacing: .1em; }
+.article-heading-meta time { font-variant-numeric: tabular-nums; }
+:root .reading-page .taotao-article-header h1 { margin: 0 0 .85rem; color: var(--note-heading); font-family: inherit; font-size: clamp(1.65rem, 2.7vw, 2.25rem); font-weight: 650; letter-spacing: -.025em; line-height: 1.4; text-wrap: pretty; overflow-wrap: anywhere; }
+:root .reading-page .paper-authors { margin: 0; color: var(--note-muted); font-size: .8125rem; }
+:root .reading-page .paper-field-label { margin-right: .6rem; font-size: .6875rem; }
+:root .reading-page .article-intro-card { margin: 0 0 1.65rem; padding: 1.1rem 1.25rem; background: var(--note-code); border: 0; border-radius: .9rem; box-shadow: none; }
+:root .reading-page .article-intro-card .paper-abstract { margin: 0 0 .85rem; }
+:root .reading-page .article-intro-card .paper-abstract:only-child { margin-bottom: 0; }
+:root .reading-page .paper-abstract h2 { margin: 0 0 .45rem; color: var(--note-muted); font-size: .6875rem; font-weight: 650; line-height: 1.6; letter-spacing: .08em; text-transform: uppercase; }
+:root .reading-page .paper-abstract > p { margin: 0; color: var(--note-text); font-size: .9375rem; line-height: 1.8; }
+:root .reading-page .paper-keywords { gap: .65rem; font-size: .75rem; line-height: 1.7; }
+:root .reading-page .paper-keywords strong { color: var(--note-muted); font-size: .6875rem; font-weight: 500; }
+:root .reading-page .taotao-markdown { font-size: 1rem; line-height: 1.85; overflow-wrap: anywhere; }
+:root .reading-page .taotao-markdown h2 { margin: 2.3rem 0 .8rem; padding: 0; font-size: 1.375rem; line-height: 1.5; letter-spacing: -.02em; scroll-margin-top: 1.5rem; }
+:root .reading-page .taotao-markdown > h2:first-child { margin-top: 0; }
+:root .reading-page .taotao-markdown h3 { margin: 1.7rem 0 .65rem; font-size: 1.125rem; }
+:root .reading-page .taotao-markdown h2:focus { outline: none; }
+:root .reading-page .taotao-markdown h2:focus-visible { outline: 2px solid var(--note-link); outline-offset: 5px; border-radius: .3rem; }
+:root .reading-page .taotao-markdown p { margin-bottom: 1.1rem; }
+:root .reading-page .taotao-markdown pre { border: 0; border-radius: .75rem; background: var(--note-code); box-shadow: none; }
+:root .reading-page .taotao-markdown blockquote { padding: .85rem 1rem; border: 0; border-radius: .75rem; background: var(--note-code); }
+:root .reading-page .taotao-markdown p:has(> img:only-child) + p:has(> em:only-child) { width: min(100%, var(--note-image-width)); }
+:root .reading-page .taotao-markdown p:has(> img:only-child) + p > em:only-child { font-style: normal; }
+:root .reading-page .taotao-article-video { width: min(100%, 40rem); }
+:root .reading-page .taotao-article-video video { height: auto; aspect-ratio: 16 / 9; object-fit: contain; }
+:root .reading-page .paper-references { margin-top: 2.5rem; padding: 1.1rem 1.25rem; border-radius: .9rem; background: var(--note-code); }
+.article-endcap { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem; margin-top: 2.5rem; padding: 1.1rem 1.25rem; border-radius: .9rem; background: var(--note-code); color: var(--note-muted); font-size: .75rem; }
+.article-endcap a { color: var(--note-link); text-decoration: none; }
+.article-endcap a:hover { text-decoration: underline; text-underline-offset: .2em; }
+@media (max-width: 900px) {
+  :root .reading-page { padding: 1rem 1.5rem 3rem; }
+  .reading-layout { grid-template-columns: minmax(0, 50rem); gap: 1rem; margin-top: .75rem; }
+  .reading-content { grid-column: 1; }
+  .reading-sidebar { position: static; grid-column: 1; grid-row: auto; max-height: none; overflow: visible; }
+  .reading-desktop-nav { display: none; }
+  .reading-mobile-nav { display: block; padding: .75rem 1rem; border-radius: .75rem; background: var(--note-code); }
+  .reading-mobile-nav summary { cursor: pointer; color: var(--note-heading); font-size: .8125rem; }
+  .reading-mobile-nav summary > span { float: right; color: var(--note-muted); font-size: .6875rem; }
+  .reading-mobile-nav nav { padding-top: .65rem; }
+  .reading-sidebar a { min-height: 44px; }
+}
+@media (max-width: 600px) {
+  :root .reading-page { padding-inline: 1.125rem; }
+  :root .reading-page .taotao-article-header h1 { font-size: 1.65rem; line-height: 1.4; }
+  :root .reading-page .article-intro-card { padding: .9rem 1rem; margin-bottom: 1.4rem; }
+  :root .reading-page .paper-keywords { flex-wrap: wrap; gap: .2rem .6rem; }
+  :root .reading-page .taotao-markdown h2 { font-size: 1.25rem; }
+}
+@media (prefers-reduced-motion: reduce) { .reading-sidebar a { transition: none; } }

@@ -1,53 +1,26 @@
-# Project
+# 项目说明
 
-_Last reviewed: 2026-09-04_
+## 目标与范围
 
-## Purpose
+这是主要为作者服务、同时向读者开放的个人知识空间。通过学习、实践与写作，留下能够重访、验证和修订的记录。
 
-A personal knowledge space built primarily for its author and open to readers. Learning, practice, and writing help form a knowledge system and gradually develop technical confidence. The independent name and identity copy remain provisional; do not infer identity from the local username or existing sample article.
+当前包括技术文章、About 和 IELTS 学习区。技术内容统一为文章，正文按主题自由组织；IELTS 学习区面向听力、阅读和写作，组织题型、方法、薄弱点与外部资源。
 
-## Experience and content model
+内容采用版本管理下的 Markdown。私人编辑器、数据库、内容历史界面与 3D 导航不属于当前产品范围。
 
-- Homepage: compact identity introduction, then a single article stream, with a clear technical visual style. Neutral colors, sans-serif typography, restrained blue accents, and whitespace instead of card borders.
-- Each article presents title/date, a 16:9 cover, then clickable keywords. Abstracts appear only on article pages.
-- Topics are indexed from existing keywords. Search matches title, abstract, keywords, and body and combines with keyword filtering.
-- Content is unified as articles with freely organized Markdown bodies. Required metadata: slug, title, publishedAt, abstract, keywords, cover. Authors and references are optional; no empty reference section appears. State is no longer required.
-- Optional revisedAt records the most recent substantial revision. Sort descending by revisedAt or publishedAt, then slug. Each article appears once. Routine edits do not alter these dates.
-- Article sources remain in src/content/articles/*.article.md. Their authoring contract is in src/content/articles/README.md.
-- About reads src/content/about-me.md directly as Markdown, the sole source of its visible content. The page provides only shared typography and navigation; no required sections or front matter. Existing placeholder copy still needs a separate identity review. Homepage name and introduction are provisional.
-- IELTS Study Space (/ielts): a lightweight workbench for IELTS preparation covering Listening, Reading, and Writing. Focuses on question types, methods, weak points, and curated external resources without heavy database or AI dependencies. Sources live in `src/content/ielts/data.js` and `src/content/ielts/notes/*.md`.
-- Visual acceptance remains the author's decision.
+## 稳定原则
 
-## Implementation
+- 优先服务文章阅读与写作。首页提供文章浏览、关键词索引和搜索，不预设尚无内容支撑的分类。
+- 阅读页面采用响应式正文单列：桌面端增加章节导航侧栏，窄屏收起为可展开目录；正文依靠留白组织段落与章节，不用水平分隔线安排正文。全站共享阅读样式，新增文章不单独添加样式。
+- 页面支持 Light、Dark 和 Auto 外观选择，交互应支持键盘、触摸、可见焦点与减少动态效果设置。
+- [About 内容](src/content/about-me.md)是该页可见文案的唯一来源；页面负责排版和导航，不要求固定章节或元数据。
+- 视觉验收由作者决定。身份与品牌文案不从本地用户名或样例文章推断。
 
-- Stack: React, Vite, Tailwind CSS 4, and local shadcn/ui primitives.
-- Article routes are client-rendered; `vercel.json` rewrites requests to `/index.html` so direct article visits and refreshes work on Vercel.
-- Content is versioned Markdown. A private editor, database, and content-history interface are not part of the current product.
-- `src/content/about-me.md` is the About page’s sole content source, currently containing incomplete author copy. The homepage exposes its `/about` route from the far-right header entry; the entry scrolls away with the page, alongside the theme selector.
-- The visual language uses a restrained background, sans-serif homepage typography, single-column article entries, a compact identity introduction, and the theme selector.
+具体颜色、字体、尺寸与布局以共享实现为准：[全局样式](src/styles/app.css)、[首页样式](src/styles/article-list.css)、[阅读样式](src/styles/article.css)、[主题组件](src/components/theme-switch.jsx)和[主题状态](src/hooks/use-theme.js)。文档记录原则，不重复维护这些参数。
 
-## Working rules
+## 待决事项
 
-1. `main` is the sole active production branch for the 2D blog.
-2. Create short-lived feature branches from `main` using the `codex/` prefix, then merge reviewed work back to `main`.
-3. Do not merge `codex/3d-pending` into `main` unless a new product decision explicitly reopens the 3D direction.
-4. Verify the active branch before work with `git branch --show-current`.
-5. Run `npm run lint`, `npm run build`, and `git diff --check` for code or content-system changes. Visual acceptance remains Tao's decision.
+- 根据实际写作需要确定语言和发布节奏。
+- 等文章积累出真实需求，再决定是否增加跨文章关系与归档视图。
 
-## Open decisions
-
-- Decide the language and publishing rhythm after several real records exist. Abstracts and article bodies may follow the needs of their content.
-- Finalize the independent space name and introduction.
-- Defer cross-article relationships and archive views until published records reveal a real need.
-- Keep a private editor and database as future options, not current requirements.
-
-## Related documents
-
-- [README.md](README.md): project entry and local commands.
-- [GIT_WORKFLOW.md](GIT_WORKFLOW.md): the project's branch, commit, merge, verification, and recovery conventions.
-- [src/content/articles/README.md](src/content/articles/README.md): article-file authoring contract.
-- [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md): third-party attribution and asset restrictions.
-
-## Theme behavior
-
-All pages use the same header appearance control: Light, Dark, or Auto (system), with icons and a sliding selection highlight. With no valid saved choice the site follows system appearance. Manual choices persist locally; system changes update the effective theme only in system mode. Changes synchronize across tabs, and unavailable browser storage does not prevent switching for the current session. The control stays in normal header flow and has native button keyboard and touch behavior, visible focus, pressed states, and reduced-motion support; there is no scroll-direction hiding.
+文件格式与编辑流程见[文章指南](src/content/articles/README.md)；分支、检查与发布操作见 [Git 速查](GIT_WORKFLOW.md)；技术栈和本地命令见 [README](README.md)。
