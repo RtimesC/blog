@@ -1,20 +1,19 @@
 # Third-party notices
 
-## ITom Dev | Interactive 3D WebGL Portfolio
+## Project origin
 
-This project began from the code architecture of [ITom Dev | Interactive 3D WebGL Portfolio](https://github.com/ITomPoland/portfolio-itom), used and modified under the repository's MIT License (included as [`LICENSE`](LICENSE)).
+This project began from the code architecture of [ITom Dev | Interactive 3D WebGL Portfolio](https://github.com/ITomPoland/portfolio-itom), used and modified under its MIT License. The original copyright and license are retained in [LICENSE](LICENSE).
 
-The original project's personal illustrations, textures, sound, images, copywriting, name, social links, and brand material are not covered by that adaptation. They are being replaced room by room and must not be redistributed as Tao's portfolio assets.
+The adaptation does not grant permission to redistribute the original project's personal illustrations, textures, sound, images, copywriting, name, social links, or brand material as this site's assets. Check the source and permission of any reused material separately.
 
 ## Fonts
 
-The bundled font files remain under their original licenses; this project's MIT License does not replace those terms.
+[The application stylesheet](src/styles/app.css) loads Instrument Serif and Inter through Google Fonts. [The font preview page](public/font-preview.html) loads additional families for comparison. Font use remains subject to each family's license; this project's MIT License does not replace those terms.
 
-- **Cabin Sketch Regular and Bold** — Copyright 2011 The Cabin Project Authors, with Reserved Font Names "Cabin" and "Cabin Sketch". Licensed under the SIL Open Font License 1.1.
-- **Rubik Scribble Regular** — Copyright 2020 The Rubik Filtered Project Authors. Licensed under the SIL Open Font License 1.1.
+Cabin Sketch and Rubik Scribble font files from the former 3D project are no longer bundled in the current checkout. There is no local `public/fonts/` license file to link to. If fonts are bundled in future, include their corresponding license files and update this notice.
 
-The complete license is included as [`LICENSE-OFL-1.1.txt`](public/fonts/LICENSE-OFL-1.1.txt).
+## Article and review assets
 
-## Local-only review assets
+Article images and videos live in `public/assets/`. Source, author, permission and any required attribution should be recorded with the relevant article; directory placement alone does not establish ownership.
 
-`tmp/local-reference/zorti-corridor-portrait-v2.png` remains a local, untracked character-reference preview only. It is not currently referenced by the corridor and must not be committed, pushed, or deployed until its source, author, licence or permission, and required attribution have been documented.
+Local review assets in the ignored `tmp/local-reference/` and `tmp/imagegen/` directories must not be committed, pushed or deployed until their source, license or permission, and required attribution are documented.
